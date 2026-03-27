@@ -4,7 +4,7 @@ date: 2026-03-27
 description: "An honest, in-depth review of AdCreative AI in 2026. Discover how this AI-powered ad creative tool performs for marketers, agencies, and small businesses looking to boost conversion rates."
 tags: ["adcreative ai review", "ai ad creative generator", "adcreative ai 2026", "ai advertising tools", "ad creative automation", "best ai tools for ads"]
 cover:
-  image: '/images/adcreative/promo.jpg'
+  image: '/images/adcreative/logo-adc.jpg'
   alt: 'AdCreative AI'
 ---
 
