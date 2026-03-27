@@ -1,5 +1,5 @@
 [build]
-  command = "git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod && hugo"
+  command = "if [ ! -d themes/PaperMod ]; then git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod; fi && hugo"
   publish = "public"
 
 [build.environment]
