@@ -1,0 +1,21 @@
+baseURL = "https://sascribe.com/"
+languageCode = "en-us"
+title = "Sascribe"
+paginate = 10
+
+[module]
+[[module.imports]]
+path = "github.com/adityatelange/hugo-PaperMod"
+
+[params]
+defaultTheme = "auto"
+homeInfoParams = {Title = "Welcome to Sascribe", Content = "Honest reviews and guides for the best SaaS tools, AI software, and digital subscriptions."}
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+
+[menu]
+[[menu.main]]
+name = "Blog"
+url = "/posts/"
+weight = 1
