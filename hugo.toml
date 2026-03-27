@@ -1,8 +1,10 @@
 baseURL = "https://sascribe.com/"
 languageCode = "en-us"
 title = "Sascribe"
-paginate = 10
 theme = "PaperMod"
+
+[pagination]
+pagerSize = 10
 
 [params]
 defaultTheme = "auto"
