@@ -1,0 +1,6 @@
+[build]
+  command = "git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod && hugo"
+  publish = "public"
+
+[build.environment]
+  HUGO_VERSION = "0.124.0"
