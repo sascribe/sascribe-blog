@@ -4,7 +4,7 @@ date: 2026-03-27
 description: "Looking for the best AdCreative AI alternatives? We compare top AI-powered ad design tools for marketers, agencies, and small businesses who want high-converting creatives without the guesswork."
 tags: ["adcreative ai alternatives", "ai ad design tools", "ad creative generators", "best ad tools 2026", "ai banner maker alternatives"]
 cover:
-  image: '/images/adcreative/promo.jpg'
+  image: '/images/adcreative/logo-adc.jpg'
   alt: 'AdCreative AI'
 ---
 
