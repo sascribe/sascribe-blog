@@ -75,9 +75,13 @@
       <div class="newsletter-inner">
         <div class="newsletter-badge">FREE NEWSLETTER</div>
         <h2 class="newsletter-title">The SaaS tools worth your money.<br>Delivered weekly.</h2>
-        <p class="newsletter-sub">Join 2,000+ founders and marketers getting honest reviews on the tools that actually drive results. No fluff. No paid placements.</p>
-        <div class="newsletter-embed">
-         <a href="https://subscribe-forms.beehiiv.com/a6ca1ca4-1c0f-4945-a647-ca2476f2fe78" target="_blank" class="btn-primary" style="display:inline-block;margin-top:8px;">Subscribe Free →</a>
+        <p class="newsletter-sub">Join founders and marketers getting honest reviews on the tools that actually drive results. No fluff. No paid placements.</p>
+        <div class="newsletter-form-wrap">
+          <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" id="nl-email" placeholder="Enter your email address" required>
+            <button type="submit" id="nl-btn">Subscribe Free</button>
+          </form>
+          <p class="newsletter-result" id="nl-result"></p>
         </div>
       </div>
     </div>
@@ -112,6 +116,49 @@
       </div>
     </div>
   </footer>
+
+  <script>
+  async function subscribeNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('nl-email').value;
+    const btn = document.getElementById('nl-btn');
+    const result = document.getElementById('nl-result');
+
+    btn.textContent = 'Subscribing...';
+    btn.disabled = true;
+    result.textContent = '';
+
+    try {
+      const res = await fetch('https://api.beehiiv.com/v2/publications/pub_df60cb42-4828-474d-8553-8092d9f0746b/subscriptions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 2NTVC8mpd6UbBgNNIV53AJZrH3f4AO7ue2wr5WoOG6R0asD852Hdrqajdct9Hlsb'
+        },
+        body: JSON.stringify({
+          email: email,
+          reactivate_existing: false,
+          send_welcome_email: true
+        })
+      });
+
+      if (res.ok) {
+        result.textContent = '🎉 You are in! Check your inbox to confirm.';
+        result.style.color = '#6EE7F7';
+        document.getElementById('nl-email').value = '';
+      } else {
+        result.textContent = 'Something went wrong. Please try again.';
+        result.style.color = '#FF6B35';
+      }
+    } catch(err) {
+      result.textContent = 'Something went wrong. Please try again.';
+      result.style.color = '#FF6B35';
+    }
+
+    btn.textContent = 'Subscribe Free';
+    btn.disabled = false;
+  }
+  </script>
 
 </body>
 </html>
