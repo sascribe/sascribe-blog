@@ -1,4 +1,5 @@
 ---
+categories: ["Ad Tools"]
 title: "Best AdCreative AI Alternatives in 2026: Top Ad Design Tools Compared"
 date: 2026-03-27
 description: "Looking for the best AdCreative AI alternatives? We compare top AI-powered ad design tools for marketers, agencies, and small businesses who want high-converting creatives without the guesswork."
