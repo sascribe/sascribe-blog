@@ -12,6 +12,7 @@ homeInfoParams = {Title = "Welcome to Sascribe", Content = "Honest reviews and g
 ShowReadingTime = true
 ShowShareButtons = true
 ShowPostNavLinks = true
+googleVerification = "K2Kg2CBIH-SgkuC4Rn-Xhn3X6q9axx7yusaPkNq-EI0"
 
 [menu]
 [[menu.main]]
