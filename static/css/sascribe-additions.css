@@ -1,0 +1,157 @@
+/* ===================================
+   SASCRIBE — Additions & Fixes
+   Append this to sascribe.css
+   =================================== */
+
+/* ===================================
+   CATEGORIES GRID
+   =================================== */
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.category-card:hover {
+  border-color: rgba(110, 231, 247, 0.3);
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+.category-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.category-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===================================
+   BEEHIIV EMBED FIX
+   =================================== */
+
+.newsletter-embed {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.newsletter-embed .beehiiv-embed {
+  width: 100% !important;
+  max-width: 480px !important;
+  height: 80px !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Override Beehiiv default styles to match dark theme */
+.newsletter-section .beehiiv-embed,
+.article-newsletter .beehiiv-embed {
+  filter: invert(0);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* Custom email form fallback if Beehiiv iframe is too tall */
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.newsletter-form input[type="email"] {
+  flex: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 12px 20px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+}
+
+.newsletter-form input[type="email"]::placeholder {
+  color: var(--text-muted);
+}
+
+.newsletter-form input[type="email"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.newsletter-form button {
+  background: var(--accent);
+  color: #0C0C0F;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.newsletter-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ===================================
+   PILLAR POST BADGE
+   =================================== */
+
+.tag--pillar {
+  color: var(--accent-warm) !important;
+  background: rgba(255, 107, 53, 0.1) !important;
+  border-color: rgba(255, 107, 53, 0.2) !important;
+}
+
+/* ===================================
+   RESPONSIVE ADDITIONS
+   =================================== */
+
+@media (max-width: 768px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+}
