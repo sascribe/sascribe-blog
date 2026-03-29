@@ -1,0 +1,72 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <div class="container">
+    <div class="page-header__inner">
+      {{ if .IsHome }}
+      <h1 class="page-title">All Categories</h1>
+      <p class="page-subtitle">Browse reviews and guides by topic.</p>
+      {{ else }}
+      <h1 class="page-title">{{ .Title }}</h1>
+      <p class="page-subtitle">{{ len .Pages }} articles in this category.</p>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="archive-section">
+  <div class="container">
+
+    {{ if .IsHome }}
+    <!-- Taxonomy list page — show all categories -->
+    <div class="categories-grid">
+      {{ range .Data.Terms.Alphabetical }}
+      <a href="{{ .Page.Permalink }}" class="category-card">
+        <span class="category-name">{{ .Page.Title }}</span>
+        <span class="category-count">{{ .Count }} {{ if eq .Count 1 }}article{{ else }}articles{{ end }}</span>
+      </a>
+      {{ end }}
+    </div>
+
+    {{ else }}
+    <!-- Single category page — show posts -->
+    {{ if .Pages }}
+    <div class="archive-grid">
+      {{ range .Pages }}
+      <article class="post-card post-card--archive">
+        {{ if .Params.cover }}{{ if .Params.cover.image }}
+        <div class="post-card__thumb">
+          <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}{{ end }}
+        <div class="post-card__body">
+          {{ with .Params.tags }}
+          <div class="post-tags">
+            {{ range first 2 . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+          <h2 class="post-card__title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+          <p class="post-card__excerpt">{{ .Summary | truncate 160 }}</p>
+          <div class="post-card__meta">
+            <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+            <span class="dot">·</span>
+            <span>{{ .ReadingTime }} min read</span>
+            <a href="{{ .Permalink }}" class="read-more">Read →</a>
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+    {{ else }}
+    <div class="empty-state">
+      <p>No articles in this category yet. Check back soon.</p>
+    </div>
+    {{ end }}
+    {{ end }}
+
+  </div>
+</section>
+
+{{ end }}
