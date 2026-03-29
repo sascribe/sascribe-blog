@@ -1,4 +1,5 @@
 ---
+categories: ["Ad Tools"]
 title: "AdCreative AI Review 2026: Is It Worth It for Generating High-Converting Ad Creatives?"
 date: 2026-03-27
 description: "An honest, in-depth review of AdCreative AI in 2026. Discover how this AI-powered ad creative tool performs for marketers, agencies, and small businesses looking to boost conversion rates."
