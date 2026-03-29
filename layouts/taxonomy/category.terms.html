@@ -1,0 +1,25 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <div class="container">
+    <div class="page-header__inner">
+      <h1 class="page-title">All Categories</h1>
+      <p class="page-subtitle">Browse reviews and guides by topic.</p>
+    </div>
+  </div>
+</section>
+
+<section class="archive-section">
+  <div class="container">
+    <div class="categories-grid">
+      {{ range .Data.Terms.Alphabetical }}
+      <a href="{{ .Page.Permalink }}" class="category-card">
+        <span class="category-name">{{ .Page.Title }}</span>
+        <span class="category-count">{{ .Count }} {{ if eq .Count 1 }}article{{ else }}articles{{ end }}</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ end }}
