@@ -1,0 +1,136 @@
+{{ define "main" }}
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Independent SaaS & AI Reviews
+      </div>
+      <h1 class="hero-title">Find the tools that<br><span class="accent">actually work.</span></h1>
+      <p class="hero-desc">Honest reviews, tutorials and comparisons of SaaS tools, AI software and digital subscriptions. No sponsored opinions. No corporate bias. Just what works.</p>
+      <div class="hero-actions">
+        <a href="/posts/" class="btn-primary">Browse All Reviews</a>
+        <a href="#newsletter" class="btn-ghost">Get Weekly Picks →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Independent</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">3x</span>
+          <span class="stat-label">Weekly Posts</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Paid Placements</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-glow"></div>
+</section>
+
+{{ $pages := where .Site.RegularPages "Type" "posts" }}
+{{ if $pages }}
+<section class="posts-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Latest Reviews</h2>
+      <a href="/posts/" class="section-link">View all →</a>
+    </div>
+
+    <div class="posts-featured">
+      {{ range first 1 $pages }}
+      <article class="post-card post-card--featured">
+        {{ if .Params.cover }}{{ if .Params.cover.image }}
+        <div class="post-card__image">
+          <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" loading="lazy">
+        </div>
+        {{ end }}{{ end }}
+        <div class="post-card__body">
+          {{ with .Params.tags }}
+          <div class="post-tags">
+            {{ range first 2 . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+          <h2 class="post-card__title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+          <p class="post-card__excerpt">{{ .Summary | truncate 200 }}</p>
+          <div class="post-card__meta">
+            <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+            <span class="dot">·</span>
+            <span>{{ .ReadingTime }} min read</span>
+            <a href="{{ .Permalink }}" class="read-more">Read Review →</a>
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    <div class="posts-grid">
+      {{ range after 1 (first 7 $pages) }}
+      <article class="post-card post-card--grid">
+        {{ if .Params.cover }}{{ if .Params.cover.image }}
+        <div class="post-card__thumb">
+          <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}{{ end }}
+        <div class="post-card__body">
+          {{ with .Params.tags }}
+          <div class="post-tags">
+            {{ range first 1 . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+          <h3 class="post-card__title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+          <div class="post-card__meta">
+            <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+            <span class="dot">·</span>
+            <span>{{ .ReadingTime }} min read</span>
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    <div class="posts-cta">
+      <a href="/posts/" class="btn-primary">See All Reviews</a>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<section class="trust-section">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🔍</div>
+        <h3>Thoroughly Tested</h3>
+        <p>Every tool we review is actually used and evaluated against real-world use cases.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💬</div>
+        <h3>Honest Pros & Cons</h3>
+        <p>We tell you what sucks too. No tool is perfect and we won't pretend otherwise.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💰</div>
+        <h3>Affiliate Transparent</h3>
+        <p>We disclose every affiliate relationship upfront. Our opinions are never for sale.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔄</div>
+        <h3>Regularly Updated</h3>
+        <p>SaaS tools change fast. We revisit and update our reviews to keep them accurate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
