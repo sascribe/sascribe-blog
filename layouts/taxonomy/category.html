@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }} — SaaS Tools, AI Reviews & Digital Stack Guides{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .IsHome }}Independent reviews, tutorials and guides for the best SaaS tools, AI software and digital subscriptions. Find what actually works.{{ else }}{{ .Summary }}{{ end }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+  {{ if .Params.cover }}{{ if .Params.cover.image }}
+  <meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.cover.image }}">
+  {{ end }}{{ end }}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/sascribe.css">
+  <link rel="stylesheet" href="/css/sascribe-additions.css">
+
+  {{ if .IsPage }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ .Title }}",
+    "datePublished": "{{ .Date.Format "2006-01-02" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02" }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sascribe",
+      "url": "https://sascribe.com"
+    },
+    "description": "{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}"
+  }
+  </script>
+  {{ end }}
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo">
+          <span class="logo-mark">S</span>
+          <span class="logo-text">ascribe</span>
+        </a>
+        <div class="nav-links">
+          <a href="/posts/">All Reviews</a>
+          <a href="/categories/">Categories</a>
+          <a href="#newsletter" class="nav-cta">Get Newsletter</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {{- block "main" . }}{{- end }}
+  </main>
+
+  <section class="newsletter-section" id="newsletter">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div class="newsletter-badge">FREE NEWSLETTER</div>
+        <h2 class="newsletter-title">The SaaS tools worth your money.<br>Delivered weekly.</h2>
+        <p class="newsletter-sub">Join founders and marketers getting honest reviews on the tools that actually drive results. No fluff. No paid placements.</p>
+        <div class="newsletter-form-wrap">
+          <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" id="nl-email" placeholder="Enter your email address" required>
+            <button type="submit" id="nl-btn">Subscribe Free</button>
+          </form>
+          <p class="newsletter-result" id="nl-result"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span class="logo-mark">S</span>
+            <span class="logo-text">ascribe</span>
+          </a>
+          <p>Independent reviews of SaaS tools, AI software and digital subscriptions. We only recommend what we'd use ourselves.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Content</h4>
+            <a href="/posts/">All Reviews</a>
+            <a href="/categories/">Categories</a>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/affiliate-disclosure/">Affiliate Disclosure</a>
+            <a href="/privacy/">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="affiliate-notice">⚡ Some links on this site are affiliate links. If you click and purchase, we may earn a commission at no extra cost to you. This helps keep Sascribe free and independent.</p>
+        <p class="copyright">© {{ now.Year }} Sascribe. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  async function subscribeNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('nl-email').value;
+    const btn = document.getElementById('nl-btn');
+    const result = document.getElementById('nl-result');
+
+    btn.textContent = 'Subscribing...';
+    btn.disabled = true;
+    result.textContent = '';
+
+    try {
+      const res = await fetch('https://api.beehiiv.com/v2/publications/pub_df60cb42-4828-474d-8553-8092d9f0746b/subscriptions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 2NTVC8mpd6UbBgNNIV53AJZrH3f4AO7ue2wr5WoOG6R0asD852Hdrqajdct9Hlsb'
+        },
+        body: JSON.stringify({
+          email: email,
+          reactivate_existing: false,
+          send_welcome_email: true
+        })
+      });
+
+      if (res.ok) {
+        result.textContent = '🎉 You are in! Check your inbox to confirm.';
+        result.style.color = '#6EE7F7';
+        document.getElementById('nl-email').value = '';
+      } else {
+        result.textContent = 'Something went wrong. Please try again.';
+        result.style.color = '#FF6B35';
+      }
+    } catch(err) {
+      result.textContent = 'Something went wrong. Please try again.';
+      result.style.color = '#FF6B35';
+    }
+
+    btn.textContent = 'Subscribe Free';
+    btn.disabled = false;
+  }
+  </script>
+
+</body>
+</html>
