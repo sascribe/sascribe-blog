@@ -3,12 +3,12 @@
 <section class="page-header">
   <div class="container">
     <div class="page-header__inner">
-      {{ if .IsHome }}
+      {{ if eq .Kind "taxonomy" }}
       <h1 class="page-title">All Categories</h1>
       <p class="page-subtitle">Browse reviews and guides by topic.</p>
       {{ else }}
       <h1 class="page-title">{{ .Title }}</h1>
-      <p class="page-subtitle">{{ len .Pages }} articles in this category.</p>
+      <p class="page-subtitle">{{ len .Pages }} {{ if eq (len .Pages) 1 }}article{{ else }}articles{{ end }} in this category.</p>
       {{ end }}
     </div>
   </div>
@@ -16,6 +16,16 @@
 
 <section class="archive-section">
   <div class="container">
+    {{ if eq .Kind "taxonomy" }}
+    <div class="categories-grid">
+      {{ range .Data.Terms.Alphabetical }}
+      <a href="{{ .Page.Permalink }}" class="category-card">
+        <span class="category-name">{{ .Page.Title }}</span>
+        <span class="category-count">{{ .Count }} {{ if eq .Count 1 }}article{{ else }}articles{{ end }}</span>
+      </a>
+      {{ end }}
+    </div>
+    {{ else }}
     {{ if .Pages }}
     <div class="archive-grid">
       {{ range .Pages }}
@@ -49,6 +59,7 @@
     <div class="empty-state">
       <p>No articles in this category yet. Check back soon.</p>
     </div>
+    {{ end }}
     {{ end }}
   </div>
 </section>
