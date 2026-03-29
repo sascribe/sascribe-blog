@@ -1,4 +1,5 @@
 ---
+categories: ["Ad Tools"]
 title: "How to Use AdCreative AI to Build High-Converting Ads: A Step-by-Step Tutorial"
 date: 2026-03-27
 description: "Learn how to use AdCreative AI step by step to generate scroll-stopping ad creatives. This beginner-friendly tutorial covers setup, campaign creation, AI scoring, and optimization tips."
