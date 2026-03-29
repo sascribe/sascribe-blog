@@ -1,4 +1,5 @@
 ---
+categories: ["Ad Tools"]
 title: "AdCreative AI Review 2026: Is This AI Ad Generator Actually Worth It?"
 date: 2026-03-29
 description: "Honest AdCreative AI review covering features, pricing, pros & cons. Find out if this AI ad generator lives up to the hype in 2026."
