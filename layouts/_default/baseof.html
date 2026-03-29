@@ -130,20 +130,20 @@
 
     try {
       const res = await fetch('https://api.beehiiv.com/v2/publications/pub_df60cb42-4828-474d-8553-8092d9f0746b/subscriptions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer 2NTVC8mpd6UbBgNNIV53AJZrH3f4AO7ue2wr5WoOG6R0asD852Hdrqajdct9Hlsb'
-        },
-        body: JSON.stringify({
-  email: email,
-  reactivate_existing: false,
-  send_welcome_email: true,
-  utm_source: 'sascribe_website',
-  utm_medium: 'organic',
-  referring_site: 'sascribe.com'
-})
-      });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 2NTVC8mpd6UbBgNNIV53AJZrH3f4AO7ue2wr5WoOG6R0asD852Hdrqajdct9Hlsb'
+      },
+      body: JSON.stringify({
+        email: email,
+        reactivate_existing: false,
+        send_welcome_email: true,
+        utm_source: 'sascribe_website',
+        utm_medium: 'organic',
+        referring_site: 'sascribe.com'
+      })
+    });
 
       if (res.ok) {
         result.textContent = '🎉 You are in! Check your inbox to confirm.';
