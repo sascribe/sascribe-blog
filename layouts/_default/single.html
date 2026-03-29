@@ -1,0 +1,81 @@
+{{ define "main" }}
+
+<article class="article">
+
+  <header class="article-header">
+    <div class="container container--narrow">
+      {{ with .Params.tags }}
+      <div class="post-tags post-tags--header">
+        {{ range first 3 . }}
+        <span class="tag">{{ . }}</span>
+        {{ end }}
+      </div>
+      {{ end }}
+      <h1 class="article-title">{{ .Title }}</h1>
+      {{ if .Description }}
+      <p class="article-desc">{{ .Description }}</p>
+      {{ end }}
+      <div class="article-meta">
+        <time>{{ .Date.Format "January 2, 2006" }}</time>
+        <span class="dot">·</span>
+        <span>{{ .ReadingTime }} min read</span>
+      </div>
+    </div>
+  </header>
+
+  {{ if .Params.cover }}{{ if .Params.cover.image }}
+  <div class="article-hero">
+    <div class="container">
+      <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" class="article-hero__img">
+    </div>
+  </div>
+  {{ end }}{{ end }}
+
+  <div class="article-body">
+    <div class="container container--narrow">
+
+      <div class="affiliate-notice-inline">
+        <span class="notice-icon">⚡</span>
+        <span>This post contains affiliate links. We may earn a commission if you purchase through our links, at no extra cost to you.</span>
+      </div>
+
+      <div class="article-content">
+        {{ .Content }}
+      </div>
+
+      <div class="article-newsletter">
+        <div class="newsletter-badge">FREE</div>
+        <h3>Get the best SaaS tools delivered weekly</h3>
+        <p>Join our newsletter for honest reviews, tutorials and exclusive deals.</p>
+        <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+        <iframe src="https://subscribe-forms.beehiiv.com/a6ca1ca4-1c0f-4945-a647-ca2476f2fe78"
+          class="beehiiv-embed"
+          frameborder="0"
+          scrolling="no"
+          style="width:100%;max-width:560px;height:315px;background:transparent;border:none;">
+        </iframe>
+      </div>
+
+      {{ $related := .Site.RegularPages.Related . | first 3 }}
+      {{ if $related }}
+      <div class="related-posts">
+        <h3 class="related-title">Related Reviews</h3>
+        <div class="related-grid">
+          {{ range $related }}
+          <a href="{{ .Permalink }}" class="related-card">
+            {{ if .Params.cover }}{{ if .Params.cover.image }}
+            <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
+            {{ end }}{{ end }}
+            <span>{{ .Title }}</span>
+          </a>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+    </div>
+  </div>
+
+</article>
+
+{{ end }}
