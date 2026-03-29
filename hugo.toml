@@ -1,21 +1,24 @@
 baseURL = "https://sascribe.com/"
 languageCode = "en-us"
 title = "Sascribe"
-theme = "PaperMod"
 
 [pagination]
 pagerSize = 10
 
+[taxonomies]
+tag = "tags"
+category = "categories"
+
 [params]
-defaultTheme = "auto"
-homeInfoParams = {Title = "Welcome to Sascribe", Content = "Honest reviews and guides for the best SaaS tools, AI software, and digital subscriptions."}
 ShowReadingTime = true
-ShowShareButtons = true
-ShowPostNavLinks = true
-googleVerification = "K2Kg2CBIH-SgkuC4Rn-Xhn3X6q9axx7yusaPkNq-EI0"
 
 [menu]
 [[menu.main]]
-name = "Blog"
+name = "All Reviews"
 url = "/posts/"
 weight = 1
+
+[[menu.main]]
+name = "Categories"
+url = "/categories/"
+weight = 2
