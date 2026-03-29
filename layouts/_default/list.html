@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <div class="container">
+    <div class="page-header__inner">
+      <h1 class="page-title">{{ if .IsHome }}All Reviews{{ else }}{{ .Title }}{{ end }}</h1>
+      <p class="page-subtitle">Honest, independent reviews of SaaS tools and AI software. No fluff. No paid opinions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="archive-section">
+  <div class="container">
+
+    {{ $pages := .Pages }}
+    {{ if $pages }}
+    <div class="archive-grid">
+      {{ range $pages }}
+      <article class="post-card post-card--archive">
+        {{ if .Params.cover }}{{ if .Params.cover.image }}
+        <div class="post-card__thumb">
+          <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}{{ end }}
+        <div class="post-card__body">
+          {{ with .Params.tags }}
+          <div class="post-tags">
+            {{ range first 2 . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+          <h2 class="post-card__title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+          <p class="post-card__excerpt">{{ .Summary | truncate 160 }}</p>
+          <div class="post-card__meta">
+            <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+            <span class="dot">·</span>
+            <span>{{ .ReadingTime }} min read</span>
+            <a href="{{ .Permalink }}" class="read-more">Read →</a>
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    {{ else }}
+    <div class="empty-state">
+      <p>No posts yet. Check back soon.</p>
+    </div>
+    {{ end }}
+
+  </div>
+</section>
+
+{{ end }}
