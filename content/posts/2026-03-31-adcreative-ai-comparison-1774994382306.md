@@ -48,8 +48,6 @@ The scoring model is trained on hundreds of millions of ad impressions, which me
 - **Ad Serving** — Built-in ad tags for direct display ad serving.
 - **Smart Resize** — Adapt one design across multiple ad sizes.
 
-![AdCreative AI ad design tool comparison](/images/adcreative/logo-adc.jpg)
-
 ## Pricing Breakdown
 
 Pricing is where these tools diverge sharply. Here's what you're looking at in 2026:
