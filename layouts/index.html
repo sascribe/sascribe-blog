@@ -48,7 +48,7 @@
       <article class="post-card post-card--featured" onclick="window.location='{{ .Permalink }}'" style="cursor:pointer;">
         {{ if .Params.cover }}{{ if .Params.cover.image }}
         <div class="post-card__image">
-          <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" loading="lazy">
+          <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" loading="lazy" {{ if eq .Params.cover.style "logo" }}data-style="logo"{{ end }}>
         </div>
         {{ end }}{{ end }}
         <div class="post-card__body">
