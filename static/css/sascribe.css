@@ -351,6 +351,7 @@ a:hover { opacity: 0.8; }
    folder slug e.g. img[src*="/manychat/"]
    ============================================= */
 
+
 /* ElevenLabs — white logo on dark bg */
 .post-card--featured .post-card__image img[src*="/elevenlabs/"] {
   object-fit: contain;
@@ -420,6 +421,75 @@ a:hover { opacity: 0.8; }
   border: none;
 }
 
+
+/* ElevenLabs — white logo on dark bg */
+.post-card--featured .post-card__image img[src*="/elevenlabs/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
+.post-card__thumb img[src*="/elevenlabs/"],
+.post-card--archive .post-card__thumb img[src*="/elevenlabs/"] {
+  object-fit: contain;
+  padding: 20px;
+  background: #0C0C0F;
+}
+
+.article-hero__img[src*="/elevenlabs/"] {
+  object-fit: contain;
+  background: #0C0C0F;
+  padding: 40px;
+  max-height: 320px;
+  border: none;
+}
+
+/* Synthesia — white logo on dark bg */
+.post-card--featured .post-card__image img[src*="/synthesia/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
+.post-card__thumb img[src*="/synthesia/"],
+.post-card--archive .post-card__thumb img[src*="/synthesia/"] {
+  object-fit: contain;
+  padding: 20px;
+  background: #0C0C0F;
+}
+
+.article-hero__img[src*="/synthesia/"] {
+  object-fit: contain;
+  background: #0C0C0F;
+  padding: 40px;
+  max-height: 320px;
+  border: none;
+}
+
+/* Beehiiv — white logo on dark bg */
+.post-card--featured .post-card__image img[src*="/beehiiv/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
+.post-card__thumb img[src*="/beehiiv/"],
+.post-card--archive .post-card__thumb img[src*="/beehiiv/"] {
+  object-fit: contain;
+  padding: 20px;
+  background: #0C0C0F;
+}
+
+.article-hero__img[src*="/beehiiv/"] {
+  object-fit: contain;
+  background: #0C0C0F;
+  padding: 40px;
+  max-height: 320px;
+  border: none;
+}
 /* ============================================= */
 
 .post-card--featured:hover .post-card__image img {
