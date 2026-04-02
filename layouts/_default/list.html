@@ -16,7 +16,7 @@
     {{ if $pages }}
     <div class="archive-grid">
       {{ range $pages }}
-      <article class="post-card post-card--archive">
+      <article class="post-card post-card--archive" onclick="window.location='{{ .Permalink }}'" style="cursor:pointer;">
         {{ if .Params.cover }}{{ if .Params.cover.image }}
         <div class="post-card__thumb">
           <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
