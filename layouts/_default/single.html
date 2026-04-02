@@ -1,7 +1,5 @@
 {{ define "main" }}
-
 <article class="article">
-
   <header class="article-header">
     <div class="container container--narrow">
       {{ with .Params.tags }}
@@ -22,34 +20,28 @@
       </div>
     </div>
   </header>
-
   {{ if .Params.cover }}{{ if .Params.cover.image }}
   <div class="article-hero">
     <div class="container">
-      <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" class="article-hero__img">
+      <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" class="article-hero__img{{ if eq .Params.cover.style "logo" }} article-hero__img--logo{{ end }}">
     </div>
   </div>
   {{ end }}{{ end }}
-
   <div class="article-body">
     <div class="container container--narrow">
-
       <div class="affiliate-notice-inline">
         <span class="notice-icon">⚡</span>
         <span>This post contains affiliate links. We may earn a commission if you purchase through our links, at no extra cost to you.</span>
       </div>
-
       <div class="article-content">
         {{ .Content }}
       </div>
-
       <div class="article-newsletter">
         <div class="newsletter-badge">FREE</div>
         <h3>Get the best SaaS tools delivered weekly</h3>
         <p>Join our newsletter for honest reviews, tutorials and exclusive deals.</p>
-       <a href="https://subscribe-forms.beehiiv.com/a6ca1ca4-1c0f-4945-a647-ca2476f2fe78" target="_blank" class="btn-primary" style="display:inline-block;margin-top:8px;">Subscribe Free →</a>
+        <a href="https://subscribe-forms.beehiiv.com/a6ca1ca4-1c0f-4945-a647-ca2476f2fe78" target="_blank" class="btn-primary" style="display:inline-block;margin-top:8px;">Subscribe Free →</a>
       </div>
-
       {{ $related := .Site.RegularPages.Related . | first 3 }}
       {{ if $related }}
       <div class="related-posts">
@@ -66,10 +58,7 @@
         </div>
       </div>
       {{ end }}
-
     </div>
   </div>
-
 </article>
-
 {{ end }}
