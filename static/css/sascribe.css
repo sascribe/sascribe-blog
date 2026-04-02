@@ -352,7 +352,13 @@ a:hover { opacity: 0.8; }
    ============================================= */
 
 /* ElevenLabs — white logo on dark bg */
-.post-card--featured .post-card__image img[src*="/elevenlabs/"],
+.post-card--featured .post-card__image img[src*="/elevenlabs/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
 .post-card__thumb img[src*="/elevenlabs/"],
 .post-card--archive .post-card__thumb img[src*="/elevenlabs/"] {
   object-fit: contain;
@@ -360,7 +366,6 @@ a:hover { opacity: 0.8; }
   background: #0C0C0F;
 }
 
-/* Article hero — ElevenLabs */
 .article-hero__img[src*="/elevenlabs/"] {
   object-fit: contain;
   background: #0C0C0F;
@@ -370,7 +375,13 @@ a:hover { opacity: 0.8; }
 }
 
 /* Synthesia — white logo on dark bg */
-.post-card--featured .post-card__image img[src*="/synthesia/"],
+.post-card--featured .post-card__image img[src*="/synthesia/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
 .post-card__thumb img[src*="/synthesia/"],
 .post-card--archive .post-card__thumb img[src*="/synthesia/"] {
   object-fit: contain;
@@ -387,7 +398,13 @@ a:hover { opacity: 0.8; }
 }
 
 /* Beehiiv — white logo on dark bg */
-.post-card--featured .post-card__image img[src*="/beehiiv/"],
+.post-card--featured .post-card__image img[src*="/beehiiv/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+
 .post-card__thumb img[src*="/beehiiv/"],
 .post-card--archive .post-card__thumb img[src*="/beehiiv/"] {
   object-fit: contain;
