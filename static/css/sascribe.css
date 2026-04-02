@@ -414,8 +414,9 @@ a:hover { opacity: 0.8; }
   border: none;
 }
 
-/* AdCreative — promo image with white bg, show full logo in archive */
-.post-card--archive .post-card__thumb img[src*="/adcreative/"] {
+/* AdCreative — promo image with white bg, show full logo */
+.post-card--archive .post-card__thumb img[src*="/adcreative/"],
+.post-card--grid .post-card__thumb img[src*="/adcreative/"] {
   object-fit: contain;
   padding: 16px;
   background: #ffffff;
