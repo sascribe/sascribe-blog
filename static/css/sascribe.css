@@ -434,7 +434,6 @@ a:hover { opacity: 0.8; }
 }
 
 /* ============================================= */
-/* ============================================= */
 
 .post-card--featured:hover .post-card__image img {
   transform: scale(1.03);
