@@ -45,7 +45,7 @@
 
     <div class="posts-featured">
       {{ range first 1 $pages }}
-      <article class="post-card post-card--featured">
+      <article class="post-card post-card--featured" onclick="window.location='{{ .Permalink }}'" style="cursor:pointer;">
         {{ if .Params.cover }}{{ if .Params.cover.image }}
         <div class="post-card__image">
           <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" loading="lazy">
@@ -74,7 +74,7 @@
 
     <div class="posts-grid">
       {{ range after 1 (first 7 $pages) }}
-      <article class="post-card post-card--grid">
+      <article class="post-card post-card--grid" onclick="window.location='{{ .Permalink }}'" style="cursor:pointer;">
         {{ if .Params.cover }}{{ if .Params.cover.image }}
         <div class="post-card__thumb">
           <img src="{{ .Params.cover.image }}" alt="{{ .Title }}" loading="lazy">
