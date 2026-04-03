@@ -929,7 +929,9 @@ a:hover { opacity: 0.8; }
 .related-card img {
   width: 100%;
   aspect-ratio: 16/9;
-  object-fit: cover;
+  object-fit: contain;
+  background: #0C0C0F;
+  padding: 12px;
 }
 
 .related-card span {
