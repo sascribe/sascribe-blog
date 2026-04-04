@@ -32,16 +32,21 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "headline": "{{ .Title }}",
+    "description": "{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}",
+    "url": "{{ .Permalink }}",
     "datePublished": "{{ .Date.Format "2006-01-02" }}",
     "dateModified": "{{ .Lastmod.Format "2006-01-02" }}",
+    "author": {
+      "@type": "Organization",
+      "name": "Sascribe"
+    },
     "publisher": {
       "@type": "Organization",
       "name": "Sascribe",
       "url": "https://sascribe.com"
-    },
-    "description": "{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}"
+    }
   }
   </script>
   {{ end }}
