@@ -7,7 +7,7 @@ categories: ["Ad Tools"]
 cover:
   image: "/images/adcreative/logo-adc.jpg"
   alt: "AdCreative AI review"
-affiliateName: "AdCreative AI"
+affiliateURL: "https://sascribe.com/go/adcreative"
 affiliateName: "AdCreative AI"
 ---
 
