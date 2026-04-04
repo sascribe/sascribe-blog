@@ -23,10 +23,25 @@
   {{ if .Params.cover }}{{ if .Params.cover.image }}
   <div class="article-hero">
     <div class="container">
+      {{ if .Params.affiliateURL }}
+      <a href="{{ .Params.affiliateURL }}" target="_blank" rel="noopener sponsored" class="article-hero__link">
+        <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" class="article-hero__img{{ if eq .Params.cover.style "logo" }} article-hero__img--logo{{ end }}">
+      </a>
+      {{ else }}
       <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt | default .Title }}" class="article-hero__img{{ if eq .Params.cover.style "logo" }} article-hero__img--logo{{ end }}">
+      {{ end }}
     </div>
   </div>
   {{ end }}{{ end }}
+  {{ if .Params.affiliateURL }}
+  <div class="article-cta-bar">
+    <div class="container container--narrow">
+      <a href="{{ .Params.affiliateURL }}" target="_blank" rel="noopener sponsored" class="article-cta-btn">
+        Try {{ .Params.affiliateName | default "it" }} Free →
+      </a>
+    </div>
+  </div>
+  {{ end }}
   <div class="article-body">
     <div class="container container--narrow">
       <div class="affiliate-notice-inline">
