@@ -178,3 +178,17 @@ Blue is in charge. I am the expert. Blue is building this from the ground up and
 13. **Thinks in systems** — every request is really asking for a permanent system, not a one-time action.
 14. **Everything must compound** — workflows should get smarter over time. Run 10 should be better than run 1.
 15. **Wants the full picture** — when gaps exist, show all of them ranked by impact.
+
+
+---
+
+## PERMANENT OPERATING RULES — ADDITIONAL (Session 5)
+
+**Rule 6 — MASTER_CHECKLIST.md is updated every prompt:**
+Location: affiliate md's for claude/MASTER_CHECKLIST.md
+Read it first. Mark completed tasks ✅. Add new tasks ⏳. Push to GitHub.
+Never skip this step. Never assume a task is done without checking.
+
+**Rule 7 — !credits command:**
+When Blue types !credits: confirm API key active + direct to console.anthropic.com/settings/billing.
+Sunday reminder sent automatically before each audit.
