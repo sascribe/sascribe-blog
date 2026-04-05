@@ -286,6 +286,53 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-05 (Session 5 — Part 2)
+
+**SEO COMPOUND IMPROVEMENTS:**
+- Internal links added to all articles (2 per article, targeting related content)
+- ElevenLabs pillar receives internal links from all other articles
+- FAQ sections + FAQPage JSON-LD schema added to all articles
+- About page created at /about — E-E-A-T signal
+- SEO Audit upgraded: internal link check + FAQ check + content refresh check
+- CLAUDE_ROLE.md updated with permanent operating rules
+
+**GAPS RESOLVED:**
+- Internal linking: FIXED
+- FAQ schema: FIXED
+- About page / E-E-A-T: FIXED
+- Content refresh check: ADDED TO AUDIT
+
+**NEXT PRIORITIES:**
+- QR-Perks email list signup
+- Mission 2: Unified affiliate dashboard (CJ + ROK APIs)
+- Backlink outreach — first 5 targets
+- Monitor NordVPN first article (Monday Apr 7)
+- QA Sunday SEO audit first run (Apr 13)
+
+### 2026-04-05 (Session 5)
+
+**AUTONOMOUS SYSTEMS BUILT:**
+- Weekly SEO Audit Agent (QQwdOvLUvh2War2A) — Sunday 11pm
+- Daily API Health Check (WZcswmhQsoRYriM4) — 8am daily
+- Discord Command Center (YDo6NIh2exauqaSi) — polls every 2min
+
+**DISCORD CHANNELS:**
+- #sascribe-alerts:   1490454712200200345
+- #sascribe-audit:    1490454714050019453
+- #sascribe-commands: 1490454715627081908
+- DISCORD_BOT_TOKEN saved to ~/.zshrc
+
+**SASCRIBE FIXES:**
+- Synthesia disclosure moved after opening hook (2 articles fixed)
+- Hook-first rule injected into n8n Generate Article prompt
+- API health check added to SEO Audit (blocks if API fails)
+
+**NEXT PRIORITIES:**
+- QR-Perks: email list capture + change admin password
+- Unified affiliate dashboard (CJ + ROK APIs)
+- Add CJ_API_KEY to ~/.zshrc
+
+
 ### 2026-04-04 (Session 4)
 
 **SASCRIBE:**
