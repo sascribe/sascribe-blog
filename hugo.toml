@@ -1,6 +1,7 @@
 baseURL = "https://sascribe.com/"
 languageCode = "en-us"
 title = "Sascribe"
+description = "Honest reviews, comparisons, and tutorials for AI tools, SaaS software, and productivity apps. Find the best tools for your workflow in 2026."
 
 [pagination]
 pagerSize = 10
