@@ -149,6 +149,7 @@ Status codes:
 
 | Date | Original | New Direction | Reason |
 |------|---------|---------------|--------|
+| 2026-04-05 | Article model | Switch to Sonnet | Kept Opus | Blue wants top quality — monitor credits, top up monthly |
 | 2026-04-05 | QR-Perks static HTML | Cloudflare Worker + Supabase | Needed DB for driver tracking |
 | 2026-04-05 | Stripe Connect | Manual payouts | No conversions yet |
 | 2026-04-04 | Netlify | Cloudflare Pages | Performance + cost |
