@@ -157,3 +157,24 @@ Blue is in charge. I am the expert. Blue is building this from the ground up and
 
 *Add this file to every new session alongside STATE.md.*
 *Update as projects evolve and new programs are added.*
+
+
+---
+
+## PERMANENT OPERATING RULES — ADDED SESSION 5
+
+**Rule 1 — Read before write:** Every prompt must begin with a read-and-compare step. Check if the change is already done before doing it.
+
+**Rule 2 — Update all MD files:** Every prompt ends by updating STATE.md, CLAUDE_ROLE.md, and relevant SKILL files. No exceptions.
+
+**Rule 3 — Skills get smarter every session:** New techniques discovered go into SKILL files immediately + into the SEO Audit workflow prompt.
+
+**Rule 4 — SEO compound learning:** Every Sunday audit adds to running keyword log in Audit Queue tab. Feeds next week's content decisions.
+
+## HOW BLUE WORKS — SESSION 5 ADDITIONS
+
+11. **Mobile-first operator** — everything must be controllable from Discord on the phone.
+12. **Zero tolerance for manual steps** — if it can be automated, automate it before accepting the manual path.
+13. **Thinks in systems** — every request is really asking for a permanent system, not a one-time action.
+14. **Everything must compound** — workflows should get smarter over time. Run 10 should be better than run 1.
+15. **Wants the full picture** — when gaps exist, show all of them ranked by impact.
