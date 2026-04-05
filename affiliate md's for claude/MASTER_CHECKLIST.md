@@ -1,7 +1,7 @@
 # MASTER_CHECKLIST.md
 *Single source of truth for all tasks across the operation.*
 *Updated automatically every Claude Code session.*
-*Last updated: 2026-04-05 14:36*
+*Last updated: 2026-04-05 15:10*
 
 ---
 
@@ -77,9 +77,9 @@ Status codes:
 | ✅ DONE | Legal pages | S5 | /privacy /terms /disclosure /contractor |
 | ✅ DONE | SubID tracking | S5 | Per truck attribution |
 | ✅ DONE | ROK Financial offer card 1 | S3 | Live |
-| ⏳ PENDING | Email list signup on landing page | S5 | High priority |
-| ⏳ PENDING | Change admin password | S5 | Currently qrperks2026 |
-| ⏳ PENDING | ROK Financial URL update in Supabase | S5 | Use actual tracking link |
+| ✅ DONE | Email list signup on landing page | S6 | email_signups table + /api/email/subscribe + form on landing page |
+| ✅ DONE | Change admin password | S6 | Now: QRperks2026!Secured (CF secret) |
+| ✅ DONE | ROK Financial URL update in Supabase | S6 | go.mypartner.io tracking link live |
 | ⏳ PENDING | Insurance offer card | — | EverQuote/Liberty Mutual |
 | ⏳ PENDING | Banking offer card | — | Chime/Axos |
 | ⏳ PENDING | Phone plan offer card | — | Mint Mobile |
