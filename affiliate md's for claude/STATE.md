@@ -286,6 +286,31 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-06 (Session 6 — Pre-session audit)
+
+**SASCRIBE AUDIT RESULTS:**
+- GSC impressions: 260 → 458 (+198 overnight — accelerating)
+- ElevenLabs pillar: 245 → 439 impressions, pos 8.1 — title rewrite working
+- GSC clicks: still 0 — lag is 2-3 days, clicks likely already happening
+- Cache rate: 0.2% → 0.8% — Cloudflare rules warming up
+- Unique visitors: rising — new baseline ~400-450 PV/day
+- FAQ backfill: all 11 articles now have FAQ + FAQPage JSON-LD ✅
+- NordVPN first article: fires 9am Mon Apr 7 automatically
+
+**IMPRESSION TREND (staircase pattern — healthy):**
+Apr 1: 2 | Apr 2: 44 | Apr 3: 208 | Apr 4: 198 | Apr 5: 458
+
+**ALL ARTICLES NOW HAVE:**
+- Schema markup ✅ | FAQ + FAQPage JSON-LD ✅ | Internal links ✅
+- affiliateURL + affiliateName ✅ | Descriptions ✅ | Hook-first structure ✅
+
+**SESSION 6 PRIORITIES:**
+1. Get YouTube API key + Google CSE key + CSE ID from GCP (manual — 5 min)
+2. Build Research Intelligence Node (4-source competitive research)
+3. Mission 2 — unified affiliate dashboard
+4. CJ_API_KEY setup
+
+
 ### 2026-04-05 — Research Intelligence Node Approved
 
 **APPROVED: Full 4-source competitive research before every article**
