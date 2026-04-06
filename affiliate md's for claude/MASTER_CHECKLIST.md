@@ -135,6 +135,52 @@ Status codes:
 
 ---
 
+
+### NEXT BUILD PRIORITIES (Session 6)
+
+| Status | Task | Notes |
+|--------|------|-------|
+| ⏳ PENDING | YouTube Data API integration | Auto-find top 3-5 review videos per affiliate before each article |
+| ⏳ PENDING | Claude video research step in pipeline | Haiku extracts insights from video transcripts, Opus writes article with context |
+| ⏳ PENDING | Fix Discord bot channels | #sascribe-audit and some commands not responding — debug token in hardcoded nodes |
+| ⏳ PENDING | Backfill FAQ on 3 articles missing it | Automated — 2 min task for Code |
+| ⏳ PENDING | CJ_API_KEY in ~/.zshrc | Get from cj.com dashboard — enables automated approval checks |
+| ⏳ PENDING | QR-Perks email list verify live | Confirm signup form works on qr-perks.com |
+| ⏳ PENDING | Mission 2 — unified affiliate dashboard | CJ + ROK + PartnerStack + Rewardful in one view |
+
+### PIPELINE ENHANCEMENT — VIDEO RESEARCH (Implementation Plan)
+
+Architecture approved: Option 3 (Haiku research + Opus writing)
+
+Step 1 — YouTube Data API setup:
+- Get YouTube Data API v3 key from Google Cloud Console (GCP project: sascribe)
+- Add as YOUTUBE_API_KEY to ~/.zshrc
+- Cost: free tier (10,000 requests/day — more than enough)
+
+Step 2 — n8n research node (before Generate Article):
+- Search YouTube for "[affiliate name] review 2026" + "[affiliate name] honest review"
+- Pull top 3 video IDs by view count from relevant channels
+- Fetch video transcripts via YouTube transcript API or captions endpoint
+
+Step 3 — Claude Haiku extraction node:
+- Feed transcripts to Haiku with prompt:
+  "Extract from these video reviews: top pros, top cons, specific features mentioned,
+   pricing details, real workflow tips, common complaints, things competitors do better.
+   Output structured JSON. Do not copy exact phrases — extract factual insights only."
+
+Step 4 — Inject into Opus article prompt:
+- Pass Haiku JSON brief as "expert_context" into existing Generate Article node
+- Opus writes article using both affiliate rules AND real-world video insights
+- Result: articles with specific credible details no pure AI content can match
+
+Cost impact: ~$0.06/article added (Haiku research) = ~$0.35/article total
+Monthly at 12 articles: ~$4.20 vs current $3.48 — negligible difference
+Budget: $20/month confirmed — full headroom
+
+Direction: APPROVED — build in Session 6
+
+---
+
 ## FUTURE PROJECTS
 
 | Status | Project | Notes |
