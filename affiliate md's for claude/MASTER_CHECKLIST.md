@@ -144,7 +144,8 @@ Status codes:
 | ⏳ PENDING | Claude video research step in pipeline | Haiku extracts insights from video transcripts, Opus writes article with context |
 | ✅ DONE | Daily audit Apr 6 | S6 | 458 impr (+198), cache 0.8%, FAQ complete |
 | ✅ DONE | Bot traffic identified — 67% of CF traffic is bots (FR/NL/SG/CN) | S6 | Real human traffic ~33% of CF numbers. GSC is accurate. |
-| ⏳ PENDING | Enable Bot Fight Mode on sascribe.com | S6 | dash.cloudflare.com -> Security -> Bots -> ON. Manual only — API token lacks scope. |
+| ❌ DROPPED | Enable Bot Fight Mode | S6 | Free plan — dashboard-only, no API support. Deferred until revenue. Bot detection built into audit instead. |
+| ⏳ PENDING | Upgrade Cloudflare to paid plan | FUTURE | Unlocks Bot Fight Mode API + advanced security. Do after first affiliate revenue. |
 | ⏳ PENDING | Fix Discord bot channels | #sascribe-audit and some commands not responding — debug token in hardcoded nodes |
 | ⏳ PENDING | Backfill FAQ on 3 articles missing it | Automated — 2 min task for Code |
 | ⏳ PENDING | CJ_API_KEY in ~/.zshrc | Get from cj.com dashboard — enables automated approval checks |
@@ -191,6 +192,23 @@ Direction: APPROVED — build in Session 6
 | ⏳ PENDING | Border Crossing program | After QR-Perks fully live |
 | ⏳ PENDING | Stripe Connect QR-Perks payouts | After first conversions |
 | ⏳ PENDING | Social media pipeline | After 30+ articles |
+
+---
+
+## HOW TO READ BOT-INFLATED NUMBERS
+*(Until Bot Fight Mode is enabled on paid plan)*
+
+Cloudflare shows ~3x inflated numbers due to FR/NL/SG/CN bot traffic.
+
+| Metric | What CF Shows | Real Estimate | Source of Truth |
+|--------|--------------|---------------|-----------------|
+| Page views | ~8,400 | ~2,800 | GSC clicks (accurate) |
+| Unique visitors | ~1,750 | ~580 | GSC impressions (accurate) |
+| Traffic by country | 67% bots | see GSC countries | GSC country data |
+
+**Rule:** Always lead with GSC numbers in analysis. CF numbers = directional only until paid plan.
+**Bot flag:** If FR+NL+SG+CN > 20% of CF requests = bot inflation present.
+**Unknown browser PV > 30% of total** = bot inflation confirmed.
 
 ---
 
