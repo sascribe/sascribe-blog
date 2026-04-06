@@ -200,3 +200,107 @@ Direction: APPROVED — build in Session 6
 | 2026-04-05 | Stripe Connect | Manual payouts | No conversions yet |
 | 2026-04-04 | Netlify | Cloudflare Pages | Performance + cost |
 | 2026-04-05 | Telegram bot | Discord | Already wired in YouTube pipeline |
+
+---
+
+## RESEARCH INTELLIGENCE NODE — FULL SPECIFICATION
+*Approved Session 5 — Build Session 6*
+*Replaces simple YouTube research with full competitive intelligence stack*
+
+### WHAT IT DOES
+Before every article the pipeline writes, this node runs a full competitive research sweep
+across 4 sources and produces a structured brief that Opus uses to write an article
+specifically engineered to beat every current competitor on page 1.
+
+### 4-SOURCE RESEARCH STACK
+
+**SOURCE 1 — Google Top 10 Articles**
+- API: Google Custom Search API (GCP project: sascribe — enable it, free 100 queries/day)
+- Query: target keyword from content queue
+- Action: web_fetch top 5-8 organic results (skip Reddit, YouTube, Amazon)
+- Haiku extracts:
+  - H2/H3 headings used (shows what Google rewards structurally)
+  - Questions answered
+  - Approximate word count
+  - CTA placement and style
+  - What they covered poorly or missed entirely (THE GAP = your angle)
+
+**SOURCE 2 — YouTube Videos**
+- API: YouTube Data API v3 (free tier — GCP project: sascribe, needs YOUTUBE_API_KEY)
+- Query: "[affiliate] review 2026" + "[affiliate] honest review"
+- Action: pull top 3-5 videos by view count, fetch transcripts/captions
+- Haiku extracts:
+  - Real user pros/cons (things article writers sanitize)
+  - Specific feature details and workflow tips
+  - Pricing gotchas and real cost at scale
+  - Complaints competitors glossed over
+  - Things the affiliate does better/worse than alternatives
+
+**SOURCE 3 — Reddit + Quora**
+- API: web_fetch (no API needed)
+- Query: site:reddit.com "[affiliate]" + site:quora.com "[affiliate]"
+- Action: fetch top 3-5 threads each
+- Haiku extracts:
+  - Real buyer questions (become FAQ targets)
+  - Specific use case pain points
+  - Comparisons real users make organically
+  - Deal-breakers and hidden limitations
+  - Praise that feels authentic (use as social proof angles)
+
+**SOURCE 4 — Affiliate Own Content**
+- API: web_fetch
+- Sources: affiliate homepage, pricing page, blog, changelog
+- Haiku extracts:
+  - Features they emphasize most (what they want affiliates to sell)
+  - Current pricing tiers and limits
+  - Recent updates or new features
+  - Their own customer testimonials
+  - What differentiators they claim
+
+### OUTPUT FORMAT (Haiku structured JSON brief)
+{
+  "target_keyword": "elevenlabs alternatives 2026",
+  "competitor_gaps": ["none cover API pricing honestly", "no one mentions latency issues"],
+  "top_headings_used": ["What is ElevenLabs", "ElevenLabs Pricing", "Best Alternatives"],
+  "missing_headings": ["ElevenLabs for Audiobooks", "ElevenLabs API Limits"],
+  "real_user_pros": ["voice cloning speed", "multilingual support"],
+  "real_user_cons": ["credit system confusing", "free tier too limited"],
+  "reddit_questions": ["does it work for long form audio", "is it worth it for podcasts"],
+  "pricing_reality": "free tier 10k chars/month, starter $5 but limits hit fast",
+  "affiliate_emphasis": ["voice cloning", "API access", "commercial license"],
+  "recommended_angle": "Focus on audiobook creators — no one covers this segment well",
+  "recommended_word_count": 2400,
+  "faq_targets": ["Is ElevenLabs free?", "ElevenLabs vs Murf for audiobooks?"]
+}
+
+### INJECTION INTO OPUS PROMPT
+Brief passed as expert_context variable in Generate Article node.
+Opus instruction added: "Use the expert_context to write content that is more specific,
+more credible, and covers gaps that current page 1 competitors miss.
+Reference insights from expert_context naturally — never copy phrases."
+
+### APIs NEEDED (add to ~/.zshrc)
+- YOUTUBE_API_KEY — Google Cloud Console → APIs → YouTube Data API v3
+- GOOGLE_CSE_KEY + GOOGLE_CSE_CX — Custom Search API + Search Engine ID
+  Enable at: console.cloud.google.com (project: sascribe)
+  Create CX at: programmablesearchengine.google.com (set to search entire web)
+  Free: 100 queries/day — enough for 3 articles/day at current schedule
+
+### COST BREAKDOWN
+Source 1 Google articles (5 pages, Haiku): ~$0.07/article
+Source 2 YouTube transcripts (3 videos, Haiku): ~$0.05/article
+Source 3 Reddit/Quora (5 threads, Haiku): ~$0.02/article
+Source 4 Affiliate content (3 pages, Haiku): ~$0.01/article
+Brief output (Haiku): ~$0.01/article
+Article generation (Opus): ~$0.29/article
+TOTAL: ~$0.45/article | ~$5.40/month at 12 articles
+Room to publish daily (30/month) for ~$13.50/month — within $20 budget
+
+### BUILD ORDER (Session 6)
+1. Enable Google Custom Search API in GCP project sascribe
+2. Create Custom Search Engine at programmablesearchengine.google.com
+3. Get YouTube Data API v3 key from GCP
+4. Add YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX to ~/.zshrc
+5. Build Research Intelligence Node in n8n (parallel 4-branch before Generate Article)
+6. Test on one manual execution before activating on schedule
+7. Monitor first 3 articles for quality — adjust Haiku prompts as needed
