@@ -121,13 +121,13 @@ Status codes:
 | ✅ | GH_TOKEN | GitHub |
 | ✅ | GOOGLE_APPLICATION_CREDENTIALS | GSC + Sheets |
 | ✅ | CLOUDFLARE_API_TOKEN | CF zones + workers |
-| ✅ | CF_ZONE_SASCRIBE | a415e6afd4367cdcf15c1335b17cb6e0 |
-| ✅ | CF_ZONE_QRPERKS | 2c424ccc5fe93280f0d28ffdd3327dce |
-| ✅ | CF_ACCOUNT_ID | d7da7199489efff971e5884c54e59255 |
+| ✅ | CF_ZONE_SASCRIBE | $CF_ZONE_SASCRIBE |
+| ✅ | CF_ZONE_QRPERKS | $CF_ZONE_QRPERKS |
+| ✅ | CF_ACCOUNT_ID | $CF_ACCOUNT_ID |
 | ✅ | N8N_API_KEY | n8n cloud |
 | ✅ | N8N_BASE_URL | onestepbeyond.app.n8n.cloud/api/v1 |
 | ✅ | SUPABASE_ACCESS_TOKEN | Management API |
-| ✅ | SUPABASE_QRPERKS_URL | fsaxluprhgmyaipaujdn.supabase.co |
+| ✅ | SUPABASE_QRPERKS_URL | $SUPABASE_PROJECT_REF.supabase.co |
 | ✅ | SUPABASE_QRPERKS_SECRET | Service role key |
 | ✅ | DISCORD_BOT_TOKEN | YouTube Factory Bot |
 | ✅ | ANTHROPIC_API_KEY | Claude API |
