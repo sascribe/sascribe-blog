@@ -210,3 +210,10 @@ Sunday reminder sent automatically before each audit.
 26. **Sheet state drives pipeline selection** — n8n picks affiliates based on Last Published Date and Last Content Type. Wrong values = wrong affiliate selected. Always verify Sheet state when pipeline misbehaves.
 27. **Free plan API limitations are real** — some Cloudflare settings (Bot Fight Mode) are dashboard-only on free plans. Document these as manual-until-paid instead of wasting time on API workarounds.
 28. **Discord bot responds but does not execute** — bot uses Claude to generate static text responses to commands. Commands like !stats need to actually pull live data, not just describe what stats are. Fix in Session 7.
+
+## WORKING INSIGHTS — SESSION 6 CONTINUED
+
+29. **n8n PUT API settings whitelist** — only {executionOrder: 'v1'} is valid in the settings object. binaryMode, callerPolicy, availableInMCP all fail. Always use minimal settings.
+30. **n8n httpRequest v4.1 has no sendQuery/queryParameters** — encode query params directly in the URL string. v4.2 features don't exist in v4.1.
+31. **Research brief must be flat safe text** — JSON inside Haiku output can't be directly embedded in another JSON string. Extract to pipe-separated text (ANGLE: x | PROS: y | CONS: z) for safe injection.
+32. **Activation call needs Content-Type header** — POST /workflows/{id}/activate with empty body fails with 415 unless Content-Type: application/json is set.
