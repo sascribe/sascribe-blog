@@ -286,6 +286,38 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-05 (Session 5 — Final Notes)
+
+**DECISIONS MADE:**
+- Monthly API budget set at $20 — full headroom for Opus + research pipeline
+- Opus kept for article generation — quality over cost savings
+- YouTube video research pipeline approved for Session 6 build
+- Implementation: Haiku extracts insights (cheap), Opus writes article (quality)
+- Cost impact: ~$0.35/article with research vs $0.29 currently — negligible at $20/month
+
+**YOUTUBE RESEARCH PIPELINE — APPROVED ARCHITECTURE:**
+- YouTube Data API v3 (free tier, GCP project: sascribe)
+- Search: "[affiliate] review 2026" — pull top 3 videos by view count
+- Haiku extracts: pros, cons, pricing, workflow tips, complaints, competitor comparisons
+- Opus writes article with expert context injected
+- Zero manual steps — fully autonomous
+- YOUTUBE_API_KEY needed: get from console.cloud.google.com
+
+**NEXT SESSION OPENS WITH:**
+1. Fix Discord bot (debug 403 on channel posts)
+2. Backfill FAQ on 3 articles
+3. Build YouTube research pipeline
+4. Verify QR-Perks email signup works
+5. CJ_API_KEY setup
+
+**AFFILIATE REVENUE PROJECTIONS (documented):**
+- Worst case Dec 2026: $50-150/month
+- Base case Dec 2026: $300-800/month  
+- Best case Dec 2026: $1,500-3,000/month
+- Key variable: email list growth + ElevenLabs pillar cracking top 5
+- Site valuation at $2k/month revenue: ~$40,000-60,000 (20-30x monthly)
+
+
 ### 2026-04-05 (Session 5 — Part 2)
 
 **SEO COMPOUND IMPROVEMENTS:**
