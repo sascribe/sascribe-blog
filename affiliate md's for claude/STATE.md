@@ -187,8 +187,8 @@ Dynamic QR codes on 8-10 commercial truck wraps in Southern California. Each tru
 
 ### Infrastructure
 - **Domain**: qr-perks.com (Cloudflare)
-- **Hosting**: Cloudflare Worker — qr-perks.com (worker name: `qrperks`, account: d7da7199489efff971e5884c54e59255)
-- **Supabase**: `fsaxluprhgmyaipaujdn.supabase.co` (project: qrperks, region: us-west-1)
+- **Hosting**: Cloudflare Worker — qr-perks.com (worker name: `qrperks`, account: $CF_ACCOUNT_ID)
+- **Supabase**: `$SUPABASE_PROJECT_REF.supabase.co` (project: qrperks, region: us-west-1)
 - **GitHub repo**: sascribe/qrperks-site
 - **Admin panel**: qr-perks.com/admin (password: qrperks2026 — change this)
 - **Driver portal**: qr-perks.com/driver
@@ -264,13 +264,13 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 - `GH_TOKEN` — GitHub API token (repo read/write for sascribe/sascribe-blog)
 - `GOOGLE_APPLICATION_CREDENTIALS` — path to `/Users/jessiepinedo/Desktop/AffiliateMarketing/sascribe-7b5ed8c59364.json` (service account: claude-code@sascribe.iam.gserviceaccount.com)
 - `CLOUDFLARE_API_TOKEN` — Cloudflare API token (zone Transform Rules access)
-- `CF_ZONE_SASCRIBE` — Cloudflare zone ID for sascribe.com (`a415e6afd4367cdcf15c1335b17cb6e0`)
-- `CF_ZONE_QRPERKS` — Cloudflare zone ID for qr-perks.com (`2c424ccc5fe93280f0d28ffdd3327dce`)
+- `CF_ZONE_SASCRIBE` — Cloudflare zone ID for sascribe.com (`$CF_ZONE_SASCRIBE`)
+- `CF_ZONE_QRPERKS` — Cloudflare zone ID for qr-perks.com (`$CF_ZONE_QRPERKS`)
 - `N8N_API_KEY` — n8n cloud API key (onestepbeyond.app.n8n.cloud)
 - `N8N_BASE_URL` — `https://onestepbeyond.app.n8n.cloud/api/v1`
-- `CF_ACCOUNT_ID` — `d7da7199489efff971e5884c54e59255`
+- `CF_ACCOUNT_ID` — `$CF_ACCOUNT_ID`
 - `SUPABASE_ACCESS_TOKEN` — Supabase personal access token (Management API / DDL execution)
-- `SUPABASE_QRPERKS_URL` — `https://fsaxluprhgmyaipaujdn.supabase.co`
+- `SUPABASE_QRPERKS_URL` — `https://$SUPABASE_PROJECT_REF.supabase.co`
 - `SUPABASE_QRPERKS_PUBLISHABLE` — saved in ~/.zshrc (publishable/anon key)
 - `SUPABASE_QRPERKS_SECRET` — saved in ~/.zshrc (service role key)
 
@@ -345,7 +345,7 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 - Brief uses pipe-separated format (safe for JSON embedding)
 
 **API KEYS CONFIRMED:**
-- YOUTUBE_API_KEY: AIzaSyAfhuVMV2oB0P6UXD6_EGlVtAG3Ziff56I (in ~/.zshrc)
+- YOUTUBE_API_KEY: $YOUTUBE_API_KEY (in ~/.zshrc)
 - GOOGLE_CSE_KEY: same key (needs API restriction fix for Custom Search)
 - GOOGLE_CSE_CX: b5832306c3be3443d (in ~/.zshrc)
 
@@ -533,7 +533,7 @@ Result: articles engineered to beat page 1, not just match it
 
 **QR-PERKS FULL BUILD:**
 - Complete site rebuilt as Cloudflare Worker (1228 lines, single worker.js file)
-- Supabase project: fsaxluprhgmyaipaujdn (us-west-1) — schema deployed via Management API
+- Supabase project: $SUPABASE_PROJECT_REF (us-west-1) — schema deployed via Management API
 - 6 tables: affiliates, drivers, trucks, scans, conversions, admins — all with RLS
 - 50 trucks seeded (t1–t10 active), 5 affiliates seeded (ROK live, 4 coming_soon)
 - All routes live: /, /t1-t50, /driver, /driver/dashboard, /admin, /admin/dashboard, /go/{affiliate}, /privacy, /terms, /disclosure, /contractor
