@@ -325,3 +325,15 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 5. Build Research Intelligence Node in n8n (parallel 4-branch before Generate Article)
 6. Test on one manual execution before activating on schedule
 7. Monitor first 3 articles for quality — adjust Haiku prompts as needed
+
+### SESSION 7 TASK QUEUE
+
+| Priority | Task | Status | Notes |
+|----------|------|--------|-------|
+| 1 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue etc return static Claude text not live API data. Needs real data injection per command. |
+| 2 | Confirm NordVPN article published Wed Apr 9 | ⏳ PENDING | Pipeline fixed — verify article quality and Discord ping fires |
+| 3 | Get GCP API keys | ⏳ PENDING | YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX — 5 min manual at console.cloud.google.com |
+| 4 | Build Research Intelligence Node | ⏳ PENDING | 4-source competitive research before every article. Full spec in MASTER_CHECKLIST.md |
+| 5 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
+| 6 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | Get from cj.com dashboard |
+
