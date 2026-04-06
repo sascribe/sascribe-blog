@@ -142,6 +142,7 @@ Status codes:
 |--------|------|-------|
 | ⏳ PENDING | YouTube Data API integration | Auto-find top 3-5 review videos per affiliate before each article |
 | ⏳ PENDING | Claude video research step in pipeline | Haiku extracts insights from video transcripts, Opus writes article with context |
+| ✅ DONE | Daily audit Apr 6 | S6 | 458 impr (+198), cache 0.8%, FAQ complete |
 | ⏳ PENDING | Fix Discord bot channels | #sascribe-audit and some commands not responding — debug token in hardcoded nodes |
 | ⏳ PENDING | Backfill FAQ on 3 articles missing it | Automated — 2 min task for Code |
 | ⏳ PENDING | CJ_API_KEY in ~/.zshrc | Get from cj.com dashboard — enables automated approval checks |
