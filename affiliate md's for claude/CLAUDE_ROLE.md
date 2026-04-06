@@ -217,3 +217,10 @@ Sunday reminder sent automatically before each audit.
 30. **n8n httpRequest v4.1 has no sendQuery/queryParameters** — encode query params directly in the URL string. v4.2 features don't exist in v4.1.
 31. **Research brief must be flat safe text** — JSON inside Haiku output can't be directly embedded in another JSON string. Extract to pipe-separated text (ANGLE: x | PROS: y | CONS: z) for safe injection.
 32. **Activation call needs Content-Type header** — POST /workflows/{id}/activate with empty body fails with 415 unless Content-Type: application/json is set.
+
+## WORKING INSIGHTS — SESSION 6 FINAL
+
+33. **Discord bot architecture** — bot polls Discord every 2min, routes commands, fetches live data (CF/n8n/GitHub), injects into Claude Haiku system prompt. Claude formats the response. This pattern (pre-fetch → inject → Claude formats) beats static prompts and avoids switch/branch complexity.
+34. **GCP Custom Search API billing requirement** — CSE JSON API requires billing account even for free tier (100/day). Error: "This project does not have access to Custom Search JSON API." Fix: enable billing at console.cloud.google.com → project sascribe → Billing.
+35. **API Keys API must be enabled before using it** — used Service Usage API (serviceusage.googleapis.com) to enable it programmatically. apikeys.googleapis.com PATCH can then update key restrictions programmatically.
+36. **n8n IF node TRUE branch is main[0], FALSE is main[1]** — when updating connections for an IF node, use main: [[{TRUE targets}], [{FALSE targets}]].
