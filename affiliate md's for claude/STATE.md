@@ -286,6 +286,40 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-06 — Research Intelligence Node Deployed
+
+**RESEARCH INTELLIGENCE NODE — LIVE:**
+- 7 new nodes added to Sascribe Blog Pipeline (epcaH77ZVtixXwa9)
+- Total nodes: 19 (was 12)
+- Chain: Pick Image → Build Queries → YouTube → Reddit → Affiliate Content → Collect → Haiku Brief → Parse Brief → Generate Article1
+
+**SOURCES ACTIVE:**
+- YouTube Data API v3: top 3 videos by view count (YOUTUBE_API_KEY confirmed working)
+- Reddit JSON API: top 5 posts by score, no auth required
+- Affiliate own website: homepage HTML stripped to text (1500 chars)
+- Google CSE: PENDING — API key needs Custom Search added to restrictions (fix: console.cloud.google.com → Credentials → edit key → add Custom Search API)
+
+**HAIKU BRIEF FORMAT:**
+- Model: claude-haiku-4-5-20251001
+- Extracts: ANGLE, GAPS, PROS, CONS, USER QUESTIONS, PRICING, AFFILIATE PROMOTES, TARGET WORDS, FAQ
+- Output: flat safe text string injected into Opus prompt as researchBriefText
+- Fallback: if Haiku fails or returns invalid JSON, defaults to basic angle
+
+**OPUS PROMPT MODIFIED:**
+- Rule 8 added: incorporate RESEARCH BRIEF naturally
+- researchBriefText injected at end of RULES section
+- Brief uses pipe-separated format (safe for JSON embedding)
+
+**API KEYS CONFIRMED:**
+- YOUTUBE_API_KEY: AIzaSyAfhuVMV2oB0P6UXD6_EGlVtAG3Ziff56I (in ~/.zshrc)
+- GOOGLE_CSE_KEY: same key (needs API restriction fix for Custom Search)
+- GOOGLE_CSE_CX: b5832306c3be3443d (in ~/.zshrc)
+
+**NEXT RUN:**
+- Wednesday Apr 9 9am PST — NordVPN article with full research brief
+- Will be first article with competitive intelligence context
+
+
 ### 2026-04-06 (Session 6 — Final)
 
 **PIPELINE FIX:**
