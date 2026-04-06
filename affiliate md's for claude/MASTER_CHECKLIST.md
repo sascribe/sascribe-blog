@@ -140,8 +140,8 @@ Status codes:
 
 | Status | Task | Notes |
 |--------|------|-------|
-| ⏳ PENDING | YouTube Data API integration | Auto-find top 3-5 review videos per affiliate before each article |
-| ⏳ PENDING | Claude video research step in pipeline | Haiku extracts insights from video transcripts, Opus writes article with context |
+| ✅ DONE | YouTube Data API integration | S6 | YOUTUBE_API_KEY live, 3 videos/article pulled by view count |
+| ✅ DONE | Research Intelligence Node — 3 sources | S6 | YouTube + Reddit + Affiliate site → Haiku brief → Opus. Google CSE pending key fix. |
 | ✅ DONE | Daily audit Apr 6 | S6 | 458 impr (+198), cache 0.8%, FAQ complete |
 | ✅ DONE | Bot traffic identified — 67% of CF traffic is bots (FR/NL/SG/CN) | S6 | Real human traffic ~33% of CF numbers. GSC is accurate. |
 | ❌ DROPPED | Enable Bot Fight Mode | S6 | Free plan — dashboard-only, no API support. Deferred until revenue. Bot detection built into audit instead. |
@@ -333,7 +333,8 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | 1 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue etc return static Claude text not live API data. Needs real data injection per command. |
 | 2 | Confirm NordVPN article published Wed Apr 9 | ⏳ PENDING | Pipeline fixed — verify article quality and Discord ping fires |
 | 3 | Get GCP API keys | ⏳ PENDING | YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX — 5 min manual at console.cloud.google.com |
-| 4 | Build Research Intelligence Node | ⏳ PENDING | 4-source competitive research before every article. Full spec in MASTER_CHECKLIST.md |
+| 4 | Build Research Intelligence Node | ✅ DONE | 3 sources live (YouTube, Reddit, Affiliate). Google CSE pending API key restriction fix. |
 | 5 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
+| 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → Credentials → edit API key → add Custom Search API to allowed APIs |
 | 6 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | Get from cj.com dashboard |
 
