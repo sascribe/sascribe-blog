@@ -286,6 +286,45 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-06 (Session 6 — Final)
+
+**PIPELINE FIX:**
+- Root cause 1: Double auth header — Generate Article node had both hardcoded x-api-key AND credential injecting another. Anthropic rejected. Fixed: authentication set to none.
+- Root cause 2: NordVPN not getting selected — Sheet had Last Content Type "queued" which pipeline code doesn't recognize. Fixed: Last Published Date set to 2000-01-01 so NordVPN always wins next selection.
+- Next publish: Wednesday Apr 9 9am — NordVPN comparison article
+
+**BOT TRAFFIC DISCOVERY:**
+- 67% of Cloudflare traffic is bots (France 38.7%, Netherlands 11.8%, Singapore 7.1%, China 3.3%)
+- Real human traffic = ~33% of CF numbers
+- GSC impressions/clicks = accurate (bots don't appear in GSC)
+- Bot Fight Mode deferred — free plan, dashboard-only. Deferred until revenue.
+- Rule going forward: GSC = truth, CF = directional trend only
+
+**AUDIT INFRASTRUCTURE:**
+- AUDIT.md created — master audit template pulls ALL data sources every time
+- Includes: country breakdown, browser breakdown, bot detection flag, QR-Perks Supabase, n8n status
+- Every future audit uses this template
+
+**GSC NUMBERS (real — no bots):**
+- Impressions: 458 (was 8 at session start — 57x growth)
+- Clicks: 0 (2-3 day lag — check Wed Apr 9)
+- ElevenLabs pillar: 439 impressions, pos 8.1
+- adcreative.ai review: pos 2.0 — first click likely showing Wed
+- adcreative.ai scam: pos 5.0 — unexpected high-intent query
+
+**SKILL FILES CREATED:**
+- affiliate md's for claude/SKILL_technical_seo_auditor.md
+- affiliate md's for claude/SKILL_master_orchestration.md
+- affiliate md's for claude/AUDIT.md
+
+**SESSION 7 PRIORITIES (in order):**
+1. Fix Discord bot — responds with menu but never executes actual commands (!stats returns static text not live data)
+2. Confirm NordVPN article — pipeline fixed, verify Wed 9am fires and article is quality
+3. Build Research Intelligence Node — 4-source competitive research before every article
+   - Needs: YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX from GCP project sascribe
+4. Get GCP API keys (manual — 5 min): console.cloud.google.com -> project sascribe
+
+
 ### 2026-04-06 (Session 6 — Pre-session audit)
 
 **SASCRIBE AUDIT RESULTS:**
