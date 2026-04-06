@@ -224,3 +224,20 @@ Sunday reminder sent automatically before each audit.
 34. **GCP Custom Search API billing requirement** — CSE JSON API requires billing account even for free tier (100/day). Error: "This project does not have access to Custom Search JSON API." Fix: enable billing at console.cloud.google.com → project sascribe → Billing.
 35. **API Keys API must be enabled before using it** — used Service Usage API (serviceusage.googleapis.com) to enable it programmatically. apikeys.googleapis.com PATCH can then update key restrictions programmatically.
 36. **n8n IF node TRUE branch is main[0], FALSE is main[1]** — when updating connections for an IF node, use main: [[{TRUE targets}], [{FALSE targets}]].
+
+
+## SECURITY RULE — CREDENTIALS HANDLING (Permanent)
+
+**Never write raw credential values (API keys, tokens, secrets, passwords, IDs) in any file that gets pushed to GitHub.**
+
+This includes STATE.md, MASTER_CHECKLIST.md, CLAUDE_ROLE.md, SKILL files, workflow exports, or any other file in any repo.
+
+Raw values live in two places only:
+1. `~/.zshrc` — environment variables
+2. `~/Desktop/AffiliateMarketing/CREDENTIALS.md` — local reference, never pushed, in .gitignore
+
+In all other files: reference the env var name only.
+- ✅ Use: `$YOUTUBE_API_KEY`
+- ❌ Never: `AIzaSyAfhuVMV2oB0P6UXD6...` (the actual value)
+
+This applies to every session, every file, every push. No exceptions.
