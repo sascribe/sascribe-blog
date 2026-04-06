@@ -192,3 +192,12 @@ Never skip this step. Never assume a task is done without checking.
 **Rule 7 — !credits command:**
 When Blue types !credits: confirm API key active + direct to console.anthropic.com/settings/billing.
 Sunday reminder sent automatically before each audit.
+
+
+## WORKING INSIGHTS — UPDATED APR 6
+
+18. **Checks audit data before assuming** — always run live data pull before recommendations. Numbers change overnight and assumptions get stale fast.
+19. **FAQ schema = PAA eligibility** — every article needs FAQ + FAQPage JSON-LD for People Also Ask eligibility. Standard on all articles, enforced in pipeline.
+20. **Impression staircase is the signal** — 2→44→208→458 in 5 days is healthy indexing. Monitor for floor-setting, not spike recovery.
+21. **GSC click lag** — clicks appear 2-3 days after they happen. Zero clicks today does not mean zero clicks happened. Check trajectory, not absolute numbers.
+22. **Cache warmup takes 24-72 hours** — Cloudflare cache rules set yesterday show 0.09%→0.8% today. Expect 5-15% by end of week as repeat URLs cache.
