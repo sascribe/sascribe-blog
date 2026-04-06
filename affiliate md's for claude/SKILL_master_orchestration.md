@@ -17,7 +17,7 @@ Three active projects:
 
 Repo: sascribe/sascribe-blog
 Host: Cloudflare Pages (auto-deploy on push)
-Domain: sascribe.com (zone: a415e6afd4367cdcf15c1335b17cb6e0)
+Domain: sascribe.com (zone: $CF_ZONE_SASCRIBE)
 Framework: Hugo, custom layouts only
 
 Key files:
@@ -101,7 +101,7 @@ in httpRequest nodes — must hardcode "Bot {token}" directly in header value.
 
 Repo: sascribe/qrperks-site (worker.js + schema.sql)
 Worker: qrperks (route: qr-perks.com/*)
-Supabase: fsaxluprhgmyaipaujdn (us-west-1, 6 tables)
+Supabase: $SUPABASE_PROJECT_REF (us-west-1, 6 tables)
 
 Tables: affiliates, drivers, trucks, scans, conversions, admins, email_signups
 
