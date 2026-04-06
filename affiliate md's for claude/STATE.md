@@ -286,6 +286,25 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-05 — Research Intelligence Node Approved
+
+**APPROVED: Full 4-source competitive research before every article**
+Sources: Google top 10 + YouTube videos + Reddit/Quora + Affiliate own content
+Model split: Haiku for all research extraction, Opus for article writing
+Cost: ~$0.45/article, ~$5.40/month at 12 articles
+Budget: $20/month confirmed — room to scale to daily publishing ($13.50/month)
+
+**APIs NEEDED NEXT SESSION:**
+- YOUTUBE_API_KEY (GCP: sascribe → YouTube Data API v3)
+- GOOGLE_CSE_KEY + GOOGLE_CSE_CX (GCP: sascribe → Custom Search API + programmablesearchengine.google.com)
+
+**STRATEGY:**
+Read top 10 results → find the gap → own the gap
+Pull Reddit threads → find real buyer questions → answer them
+Watch YouTube reviews → extract real user experience → add credibility
+Result: articles engineered to beat page 1, not just match it
+
+
 ### 2026-04-05 (Session 5 — Final Notes)
 
 **DECISIONS MADE:**
