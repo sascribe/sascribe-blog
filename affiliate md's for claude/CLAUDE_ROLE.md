@@ -90,7 +90,7 @@ Blue is in charge. I am the expert. Blue is building this from the ground up and
 
 **Current infrastructure status (as of 2026-04-04):**
 - Cloudflare Worker deployed (1228 lines) — all routes live
-- Supabase: fsaxluprhgmyaipaujdn — 6 tables, 50 trucks seeded, 5 affiliates seeded
+- Supabase: $SUPABASE_PROJECT_REF — 6 tables, 50 trucks seeded, 5 affiliates seeded
 - Admin dashboard: qr-perks.com/admin (pw: qrperks2026)
 - Driver dashboard: qr-perks.com/driver
 - SubID tracking: every truck click appends `?subid=qrp_t{n}`
