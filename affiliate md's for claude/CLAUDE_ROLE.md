@@ -201,3 +201,12 @@ Sunday reminder sent automatically before each audit.
 20. **Impression staircase is the signal** — 2→44→208→458 in 5 days is healthy indexing. Monitor for floor-setting, not spike recovery.
 21. **GSC click lag** — clicks appear 2-3 days after they happen. Zero clicks today does not mean zero clicks happened. Check trajectory, not absolute numbers.
 22. **Cache warmup takes 24-72 hours** — Cloudflare cache rules set yesterday show 0.09%→0.8% today. Expect 5-15% by end of week as repeat URLs cache.
+
+## WORKING INSIGHTS — SESSION 6
+
+23. **Bot traffic is real and significant** — 67% of CF traffic on sascribe.com is bots. Always lead analysis with GSC numbers not CF numbers. CF = directional, GSC = truth.
+24. **Pipeline failures have specific signatures** — 3-second failure = auth issue or node config problem, never generation. Always check execution duration first when diagnosing.
+25. **Double auth headers kill API calls** — when n8n node has BOTH a credential AND a hardcoded header for same auth, the duplicate kills the request. Set authentication: none when using hardcoded headers.
+26. **Sheet state drives pipeline selection** — n8n picks affiliates based on Last Published Date and Last Content Type. Wrong values = wrong affiliate selected. Always verify Sheet state when pipeline misbehaves.
+27. **Free plan API limitations are real** — some Cloudflare settings (Bot Fight Mode) are dashboard-only on free plans. Document these as manual-until-paid instead of wasting time on API workarounds.
+28. **Discord bot responds but does not execute** — bot uses Claude to generate static text responses to commands. Commands like !stats need to actually pull live data, not just describe what stats are. Fix in Session 7.
