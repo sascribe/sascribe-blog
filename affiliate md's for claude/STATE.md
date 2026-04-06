@@ -286,6 +286,40 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 
 ## CHANGELOG
 
+### 2026-04-06 — Discord Bot Live Data + 4-Source Pipeline Complete
+
+**DISCORD BOT — LIVE DATA (YDo6NIh2exauqaSi):**
+- 4 new nodes added: Live: CF Stats, Live: n8n Executions, Live: GitHub Checklist, Inject Live Data
+- Every command now fetches 3 live data sources before Claude responds
+- !stats: real Cloudflare 7-day PV/uniques/cache (live)
+- !pipeline: real last n8n execution status + history (live)
+- !checklist + !queue: real MASTER_CHECKLIST.md from GitHub (live)
+- !credits, !help, !audit, !fix: contextual static responses (no API needed)
+- System prompt updated with LIVE DATA section fed by Inject Live Data node
+- Total nodes: 10 (was 6)
+
+**RESEARCH INTELLIGENCE NODE — COMPLETE (4 SOURCES):**
+- Source 1 Google: DuckDuckGo HTML fallback (CSE needs billing in GCP)
+- Source 2 YouTube: YouTube Data API v3 (LIVE — YOUTUBE_API_KEY working)
+- Source 3 Reddit: Reddit JSON API (LIVE — no auth needed)
+- Source 4 Affiliate: Affiliate homepage web scrape (LIVE)
+- Total pipeline nodes: 21 (was 12 at session start)
+
+**GCP API KEY STATUS:**
+- Key restricted to: youtube.googleapis.com + customsearch.googleapis.com
+- YouTube: WORKING
+- Custom Search: BLOCKED — requires billing enabled on GCP project sascribe
+- Fix: console.cloud.google.com → sascribe → Billing → link billing account (free 100 queries/day after setup)
+- GOOGLE_CSE_KEY + GOOGLE_CSE_CX in ~/.zshrc ready for when billing is added
+
+**SESSION 7 TOP PRIORITIES:**
+1. Confirm NordVPN article published Wed Apr 9 (check Discord and GitHub)
+2. Enable billing on GCP sascribe project → unlocks Google CSE (4th source fully live)
+3. Add !qrperks command to Discord (QR-Perks Supabase scan/conversion stats)
+4. CJ_API_KEY from cj.com dashboard → add to ~/.zshrc
+5. QR-Perks: add more offer cards (Insurance, Banking, Phone, Gas)
+
+
 ### 2026-04-06 — Research Intelligence Node Deployed
 
 **RESEARCH INTELLIGENCE NODE — LIVE:**
