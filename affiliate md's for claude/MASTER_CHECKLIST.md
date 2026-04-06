@@ -95,7 +95,7 @@ Status codes:
 |--------|------|---------|-------|
 | ✅ DONE | Sascribe Blog Pipeline | S1 | Mon/Wed/Fri 9am — epcaH77ZVtixXwa9 |
 | ✅ DONE | Weekly SEO Audit Agent | S5 | Sunday 11pm — QQwdOvLUvh2War2A |
-| ✅ DONE | Discord Command Center | S5 | Every 2min — YDo6NIh2exauqaSi |
+| ✅ DONE | Discord Command Center — LIVE DATA | S6 | Every 2min — YDo6NIh2exauqaSi — CF + n8n + GitHub live |
 | ✅ DONE | Daily API Health Check | S5 | 8am daily — WZcswmhQsoRYriM4 |
 | ⏳ PENDING | Unified affiliate dashboard | S5 | Mission 2 — CJ + ROK + PartnerStack |
 | ⏳ PENDING | Content refresh automation | — | Auto-update old articles |
