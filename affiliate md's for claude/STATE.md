@@ -624,3 +624,61 @@ Result: articles engineered to beat page 1, not just match it
 ---
 
 *Update this file at the end of every session.*
+
+
+## Session 7 — 2026-04-06
+
+### What Was Built
+
+**Security Audit (completed first)**
+- Scanned all 48 files in sascribe/sascribe-blog for exposed credentials
+- Found and redacted: YouTube API key (STATE.md), CF zone IDs + account ID (STATE.md, MASTER_CHECKLIST.md, SKILL file), Supabase project ref (CLAUDE_ROLE.md + 3 other files)
+- 4 commits pushed — all files now use env var names ($YOUTUBE_API_KEY etc.), never raw values
+- CREDENTIALS.md confirmed local-only at ~/Desktop/AffiliateMarketing/CREDENTIALS.md
+
+**Research Intelligence Node — LIVE**
+- 4 research sources now feed every article before generation:
+  - Source 1: DuckDuckGo HTML scrape (competitor top results + snippets)
+  - Source 2: YouTube Data API v3 (top 3 videos by view count for affiliate + "review 2026")
+  - Source 3: Reddit JSON API (top 5 posts, no auth required)
+  - Source 4: Affiliate own site (homepage scraped, HTML stripped, first 1500 chars)
+- Research: Collect node aggregates all sources → Research: Haiku Brief (claude-haiku-4-5-20251001) → flat pipe-separated brief → injected as researchBriefText into Opus prompt
+- Blog Pipeline now 21 nodes total (was 12 before research chain)
+- Google CSE (Source 1 upgrade): API enabled in GCP, key restrictions updated. Blocked by billing requirement — DuckDuckGo fallback active until GCP billing enabled
+- YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX added to ~/.zshrc
+
+**Discord Command Center — Fixed**
+- Root cause: Inject Live Data used .join('\n') creating literal newlines injected into JSON body string → "Input does not match expected shape" from Anthropic API
+- Fix 1: Inject Live Data rewritten to output a flat single-line liveData string using || separators
+- Fix 2: Claude Executes Command body changed from raw JSON template to JSON.stringify() expression — properly escapes all special chars including newlines and quotes
+- Fix 3: GitHub checklist base64 decode changed from manual decoder to Buffer.from(b64, 'base64').toString('utf-8')
+- All commands now pull live data: CF 7-day stats, n8n pipeline executions, GitHub checklist
+
+**NordVPN First Article Published**
+- File: content/posts/2026-04-06-nordvpn-review-1775517557899.md
+- URL: https://sascribe.com/posts/2026-04-06-nordvpn-review-1775517557899/
+- Content type: review | ~1,600 words | Score: 8.7/10
+- Research brief visible in article: Reddit question "Is NordVPN actually no-logs?" directly addressed, Meshnet feature covered (competitor gap), real-world speed percentages (85-92% on NordLynx), Deloitte audit referenced, full competitor table (NordVPN vs ExpressVPN vs Surfshark)
+- FTC disclosure correctly placed after hook paragraph
+- 3 affiliate links embedded
+
+**Pipeline Bugs Fixed**
+1. JSON.stringify() on all Anthropic API calls — raw template injection breaks JSON when content has special chars; both blog pipeline and Discord bot now use JSON.stringify()
+2. ISO date format in slugs — Format Article1 now uses new Date().toISOString().split('T')[0] instead of human-readable date string
+3. Code fence stripping — Format Article1 strips ```markdown ... ``` wrappers Claude occasionally adds despite instructions
+4. continueOnFail=True on Reddit, Google Search, and Affiliate Content research nodes — n8n cloud IPs are blocked by Reddit; pipeline now continues with partial research if any source fails
+5. Deterministic affiliate selection — Pick Content Type1 now selects affiliate with oldest Last Published Date (was random, caused NordVPN to be skipped at 9am scheduled run)
+6. Discord notification syntax — content expression used escaped quotes $(\'...\') causing syntax error; fixed to $json refs
+7. Cover image frontmatter — Generate Article1 body now includes exact Hugo frontmatter template (cover: image:/style:, affiliateURL, affiliateName, schema) so Claude cannot deviate
+
+**Trigger Method for n8n Cloud (documented)**
+- n8n public API v1 has no manual execution endpoint for scheduled workflows
+- Webhook triggers do not register on n8n cloud even with proper UUID node IDs
+- Working method: temporarily override Schedule Trigger cron (in PDT timezone, not UTC), deactivate/reactivate workflow, poll until execution fires, restore original cron
+- Original cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am PDT = 16:00 UTC)
+
+### Session 7 Sascribe Pipeline State
+- Nodes: 21 total | Active: True | Schedule: Mon/Wed/Fri 9am PDT
+- Articles published: NordVPN review (Apr 6) + all previous
+- Sheet state: NordVPN Last Published Date needs update to today (pipeline Update Sheet node handles this automatically)
+- Next scheduled run: Wed Apr 9 — ElevenLabs alternatives (oldest after NordVPN)
