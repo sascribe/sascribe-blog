@@ -260,3 +260,24 @@ This applies to every session, every file, every push. No exceptions.
 43. **Format Article1 must strip code fences** — Claude occasionally wraps output in ```markdown ... ``` despite explicit instructions not to. Format Article1 code now strips opening and closing backtick fences before pushing to GitHub. Always keep this strip in Format Article1.
 
 44. **ISO date format for slug generation** — Format Article1 originally used prevData.date (human-readable "April 6, 2026") for filename. Fixed to use new Date().toISOString().split('T')[0] ("2026-04-06"). All filenames must follow 2026-MM-DD pattern for Hugo sort order and URL consistency.
+
+
+## WORKING INSIGHTS — SESSION 7
+
+37. **JSON.stringify() required for all n8n Anthropic API calls** — raw `={{ {"key":"{{ $json.field }}"} }}` template bodies break silently when field values contain newlines, quotes, or backslashes (Anthropic returns 400 "Input does not match expected shape"). Always build the full request body as `={{ JSON.stringify({...field: $json.field...}) }}`. Applied to Generate Article1 and Claude Executes Command.
+
+38. **n8n cloud IPs are blocked by Reddit** — Research: Reddit returns HTML "Blocked" page instead of JSON. Set `continueOnFail: true` on the node; Research: Collect has try/catch so the chain continues with empty Reddit data. Apply continueOnFail to all external scraping nodes (Reddit, DDG, affiliate sites).
+
+39. **n8n cloud webhook triggers don't register** — Adding a Webhook node to an active scheduled workflow and calling it returns 404, even after deactivate/reactivate cycles and proper UUID node IDs. Manual trigger method: override Schedule Trigger cron in PDT time (n8n cloud runs PDT = UTC-7), deactivate, reactivate, poll /executions, restore cron after execution.
+
+40. **n8n cloud scheduler runs in PDT, not UTC** — Confirmed: cron `0 9 * * 1,3,5` fires at 16:00 UTC (9am PDT). Always calculate cron overrides in PDT when targeting n8n cloud.
+
+41. **Deterministic affiliate selection required** — Math.random() in Pick Content Type caused NordVPN (oldest date 2000-01-01) to be skipped at the scheduled 9am run. Fixed to always sort by Last Published Date ascending and pick the oldest, excluding the most recently published to avoid back-to-back repeats.
+
+42. **Generate Article1 must hardcode exact Hugo frontmatter structure** — When given only general instructions, Claude invents its own frontmatter fields (e.g. `image:` / `imageStyle:` instead of `cover: image:` / `cover: style:`). The n8n body must include the literal YAML template with `cover:`, nested `image:`, `alt:`, `style:`, plus `affiliateURL`, `affiliateName`, `schema: BlogPosting`. Missing `cover:` nesting = no hero image on site.
+
+43. **Format Article1 must strip code fences** — Claude wraps output in ` ```markdown ``` ` despite explicit instructions not to. Keep `content.replace(/^\`\`\`[\w]*\n/, '').replace(/\n\`\`\`\s*$/, '')` in Format Article1 permanently.
+
+44. **ISO date format for slugs** — Format Article1 used `prevData.date` (human-readable "April 6, 2026") for filename. Hugo sorts and URLs break with spaces and commas. Fixed to `new Date().toISOString().split('T')[0]` ("2026-04-06"). Never use human-readable dates in filenames.
+
+45. **max_tokens ceiling cuts articles short** — Haiku research brief targets 2000-3000 words; Opus was hitting the 4000 token ceiling at ~1600 words. Increased to 8000. At ~750 words/1000 tokens for Opus, 8000 tokens ≈ 6000 words max — well above any needed article length.
