@@ -281,3 +281,8 @@ This applies to every session, every file, every push. No exceptions.
 44. **ISO date format for slugs** — Format Article1 used `prevData.date` (human-readable "April 6, 2026") for filename. Hugo sorts and URLs break with spaces and commas. Fixed to `new Date().toISOString().split('T')[0]` ("2026-04-06"). Never use human-readable dates in filenames.
 
 45. **max_tokens ceiling cuts articles short** — Haiku research brief targets 2000-3000 words; Opus was hitting the 4000 token ceiling at ~1600 words. Increased to 8000. At ~750 words/1000 tokens for Opus, 8000 tokens ≈ 6000 words max — well above any needed article length.
+
+46. **Pricing pages are separate from homepages** — /pricing URLs often contain tiered pricing tables, billing period info, and active promotions that the homepage does not expose. Always fetch both separately and pass both to Haiku.
+47. **pricing_status=unverified is a signal to Opus** — when Haiku cannot extract verified prices, the brief includes PRICING STATUS: unverified, instructing Opus to say "check current pricing on their site" rather than publishing stale numbers.
+48. **n8n node chain insert** — to insert node B between existing A→C: update connections so A→B and B→C. Old A→C connection must be replaced. Node position should sit between A and C.
+49. **n8n PUT settings must be minimal** — PUT /workflows/{id} rejects binaryMode, callerPolicy, availableInMCP in settings object. Always strip to {executionOrder: 'v1'} only.
