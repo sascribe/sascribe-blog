@@ -682,3 +682,55 @@ Result: articles engineered to beat page 1, not just match it
 - Articles published: NordVPN review (Apr 6) + all previous
 - Sheet state: NordVPN Last Published Date needs update to today (pipeline Update Sheet node handles this automatically)
 - Next scheduled run: Wed Apr 9 — ElevenLabs alternatives (oldest after NordVPN)
+
+
+## Session 7 — 2026-04-06 (Final)
+
+### Completed This Session
+
+**Security Audit**
+- Scanned all 48 repo files for credentials — found and redacted: YouTube API key in STATE.md, CF zone IDs + account ID in STATE.md/MASTER_CHECKLIST.md/SKILL file, Supabase project ref in CLAUDE_ROLE.md and 3 others
+- All 4 files patched in 4 commits; env var names ($YOUTUBE_API_KEY etc.) used everywhere in repo
+- Permanent security rule added to CLAUDE_ROLE.md: raw credentials live only in ~/.zshrc and ~/Desktop/AffiliateMarketing/CREDENTIALS.md
+
+**Research Intelligence Node — LIVE (21 nodes total)**
+- 4 sources per article: DuckDuckGo HTML (competitor snippets), YouTube Data API v3 (top 3 videos), Reddit JSON (top 5 posts), Affiliate site homepage (HTML stripped, 1500 chars)
+- Haiku (claude-haiku-4-5-20251001) synthesises all sources into structured JSON brief
+- Parse Brief converts to flat pipe-separated researchBriefText injected into Opus prompt
+- NordVPN brief verified: competitor gaps (Meshnet, Threat Protection, speed benchmarks), 5 Reddit questions, 9 FAQ targets, pricing reality, affiliate emphasis — all visible in published article
+- Google CSE Source 1 upgrade pending GCP billing; DuckDuckGo fallback active
+- Keys added to ~/.zshrc: YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX
+
+**Discord Command Center — LIVE (10 nodes, all live data)**
+- Root cause of break: Inject Live Data used .join('\n') → literal newlines injected into JSON body string → Anthropic 400 "Input does not match expected shape"
+- Fix: Claude Executes Command body changed to JSON.stringify() expression; Inject Live Data rewritten to flat single-line liveData string; GitHub base64 decode changed to Buffer.from()
+- All commands now pull live: CF 7-day stats, n8n pipeline executions, GitHub checklist
+
+**NordVPN — First Article Published**
+- File: 2026-04-06-nordvpn-review-1775517557899.md
+- URL: https://sascribe.com/posts/2026-04-06-nordvpn-review-1775517557899/
+- Content type: review | ~1,600 words | Score: 8.7/10
+- Cover image: /images/nordvpn/logo-nordvpn.png — clickable hero (affiliateURL present)
+- CTA bar: "Try NordVPN Free →" — rendered via affiliateURL in single.html
+- CF cache purged post-publish
+
+**Pipeline Bugs Fixed**
+1. JSON.stringify() on all Anthropic API calls — raw {{ }} template injection breaks on special chars
+2. ISO date slugs — Format Article1 uses new Date().toISOString().split('T')[0]; was human-readable "April 6, 2026"
+3. Code fence stripping — Format Article1 strips ```markdown``` wrappers Claude adds despite instructions
+4. continueOnFail=True — Research: Reddit/Google Search/Affiliate Content; n8n cloud IPs blocked by Reddit
+5. Deterministic affiliate selection — Pick Content Type now picks oldest Last Published Date; was random (NordVPN skipped at 9am run)
+6. Discord notification syntax — fixed escaped quotes $(\'...\') in content expression
+7. Frontmatter template hardcoded — Generate Article1 body includes exact cover:/affiliateURL/affiliateName/schema fields; Claude cannot deviate
+8. max_tokens 4000 → 8000 — Haiku recommends 2000-3000 words; Opus was hitting ceiling at ~1600 words
+
+**n8n Trigger Method (documented)**
+- Public API v1 has no manual execution endpoint for scheduled workflows
+- Webhook nodes do not register on n8n cloud
+- Working: override Schedule Trigger cron in PDT (UTC-7), deactivate/reactivate, poll /executions, restore cron
+- Original cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am PDT = 16:00 UTC)
+
+### Sascribe Blog Pipeline — Current State
+- Nodes: 21 | Active: True | Schedule: Mon/Wed/Fri 9am PDT | max_tokens: 8000
+- Articles: 7 total (AdCreative ×4, ElevenLabs ×2, Beehiiv ×3, Synthesia ×2, NordVPN ×1)
+- Next run: Wed Apr 9 — ElevenLabs alternatives (oldest unpublished type after NordVPN)
