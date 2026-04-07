@@ -347,3 +347,14 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
 | 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
 | 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard |
+
+
+### SESSION 7 PRIORITIES — Next Session
+
+| Priority | Task | Status | Notes |
+|---|---|---|---|
+| 1 | Enable GCP billing for sascribe project | ⏳ PENDING | Unlocks Google CSE as Source 1 (replaces DuckDuckGo). console.cloud.google.com → sascribe → Billing |
+| 2 | Regenerate YouTube/CSE API key in GCP | ⏳ PENDING | Old key briefly exposed in STATE.md — rotate at console.cloud.google.com → Credentials |
+| 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
+| 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
+| 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard — enables CJ affiliate tracking |
