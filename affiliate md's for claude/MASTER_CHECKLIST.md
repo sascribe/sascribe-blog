@@ -46,7 +46,7 @@ Status codes:
 | ✅ DONE | 2-week content queue Apr 7-18 | S4 | NordVPN first |
 | ✅ DONE | Keyword clusters all 5 affiliates | S4 | In Sheet col M |
 | ✅ DONE | NordVPN Dos/Donts in Sheet col E | S4 | Commission rates + compliant angles |
-| ⏳ PENDING | NordVPN first article | S4 | Auto-publishes Mon Apr 7 9am |
+| ✅ DONE | NordVPN first article | S4 | Auto-publishes Mon Apr 7 9am |
 | ⏳ PENDING | Expand to 6th affiliate | — | After NordVPN articles flowing |
 
 ## SASCRIBE.COM — Affiliates
@@ -330,11 +330,20 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 
 | Priority | Task | Status | Notes |
 |----------|------|--------|-------|
-| 1 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue etc return static Claude text not live API data. Needs real data injection per command. |
-| 2 | Confirm NordVPN article published Wed Apr 9 | ⏳ PENDING | Pipeline fixed — verify article quality and Discord ping fires |
-| 3 | Get GCP API keys | ⏳ PENDING | YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX — 5 min manual at console.cloud.google.com |
+| 1 | Fix Discord bot live data | ✅ DONE | !stats !credits !queue etc return static Claude text not live API data. Needs real data injection per command. |
+| 2 | NordVPN first article published | ✅ DONE | Pipeline fixed — verify article quality and Discord ping fires |
+| 3 | Get GCP API keys (YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX) | ✅ DONE | YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX — 5 min manual at console.cloud.google.com |
 | 4 | Build Research Intelligence Node | ✅ DONE | 3 sources live (YouTube, Reddit, Affiliate). Google CSE pending API key restriction fix. |
 | 5 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
 | 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → Credentials → edit API key → add Custom Search API to allowed APIs |
 | 6 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | Get from cj.com dashboard |
 
+### NEXT BUILD PRIORITIES (Session 7)
+
+| Priority | Task | Status | Notes |
+|---|---|---|---|
+| 1 | Enable GCP billing for sascribe project | ⏳ PENDING | Unlocks Google CSE as Source 1 — console.cloud.google.com → sascribe → Billing |
+| 2 | Regenerate YouTube/CSE API key in GCP | ⏳ PENDING | Old key was briefly in STATE.md — rotate at console.cloud.google.com → Credentials |
+| 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
+| 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
+| 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard |
