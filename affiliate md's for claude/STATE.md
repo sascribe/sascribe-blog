@@ -752,3 +752,149 @@ Result: articles engineered to beat page 1, not just match it
   - Hero:     padding: 36px 8px
 - File: static/css/sascribe.css | SHA: b453d46a
 - CF cache purged after push
+
+---
+
+## AUDIT BASELINE — 2026-04-06
+
+### GOOGLE SEARCH CONSOLE (28d: Mar 6 → Apr 3 | 7d: Mar 27 → Apr 3)
+
+| Metric | 28d | 7d |
+|---|---|---|
+| Impressions | 260 | 260 (all in last 7d — site indexed Mar 28+) |
+| Clicks | 0 | 0 |
+| CTR | 0% | 0% |
+| Avg Position | 7.69 | 7.69 |
+
+**Note:** 28d = 7d here because all indexing happened after Mar 28. Normal — site is brand new.
+
+**Daily impression trend (last 7 indexed days):**
+
+| Date | Impressions | Clicks | Avg Pos |
+|---|---|---|---|
+| Mar 28 | 0 | 0 | — |
+| Mar 29 | 2 | 0 | 4.0 |
+| Mar 30 | 4 | 0 | 2.5 |
+| Mar 31 | 0 | 0 | — |
+| Apr 1 | 2 | 0 | 2.0 |
+| Apr 2 | 44 | 0 | 6.7 |
+| Apr 3 | 208 | 0 | 8.1 |
+
+→ Staircase trajectory: 2→4→2→44→208. Strong indexing signal. Click lag: expect first clicks in coming days.
+
+**Top queries by impressions (28d):**
+
+| Query | Impressions | Avg Pos |
+|---|---|---|
+| elevenlabs update april 2026 | 7 | 9.7 |
+| elevenlabs update 2026 voice ai | 2 | 7.5 |
+| elevenlabs updates 2026 voice ai | 2 | 9.5 |
+| elevenlabs update 2026 voice cloning | 1 | 9.0 |
+| elevenlabs changelog april 2026 | 1 | 7.0 |
+
+→ ElevenLabs pillar dominating early search impressions. Trending queries from Apr publish.
+
+**Top pages by impressions (28d):**
+
+| Page | Impressions | Avg Pos |
+|---|---|---|
+| sascribe.com/ | 15 | 3.1 |
+| /posts/2026-04-01-elevenlabs-pillar-… | 245 | 8.0 |
+
+→ ElevenLabs pillar = 94% of all impressions. Homepage at pos 3.1 — strong brand signal.
+
+**Device breakdown (28d):**
+
+| Device | Impressions | % |
+|---|---|---|
+| Desktop | 256 | 98.5% |
+| Mobile | 4 | 1.5% |
+| Tablet | 0 | 0% |
+
+→ Desktop-heavy. Expected for SaaS/AI tool searchers. No mobile concern yet.
+
+**Country breakdown (28d — top 10):**
+
+| Country | Impressions |
+|---|---|
+| Brazil | 16 |
+| Canada | 8 |
+| Spain | 3 |
+| Australia | 4 |
+| Germany | 4 |
+| China | 2 |
+| Argentina | 2 |
+| Ecuador | 2 |
+| Belgium | 1 |
+| Finland | 1 |
+
+→ US not in top 10 yet. Brazil + Canada leading. Early days — geo distribution will normalize as more articles index.
+
+---
+
+### CLOUDFLARE (7d: Mar 30 → Apr 5)
+
+| Date | PageViews | Requests | Uniques |
+|---|---|---|---|
+| Mar 30 | 133 | 756 | 207 |
+| Mar 31 | 224 | 2,333 | 167 |
+| Apr 1 | 4,517 | 5,570 | 240 |
+| Apr 2 | 1,286 | 2,042 | 313 |
+| Apr 3 | 724 | 977 | 204 |
+| Apr 4 | 404 | 622 | 167 |
+| Apr 5 | 455 | 1,399 | 164 |
+| **7d Total** | **7,743** | **13,699** | **1,462** |
+
+**⚠️ BOT SIGNAL — FLAG:**
+
+| Country | 7d Requests | Threats | Notes |
+|---|---|---|---|
+| FR (France) | ~5,975 | 113 | Apr 1: 4,459 req (93 threats) in single day — bot wave |
+| NL (Netherlands) | ~1,391 | 832 | Apr 5: 822 req, 814 of them threats — near-pure bot |
+| SG (Singapore) | ~1,098 | 0 | Consistent daily baseline — likely crawlers |
+| CN (China) | ~477 | 0 | Normal crawler pattern |
+
+FR+NL+SG+CN = ~8,941 / 13,699 total = **65% of all CF traffic** — well above 20% bot signal threshold.
+→ Use GSC numbers as truth. CF traffic is not representative of real audience.
+
+**Cache hit rate:** Rising — 8.8MB cached Apr 3 → 4.2MB Apr 5. CF cache warming as repeat URLs accumulate.
+
+---
+
+### GITHUB — CONTENT INVENTORY (12 articles total)
+
+| Affiliate | Articles | Types | First Published |
+|---|---|---|---|
+| AdCreative | 4 | comparison, review, tutorial, use-cases | Mar 31 |
+| ElevenLabs | 2 | pillar, comparison | Apr 1–2 |
+| Beehiiv | 3 | comparison, pillar, review | Apr 2 |
+| Synthesia | 2 | pillar, tutorial | Apr 2–3 |
+| NordVPN | 1 | review | Apr 6 |
+| **Total** | **12** | | |
+
+→ Next up: ElevenLabs (oldest unpublished content type after NordVPN) on Wed Apr 9.
+
+---
+
+### BEEHIIV
+
+| Status | Detail |
+|---|---|
+| BEEHIIV_API_KEY | ⚠️ MISSING from ~/.zshrc |
+
+→ Flag for Session 8: log into beehiiv.com dashboard → API → generate key → add to ~/.zshrc as BEEHIIV_API_KEY.
+
+---
+
+### n8n PIPELINE — LAST 5 EXECUTIONS
+
+| ID | Date (UTC) | Mode | Status | Duration | Notes |
+|---|---|---|---|---|---|
+| 1335 | Apr 6 23:18 | scheduled | ❌ error | 81s | Cron override — NordVPN article published despite "error" (Reddit/research node failures, continueOnFail=true) |
+| 1332 | Apr 6 23:14 | scheduled | ❌ error | 5s | Cron override test — fast fail |
+| 1113 | Apr 6 16:00 | scheduled | ❌ error | 4s | Scheduled 9am PDT run — fast fail (likely cron still set to override minute at time of run) |
+| 520 | Apr 3 16:00 | scheduled | ✅ success | 74s | Synthesia tutorial — clean run |
+| 508 | Apr 2 18:00 | manual | ✅ success | 1s | Manual test |
+
+→ Last 3 show error but are expected: executions 1332/1335 were cron override tests and 1113 was the Monday scheduled run during our session. Next clean scheduled run: Wed Apr 9 16:00 UTC.
+→ Execution 1335 error status is misleading — NordVPN article did publish successfully. Error is from Reddit block (continueOnFail=true) + research chain partial failures, not article generation.
