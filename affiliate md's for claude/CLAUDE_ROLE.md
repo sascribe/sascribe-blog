@@ -241,3 +241,22 @@ In all other files: reference the env var name only.
 - ❌ Never: `AIzaSyAfhuVMV2oB0P6UXD6...` (the actual value)
 
 This applies to every session, every file, every push. No exceptions.
+
+
+## WORKING INSIGHTS — SESSION 7
+
+37. **JSON.stringify() required for all n8n Anthropic API calls** — raw JSON template bodies with {{ $json.field }} injection break when field values contain newlines, quotes, or backslashes. Always use ={{ JSON.stringify({...}) }} to build the entire request body. This applies to both blog pipeline (Generate Article1) and Discord bot (Claude Executes Command).
+
+38. **n8n cloud IPs are blocked by Reddit** — Research: Reddit node returns "Blocked" HTML instead of JSON. Fix: set continueOnFail=True on the node; Research: Collect has try/catch so pipeline continues with partial research data. Same risk for other social APIs — always add continueOnFail to external scraping nodes.
+
+39. **Webhook triggers don't register on n8n cloud** — Even with proper UUID node IDs and workflow deactivate/reactivate cycles, webhook nodes added to scheduled workflows return 404 on n8n cloud. Manual trigger method: temporarily override Schedule Trigger cron expression (in PDT timezone, not UTC), deactivate/reactivate workflow, poll /executions until new run appears, restore original cron.
+
+40. **n8n cloud cron runs in PDT, not UTC** — Confirmed from execution timestamps: cron "0 9 * * 1,3,5" fires at 16:00 UTC (= 9am PDT). When overriding cron for manual trigger, calculate fire time in PDT (UTC-7) not UTC.
+
+41. **Deterministic affiliate selection prevents skipping** — Original Pick Content Type used Math.random() to select from pool. NordVPN (oldest date: 2000-01-01) was skipped randomly. Fixed to always select affiliate with oldest Last Published Date, excluding the most recently published affiliate to avoid repeats.
+
+42. **Generate Article1 must include exact Hugo frontmatter template** — Claude invents its own frontmatter when given only general instructions. Body must hardcode the exact required YAML structure: cover: image/alt/style, affiliateURL, affiliateName, schema: BlogPosting. Missing cover: nesting means no cover image on the site.
+
+43. **Format Article1 must strip code fences** — Claude occasionally wraps output in ```markdown ... ``` despite explicit instructions not to. Format Article1 code now strips opening and closing backtick fences before pushing to GitHub. Always keep this strip in Format Article1.
+
+44. **ISO date format for slug generation** — Format Article1 originally used prevData.date (human-readable "April 6, 2026") for filename. Fixed to use new Date().toISOString().split('T')[0] ("2026-04-06"). All filenames must follow 2026-MM-DD pattern for Hugo sort order and URL consistency.
