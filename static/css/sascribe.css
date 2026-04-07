@@ -416,23 +416,24 @@ a:hover { opacity: 0.8; }
 }
 
 /* --- NordVPN --- */
+/* Wide horizontal logo — reduce left/right padding so it fills container proportionally */
 /* NOTE: This logo PNG has black background baked in — matches site bg #0C0C0F perfectly */
 .post-card--featured .post-card__image img[src*="/nordvpn/"] {
   object-fit: contain;
-  padding: 20px;
+  padding: 28px 8px;
   background: #0C0C0F;
   max-height: 200px;
 }
 .post-card__thumb img[src*="/nordvpn/"],
 .post-card--archive .post-card__thumb img[src*="/nordvpn/"] {
   object-fit: contain;
-  padding: 10px;
+  padding: 14px 4px;
   background: #0C0C0F;
 }
 .article-hero__img[src*="/nordvpn/"] {
   object-fit: contain;
   background: #0C0C0F;
-  padding: 24px;
+  padding: 36px 8px;
   max-height: 320px;
   border: none;
 }
