@@ -731,6 +731,14 @@ Result: articles engineered to beat page 1, not just match it
 - Original cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am PDT = 16:00 UTC)
 
 ### Sascribe Blog Pipeline — Current State
-- Nodes: 21 | Active: True | Schedule: Mon/Wed/Fri 9am PDT | max_tokens: 8000
+- Nodes: 22 | Active: True | Schedule: Mon/Wed/Fri 9am PDT | max_tokens: 8000
 - Articles: 7 total (AdCreative ×4, ElevenLabs ×2, Beehiiv ×3, Synthesia ×2, NordVPN ×1)
 - Next run: Wed Apr 9 — ElevenLabs alternatives (oldest unpublished type after NordVPN)
+
+### Research Intelligence — Source 4b Added (Session 7)
+- New node: Research: Affiliate Pricing (httpRequest GET, continueOnFail=true)
+- Chain: Affiliate Content → Affiliate Pricing → Collect
+- Fetches affiliate's /pricing page in addition to homepage
+- Haiku extracts: plan names, prices, billing periods, active promotions → pricing_verified JSON field with fetched_at timestamp
+- If /pricing 404s or returns <200 chars: pricing_status=unverified → Opus uses "check current pricing on their site"
+- Parse Brief passes through pricing_verified object and pricing_status to Generate Article1
