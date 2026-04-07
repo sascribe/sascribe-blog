@@ -906,3 +906,137 @@ FR+NL+SG+CN = ~8,941 / 13,699 total = **65% of all CF traffic** — well above 2
 
 → Last 3 show error but are expected: executions 1332/1335 were cron override tests and 1113 was the Monday scheduled run during our session. Next clean scheduled run: Wed Apr 9 16:00 UTC.
 → Execution 1335 error status is misleading — NordVPN article did publish successfully. Error is from Reddit block (continueOnFail=true) + research chain partial failures, not article generation.
+
+---
+
+## AUDIT BASELINE — 2026-04-07 (delta vs 2026-04-06)
+
+### GOOGLE SEARCH CONSOLE (28d: Mar 8→Apr 5 | 7d: Mar 29→Apr 5)
+
+| Metric | Apr 6 baseline | Apr 7 (today) | Delta |
+|---|---|---|---|
+| Impressions (28d) | 260 | **630** | **+370 (+142%)** |
+| Clicks | 0 | 0 | — |
+| CTR | 0% | 0% | — |
+| Avg Position | 7.69 | **7.89** | -0.20 (more competitive queries in mix) |
+
+**Daily impression trend (new data since last night):**
+
+| Date | Apr 6 audit | Apr 7 audit | Delta |
+|---|---|---|---|
+| Mar 28 | 0 | 0 | — |
+| Mar 29 | 2 | 2 | — |
+| Mar 30 | 4 | 4 | — |
+| Mar 31 | 0 | 0 | — |
+| Apr 1 | 2 | 2 | — |
+| Apr 2 | 44 | 44 | — |
+| Apr 3 | 208 | 208 | — |
+| Apr 4 | **NEW** | 198 | first appearance |
+| Apr 5 | **NEW** | 172 | first appearance |
+
+→ Apr 4 (198) and Apr 5 (172) are new in today's window — 2-day lag cleared. Strong floor: 172–208 impressions/day is the new daily baseline. Slight dip from 208→198→172 is normal weekend drift or position settling.
+
+**Top pages (28d):**
+
+| Page | Apr 6 | Apr 7 | Delta |
+|---|---|---|---|
+| sascribe.com/ | 15 imp, pos 3.1 | 20 imp, pos 3.6 | +5 impressions |
+| ElevenLabs pillar | 245 imp, pos 8.0 | **610 imp, pos 8.0** | **+365 impressions** |
+| /tags/corporate-training/ | NEW | 1 imp, pos 2.0 | new tag page indexed |
+
+→ ElevenLabs pillar is now at 610 impressions — compounding fast.
+
+**Top queries (28d) — new this audit:**
+- elevenlabs 2026 updates voice cloning — 2 imp, pos 6.5 (new)
+- elevenlabs ai voice features 2026 — 1 imp, pos 10 (new)
+- elevenlabs announcement april 2026 — 1 imp, pos 10 (new)
+- elevenlabs marathi voice support 2026 — 1 imp, pos 10 (new)
+→ Query variety expanding. Still 0 clicks — position 8+ needs to reach top 3 for CTR.
+
+**Country breakdown (28d) — new leaders:**
+
+| Country | Apr 6 | Apr 7 | Delta |
+|---|---|---|---|
+| Brazil | 16 | **41** | +25 |
+| Canada | 8 | 19 | +11 |
+| Australia | 4 | 8 | +4 |
+| Belgium | 1 | 4 | +3 |
+| China | 2 | 5 | +3 |
+
+→ Brazil dominant. US still not in top 10. International reach expanding naturally.
+
+**Devices (28d):**
+- Desktop: 622 (98.7%) | Mobile: 8 (1.3%) — unchanged ratio, volume up
+
+---
+
+### CLOUDFLARE (7d: Apr 1→Apr 7)
+
+| Date | PageViews | Requests | Uniques | Bot notes |
+|---|---|---|---|---|
+| Apr 1 | 4,517 | 5,570 | 240 | FR: 4,459 (93 threats) — bot wave |
+| Apr 2 | 1,286 | 2,042 | 313 | NL: 206 (9 threats) |
+| Apr 3 | 724 | 977 | 204 | Clean |
+| Apr 4 | 404 | 622 | 167 | Clean |
+| Apr 5 | 455 | 1,399 | 164 | NL: 822 (814 threats!) — bot wave |
+| Apr 6 | 1,017 | 1,128 | 188 | NL: 662 (5 threats), SG: 108 |
+| Apr 7 (today) | 1,011 | 1,244 | **366** | RU: 261, DE: 197, AU: 176, NL: 91 (52 threats) |
+| **7d Total** | **9,414** | **12,982** | **1,642** | |
+
+**Apr 7 bot analysis:**
+- FR+NL+SG+CN = 57+91+69+6 = 223 / 1,244 = **18%** — BELOW threshold for first time
+- RU (261) and DE (197) are new top sources today — crawler/bot pattern shift
+- Uniques spike to 366 today — unusually high, likely new crawler wave from RU/DE/AU
+
+**Cache hit rate trend:**
+- cachedRequests: 0→0→0→26→101→82 (Apr 2→7) — cache warming confirmed
+- cachedBytes Apr 7: 3.6MB / 14.1MB total = 25.6% cache hit rate by bytes — improving daily
+
+---
+
+### BEEHIIV
+
+| Metric | Apr 6 | Apr 7 | Delta |
+|---|---|---|---|
+| Total active subscribers | 6 | **6** | 0 — no new subs |
+| Same 6 accounts as last night | ✓ | ✓ | — |
+
+→ No organic subscribers yet. Expected — GSC clicks still at 0. First organic sub will follow first click.
+
+---
+
+### GITHUB — CONTENT
+
+| Metric | Apr 6 | Apr 7 | Delta |
+|---|---|---|---|
+| Total articles | 12 | **12** | No change |
+| Last article | NordVPN review (Apr 6) | same | — |
+
+→ Clean. Next article: ElevenLabs on Wed Apr 9.
+
+---
+
+### n8n PIPELINE
+
+No new executions since last night. Last 5 unchanged:
+
+| ID | Status | Duration | Date |
+|---|---|---|---|
+| 1335 | error | 81s | Apr 6 23:18 UTC |
+| 1332 | error | 5s | Apr 6 23:14 UTC |
+| 1113 | error | 4s | Apr 6 16:00 UTC |
+| 520 | ✅ success | 74s | Apr 3 16:00 UTC |
+| 508 | ✅ success | 1s | Apr 2 18:00 UTC |
+
+Next scheduled: **Wed Apr 9 16:00 UTC** (9am PDT) — ElevenLabs article.
+
+---
+
+### KEY SIGNALS — APR 7
+
+1. **+142% impressions overnight** — 260→630. Apr 4/5 data cleared the lag. Daily floor now ~172–208.
+2. **ElevenLabs pillar at 610 impressions** — single article driving 97% of all GSC traffic.
+3. **CF uniques spike to 366 today** — new crawler cohort (RU+DE+AU dominant). Not organic growth.
+4. **Bot % dropped to 18%** on CF today — first time below 20% threshold, though patterns shift daily.
+5. **0 clicks still** — position avg 7.89. Need articles reaching top 3 on any query to start CTR.
+6. **No new Beehiiv subs** — clicks are the unlock. No clicks = no subs.
