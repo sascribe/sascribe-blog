@@ -876,13 +876,21 @@ FR+NL+SG+CN = ~8,941 / 13,699 total = **65% of all CF traffic** — well above 2
 
 ---
 
-### BEEHIIV
+### BEEHIIV — 2026-04-06 BASELINE
 
-| Status | Detail |
+| Metric | Value |
 |---|---|
-| BEEHIIV_API_KEY | ⚠️ MISSING from ~/.zshrc |
+| Total active subscribers | **6** |
+| New last 7 days | 6 (all subs are <14 days old) |
+| New last 28 days | 6 |
+| BEEHIIV_API_KEY | ✅ set in ~/.zshrc |
+| BEEHIIV_PUBLICATION_ID | ✅ set in ~/.zshrc |
 
-→ Flag for Session 8: log into beehiiv.com dashboard → API → generate key → add to ~/.zshrc as BEEHIIV_API_KEY.
+**Source breakdown:**
+- direct (website form): 1 sub (Mar 26)
+- sascribe_website via API: 5 subs (Mar 29 — bulk add or test)
+
+→ 5 of 6 subs came in on Mar 29 via API channel — likely seeded/test accounts. Watch for organic growth post Apr 1 article wave.
 
 ---
 
