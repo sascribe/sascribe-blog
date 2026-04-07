@@ -365,3 +365,14 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 
 - [x] ✅ Generate Article1 prompt: removed duplicate disclosure rule, added rule 9 internal links (5-8, first within 300w) (Session 7)
 - [x] ✅ NordVPN article: removed duplicate disclosure + added 5 internal links to ElevenLabs/Synthesia/Beehiiv/AdCreative (Session 7)
+
+
+## AFFILIATES — APPROVED, PAUSED
+
+### COMETLY — APPROVED, PAUSED ⏸️
+- **Status:** Approved, not yet activated
+- **Commission:** 20% recurring, 60-day cookie
+- **Managed via:** First Promoter (cometly.firstpromoter.com)
+- **Activation threshold:** 20+ articles published on existing affiliates AND a content angle exists that serves paid media / ecommerce marketing audience
+- **When activated:** Add to Google Sheet, create /go/cometly Cloudflare redirect, wire into n8n pipeline
+- **Do not write content for this affiliate until threshold is met** — audience mismatch with current SaaS/AI tools readership
