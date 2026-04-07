@@ -360,3 +360,5 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard — enables CJ affiliate tracking |
 
 - [x] ✅ Research: Affiliate Pricing node — /pricing page fetch → Haiku pricing_verified extraction with timestamp (Session 7)
+
+- [x] ✅ NordVPN logo sizing fix — asymmetric padding (28px 8px / 14px 4px / 36px 8px) for wide horizontal logo visual weight (Session 7)
