@@ -755,300 +755,122 @@ Result: articles engineered to beat page 1, not just match it
 
 ---
 
-## AUDIT BASELINE — 2026-04-06
+## AUDIT BASELINE — 2026-04-07 (Evening)
 
-### GOOGLE SEARCH CONSOLE (28d: Mar 6 → Apr 3 | 7d: Mar 27 → Apr 3)
+**vs Apr 6 morning baseline — all deltas shown**
 
-| Metric | 28d | 7d |
-|---|---|---|
-| Impressions | 260 | 260 (all in last 7d — site indexed Mar 28+) |
-| Clicks | 0 | 0 |
-| CTR | 0% | 0% |
-| Avg Position | 7.69 | 7.69 |
+---
 
-**Note:** 28d = 7d here because all indexing happened after Mar 28. Normal — site is brand new.
+### GOOGLE SEARCH CONSOLE
 
-**Daily impression trend (last 7 indexed days):**
+**28D totals (Mar 10 → Apr 5, newest available — 2d lag):**
 
-| Date | Impressions | Clicks | Avg Pos |
+| Metric | Apr 6 Baseline | Apr 7 Evening | Delta |
 |---|---|---|---|
-| Mar 28 | 0 | 0 | — |
-| Mar 29 | 2 | 0 | 4.0 |
-| Mar 30 | 4 | 0 | 2.5 |
-| Mar 31 | 0 | 0 | — |
-| Apr 1 | 2 | 0 | 2.0 |
-| Apr 2 | 44 | 0 | 6.7 |
-| Apr 3 | 208 | 0 | 8.1 |
+| Impressions | 260 | 630 | **+370 (+142%)** |
+| Clicks | 0 | 0 | 0 |
+| CTR | 0% | 0% | — |
+| Avg Position | 7.69 | 7.9 | -0.2 |
 
-→ Staircase trajectory: 2→4→2→44→208. Strong indexing signal. Click lag: expect first clicks in coming days.
+**Daily impression trend (all days with data):**
 
-**Top queries by impressions (28d):**
+| Date | Impressions | Clicks | Avg Pos | vs Apr 6 |
+|---|---|---|---|---|
+| Mar 28 | 0 | 0 | — | same |
+| Mar 29 | 2 | 0 | 4.0 | same |
+| Mar 30 | 4 | 0 | 2.5 | same |
+| Mar 31 | 0 | 0 | — | same |
+| Apr 1 | 2 | 0 | 2.0 | same |
+| Apr 2 | 44 | 0 | 6.7 | same |
+| Apr 3 | 208 | 0 | 8.1 | same |
+| Apr 4 | 198 | 0 | 8.1 | **NEW** |
+| Apr 5 | 172 | 0 | 7.9 | **NEW** |
 
-| Query | Impressions | Avg Pos |
+→ Apr 4–5 now visible (2-day lag). Impressions stabilizing 170-210 range — healthy floor establishing. Apr 6 NordVPN article not yet indexed. 0 clicks still — normal for positions 8-10 range.
+
+**Top queries (28d):**
+
+| Query | Impressions | Pos |
 |---|---|---|
 | elevenlabs update april 2026 | 7 | 9.7 |
-| elevenlabs update 2026 voice ai | 2 | 7.5 |
-| elevenlabs updates 2026 voice ai | 2 | 9.5 |
-| elevenlabs update 2026 voice cloning | 1 | 9.0 |
-| elevenlabs changelog april 2026 | 1 | 7.0 |
+| elevenlabs update 2026 voice ai | 5 | 7.6 |
+| elevenlabs 2026 updates voice cloning | 2 | 6.5 |
+| elevenlabs singing feature 2026 | 2 | 13.5 |
+| adcreative.ai review (advanced ops) | 3 | 2.0 |
+| adcreative.ai scam (advanced ops) | 1 | 5.0 |
 
-→ ElevenLabs pillar dominating early search impressions. Trending queries from Apr publish.
-
-**Top pages by impressions (28d):**
-
-| Page | Impressions | Avg Pos |
-|---|---|---|
-| sascribe.com/ | 15 | 3.1 |
-| /posts/2026-04-01-elevenlabs-pillar-… | 245 | 8.0 |
-
-→ ElevenLabs pillar = 94% of all impressions. Homepage at pos 3.1 — strong brand signal.
-
-**Device breakdown (28d):**
-
-| Device | Impressions | % |
-|---|---|---|
-| Desktop | 256 | 98.5% |
-| Mobile | 4 | 1.5% |
-| Tablet | 0 | 0% |
-
-→ Desktop-heavy. Expected for SaaS/AI tool searchers. No mobile concern yet.
-
-**Country breakdown (28d — top 10):**
-
-| Country | Impressions |
-|---|---|
-| Brazil | 16 |
-| Canada | 8 |
-| Spain | 3 |
-| Australia | 4 |
-| Germany | 4 |
-| China | 2 |
-| Argentina | 2 |
-| Ecuador | 2 |
-| Belgium | 1 |
-| Finland | 1 |
-
-→ US not in top 10 yet. Brazil + Canada leading. Early days — geo distribution will normalize as more articles index.
+→ ElevenLabs still dominant. AdCreative queries now appearing (advanced-operator format — likely from SEO tools not real users). No NordVPN queries yet.
 
 ---
 
-### CLOUDFLARE (7d: Mar 30 → Apr 5)
+### CLOUDFLARE (24h: Apr 6 full + Apr 7 partial)
 
-| Date | PageViews | Requests | Uniques |
-|---|---|---|---|
-| Mar 30 | 133 | 756 | 207 |
-| Mar 31 | 224 | 2,333 | 167 |
-| Apr 1 | 4,517 | 5,570 | 240 |
-| Apr 2 | 1,286 | 2,042 | 313 |
-| Apr 3 | 724 | 977 | 204 |
-| Apr 4 | 404 | 622 | 167 |
-| Apr 5 | 455 | 1,399 | 164 |
-| **7d Total** | **7,743** | **13,699** | **1,462** |
-
-**⚠️ BOT SIGNAL — FLAG:**
-
-| Country | 7d Requests | Threats | Notes |
-|---|---|---|---|
-| FR (France) | ~5,975 | 113 | Apr 1: 4,459 req (93 threats) in single day — bot wave |
-| NL (Netherlands) | ~1,391 | 832 | Apr 5: 822 req, 814 of them threats — near-pure bot |
-| SG (Singapore) | ~1,098 | 0 | Consistent daily baseline — likely crawlers |
-| CN (China) | ~477 | 0 | Normal crawler pattern |
-
-FR+NL+SG+CN = ~8,941 / 13,699 total = **65% of all CF traffic** — well above 20% bot signal threshold.
-→ Use GSC numbers as truth. CF traffic is not representative of real audience.
-
-**Cache hit rate:** Rising — 8.8MB cached Apr 3 → 4.2MB Apr 5. CF cache warming as repeat URLs accumulate.
-
----
-
-### GITHUB — CONTENT INVENTORY (12 articles total)
-
-| Affiliate | Articles | Types | First Published |
-|---|---|---|---|
-| AdCreative | 4 | comparison, review, tutorial, use-cases | Mar 31 |
-| ElevenLabs | 2 | pillar, comparison | Apr 1–2 |
-| Beehiiv | 3 | comparison, pillar, review | Apr 2 |
-| Synthesia | 2 | pillar, tutorial | Apr 2–3 |
-| NordVPN | 1 | review | Apr 6 |
-| **Total** | **12** | | |
-
-→ Next up: ElevenLabs (oldest unpublished content type after NordVPN) on Wed Apr 9.
-
----
-
-### BEEHIIV — 2026-04-06 BASELINE
-
-| Metric | Value |
-|---|---|
-| Total active subscribers | **6** |
-| New last 7 days | 6 (all subs are <14 days old) |
-| New last 28 days | 6 |
-| BEEHIIV_API_KEY | ✅ set in ~/.zshrc |
-| BEEHIIV_PUBLICATION_ID | ✅ set in ~/.zshrc |
-
-**Source breakdown:**
-- direct (website form): 1 sub (Mar 26)
-- sascribe_website via API: 5 subs (Mar 29 — bulk add or test)
-
-→ 5 of 6 subs came in on Mar 29 via API channel — likely seeded/test accounts. Watch for organic growth post Apr 1 article wave.
-
----
-
-### n8n PIPELINE — LAST 5 EXECUTIONS
-
-| ID | Date (UTC) | Mode | Status | Duration | Notes |
+| Date | PageViews | Requests | Uniques | Cache% | Bot% |
 |---|---|---|---|---|---|
-| 1335 | Apr 6 23:18 | scheduled | ❌ error | 81s | Cron override — NordVPN article published despite "error" (Reddit/research node failures, continueOnFail=true) |
-| 1332 | Apr 6 23:14 | scheduled | ❌ error | 5s | Cron override test — fast fail |
-| 1113 | Apr 6 16:00 | scheduled | ❌ error | 4s | Scheduled 9am PDT run — fast fail (likely cron still set to override minute at time of run) |
-| 520 | Apr 3 16:00 | scheduled | ✅ success | 74s | Synthesia tutorial — clean run |
-| 508 | Apr 2 18:00 | manual | ✅ success | 1s | Manual test |
+| Apr 6 (full day) | 1,017 | 1,128 | 188 | 9.0% | 70.9% ⚠️ |
+| Apr 7 (partial, ~21:30 UTC) | 1,171 | 1,451 | 438 | 5.8% | 24.1% |
 
-→ Last 3 show error but are expected: executions 1332/1335 were cron override tests and 1113 was the Monday scheduled run during our session. Next clean scheduled run: Wed Apr 9 16:00 UTC.
-→ Execution 1335 error status is misleading — NordVPN article did publish successfully. Error is from Reddit block (continueOnFail=true) + research chain partial failures, not article generation.
+**Deltas (Apr 7 partial vs Apr 6 full):**
+- Requests: +323 (+29%) — but Apr 7 not complete
+- Uniques: +250 (+133%) — significantly more unique IPs today
+- Cache: -3.2pp — cache cleared by NordVPN article additions
+- Bot%: -46.8pp — much cleaner traffic today vs yesterday's 70.9%
 
----
-
-## AUDIT BASELINE — 2026-04-07 (delta vs 2026-04-06)
-
-### GOOGLE SEARCH CONSOLE (28d: Mar 8→Apr 5 | 7d: Mar 29→Apr 5)
-
-| Metric | Apr 6 baseline | Apr 7 (today) | Delta |
-|---|---|---|---|
-| Impressions (28d) | 260 | **630** | **+370 (+142%)** |
-| Clicks | 0 | 0 | — |
-| CTR | 0% | 0% | — |
-| Avg Position | 7.69 | **7.89** | -0.20 (more competitive queries in mix) |
-
-**Daily impression trend (new data since last night):**
-
-| Date | Apr 6 audit | Apr 7 audit | Delta |
-|---|---|---|---|
-| Mar 28 | 0 | 0 | — |
-| Mar 29 | 2 | 2 | — |
-| Mar 30 | 4 | 4 | — |
-| Mar 31 | 0 | 0 | — |
-| Apr 1 | 2 | 2 | — |
-| Apr 2 | 44 | 44 | — |
-| Apr 3 | 208 | 208 | — |
-| Apr 4 | **NEW** | 198 | first appearance |
-| Apr 5 | **NEW** | 172 | first appearance |
-
-→ Apr 4 (198) and Apr 5 (172) are new in today's window — 2-day lag cleared. Strong floor: 172–208 impressions/day is the new daily baseline. Slight dip from 208→198→172 is normal weekend drift or position settling.
-
-**Top pages (28d):**
-
-| Page | Apr 6 | Apr 7 | Delta |
-|---|---|---|---|
-| sascribe.com/ | 15 imp, pos 3.1 | 20 imp, pos 3.6 | +5 impressions |
-| ElevenLabs pillar | 245 imp, pos 8.0 | **610 imp, pos 8.0** | **+365 impressions** |
-| /tags/corporate-training/ | NEW | 1 imp, pos 2.0 | new tag page indexed |
-
-→ ElevenLabs pillar is now at 610 impressions — compounding fast.
-
-**Top queries (28d) — new this audit:**
-- elevenlabs 2026 updates voice cloning — 2 imp, pos 6.5 (new)
-- elevenlabs ai voice features 2026 — 1 imp, pos 10 (new)
-- elevenlabs announcement april 2026 — 1 imp, pos 10 (new)
-- elevenlabs marathi voice support 2026 — 1 imp, pos 10 (new)
-→ Query variety expanding. Still 0 clicks — position 8+ needs to reach top 3 for CTR.
-
-**Country breakdown (28d) — new leaders:**
-
-| Country | Apr 6 | Apr 7 | Delta |
-|---|---|---|---|
-| Brazil | 16 | **41** | +25 |
-| Canada | 8 | 19 | +11 |
-| Australia | 4 | 8 | +4 |
-| Belgium | 1 | 4 | +3 |
-| China | 2 | 5 | +3 |
-
-→ Brazil dominant. US still not in top 10. International reach expanding naturally.
-
-**Devices (28d):**
-- Desktop: 622 (98.7%) | Mobile: 8 (1.3%) — unchanged ratio, volume up
+**Apr 7 top countries:** US (303), RU (261), DE (197), AU (178), SG (130)
+→ US now #1 today — real traffic improvement. RU+DE+AU unusual — monitor.
+→ Apr 6 was NL-dominated (662 of 1,128 = 58%) — heavy bot day.
 
 ---
 
-### CLOUDFLARE (7d: Apr 1→Apr 7)
+### GITHUB — CONTENT INVENTORY
 
-| Date | PageViews | Requests | Uniques | Bot notes |
-|---|---|---|---|---|
-| Apr 1 | 4,517 | 5,570 | 240 | FR: 4,459 (93 threats) — bot wave |
-| Apr 2 | 1,286 | 2,042 | 313 | NL: 206 (9 threats) |
-| Apr 3 | 724 | 977 | 204 | Clean |
-| Apr 4 | 404 | 622 | 167 | Clean |
-| Apr 5 | 455 | 1,399 | 164 | NL: 822 (814 threats!) — bot wave |
-| Apr 6 | 1,017 | 1,128 | 188 | NL: 662 (5 threats), SG: 108 |
-| Apr 7 (today) | 1,011 | 1,244 | **366** | RU: 261, DE: 197, AU: 176, NL: 91 (52 threats) |
-| **7d Total** | **9,414** | **12,982** | **1,642** | |
+| Affiliate | Articles | Published Types |
+|---|---|---|
+| AdCreative | 4 | review, comparison, tutorial, use-cases |
+| ElevenLabs | 2 | pillar, comparison |
+| Beehiiv | 3 | review, comparison, pillar |
+| Synthesia | 2 | pillar, tutorial |
+| NordVPN | 1 | review |
+| **Total** | **12** | |
 
-**Apr 7 bot analysis:**
-- FR+NL+SG+CN = 57+91+69+6 = 223 / 1,244 = **18%** — BELOW threshold for first time
-- RU (261) and DE (197) are new top sources today — crawler/bot pattern shift
-- Uniques spike to 366 today — unusually high, likely new crawler wave from RU/DE/AU
-
-**Cache hit rate trend:**
-- cachedRequests: 0→0→0→26→101→82 (Apr 2→7) — cache warming confirmed
-- cachedBytes Apr 7: 3.6MB / 14.1MB total = 25.6% cache hit rate by bytes — improving daily
+**Delta vs morning:** 0 new articles — pipeline was down all day (syntax error in Generate Article1 fixed this session).
 
 ---
 
 ### BEEHIIV
 
-| Metric | Apr 6 | Apr 7 | Delta |
+| Metric | Apr 6 Baseline | Apr 7 Evening | Delta |
 |---|---|---|---|
-| Total active subscribers | 6 | **6** | 0 — no new subs |
-| Same 6 accounts as last night | ✓ | ✓ | — |
+| Total active subscribers | 6 | 6 | 0 |
+| New today | — | 0 | — |
 
-→ No organic subscribers yet. Expected — GSC clicks still at 0. First organic sub will follow first click.
+**Subscriber list (all 6 active):** sascribeblog@, blu3rror@, jessiepinedo88@, dumptikgo@, speedydumpsco@, bluefrogagr@ — all Mar 26–29.
+1 invalid sub (speedydumpco@) not counted.
 
 ---
 
-### GITHUB — CONTENT
+### N8N PIPELINE STATUS
 
-| Metric | Apr 6 | Apr 7 | Delta |
-|---|---|---|---|
-| Total articles | 12 | **12** | No change |
-| Last article | NordVPN review (Apr 6) | same | — |
+| Check | Status |
+|---|---|
+| Active | ✅ True |
+| Cron | ✅ 0 9 * * 1,3,5 (Mon/Wed/Fri 9am UTC) |
+| Nodes | 22 |
+| Body quote fix | ✅ CONFIRMED (missing `"` after content string restored) |
+| Last execution | 1849 — Apr 7 16:15 UTC (error, 0 nodes — pre-fix) |
+| Next scheduled run | Mon Apr 13 9am UTC (ElevenLabs review) |
 
-→ Clean. Next article: ElevenLabs on Wed Apr 9.
+**CRITICAL FIX THIS SESSION:** Generate Article1 body expression had missing closing `"` on last string literal in content concatenation. JS syntax error caused n8n to fail expression compilation at startup → 0 nodes ran on every trigger since ~Apr 6 23:18. Fixed by restoring closing quote.
 
----
-
-### n8n PIPELINE
-
-No new executions since last night. Last 5 unchanged:
-
-| ID | Status | Duration | Date |
-|---|---|---|---|
-| 1335 | error | 81s | Apr 6 23:18 UTC |
-| 1332 | error | 5s | Apr 6 23:14 UTC |
-| 1113 | error | 4s | Apr 6 16:00 UTC |
-| 520 | ✅ success | 74s | Apr 3 16:00 UTC |
-| 508 | ✅ success | 1s | Apr 2 18:00 UTC |
-
-Next scheduled: **Wed Apr 9 16:00 UTC** (9am PDT) — ElevenLabs article.
+**PENDING:** Manual UI test to confirm trigger works. Go to onestepbeyond.app.n8n.cloud → Sascribe Blog Pipeline → Execute workflow button to trigger ElevenLabs article.
 
 ---
 
-### KEY SIGNALS — APR 7
+### PIPELINE CONTENT QUEUE
 
-1. **+142% impressions overnight** — 260→630. Apr 4/5 data cleared the lag. Daily floor now ~172–208.
-2. **ElevenLabs pillar at 610 impressions** — single article driving 97% of all GSC traffic.
-3. **CF uniques spike to 366 today** — new crawler cohort (RU+DE+AU dominant). Not organic growth.
-4. **Bot % dropped to 18%** on CF today — first time below 20% threshold, though patterns shift daily.
-5. **0 clicks still** — position avg 7.89. Need articles reaching top 3 on any query to start CTR.
-6. **No new Beehiiv subs** — clicks are the unlock. No clicks = no subs.
+| Priority | Affiliate | Content Type | Reason |
+|---|---|---|---|
+| 1 | ElevenLabs | review | Oldest LPD (Apr 2), review not yet published |
+| 2 | Synthesia | comparison or tutorial | review not done |
+| 3 | NordVPN | comparison | First published Apr 6 |
 
-### Prompt + Article Fixes (Session 7 — Apr 7)
-- Generate Article1: removed FTC disclosure instruction from rule 7 (single.html handles it)
-- Generate Article1: added rule 9 — INTERNAL LINKS: 5-8 per article, first within 300 words, topically relevant, descriptive anchor text, CTA not counted
-- NordVPN article patched: removed duplicate disclosure paragraph after hook
-- NordVPN article patched: 5 internal links added at natural placements:
-  1. Quick Verdict → ElevenLabs pillar (AI content tools)
-  2. Meshnet section → Synthesia tutorial (remote AI video)
-  3. Privacy section → Beehiiv pillar (newsletter/email)
-  4. Comparison section → AdCreative review + ElevenLabs pillar
-  5. Final verdict → Synthesia pillar (AI content stack)
-- CF cache purged after article patch
