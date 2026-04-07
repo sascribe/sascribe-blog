@@ -288,3 +288,6 @@ This applies to every session, every file, every push. No exceptions.
 49. **n8n PUT settings must be minimal** — PUT /workflows/{id} rejects binaryMode, callerPolicy, availableInMCP in settings object. Always strip to {executionOrder: 'v1'} only.
 
 50. **Wide logos need asymmetric padding** — horizontal logos (like NordVPN) in object-fit: contain containers appear undersized with uniform padding because the width is the constraining dimension. Fix: reduce left/right padding (e.g. 36px 8px) so the logo fills more of the container while keeping vertical spacing for visual breathing room. Standard square/tall logos use uniform 40px/20px.
+
+51. **Duplicate disclosure = double penalty** — single.html renders the affiliate disclosure automatically. Any disclosure written in the article body creates a duplicate. Remove from prompt rule 7; confirmed in NordVPN article Apr 7.
+52. **Internal links for new sites: bridge by topic, not by exact match** — when a new site only has AI tools articles and the current article is VPN/security, link to content that bridges naturally (remote work, digital creator tools, content production). Never force a link; 4 solid ones beats 8 awkward ones. First link must appear within first 300 words.
