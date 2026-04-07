@@ -358,3 +358,5 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
 | 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
 | 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard — enables CJ affiliate tracking |
+
+- [x] ✅ Research: Affiliate Pricing node — /pricing page fetch → Haiku pricing_verified extraction with timestamp (Session 7)
