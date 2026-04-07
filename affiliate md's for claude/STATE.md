@@ -1040,3 +1040,15 @@ Next scheduled: **Wed Apr 9 16:00 UTC** (9am PDT) — ElevenLabs article.
 4. **Bot % dropped to 18%** on CF today — first time below 20% threshold, though patterns shift daily.
 5. **0 clicks still** — position avg 7.89. Need articles reaching top 3 on any query to start CTR.
 6. **No new Beehiiv subs** — clicks are the unlock. No clicks = no subs.
+
+### Prompt + Article Fixes (Session 7 — Apr 7)
+- Generate Article1: removed FTC disclosure instruction from rule 7 (single.html handles it)
+- Generate Article1: added rule 9 — INTERNAL LINKS: 5-8 per article, first within 300 words, topically relevant, descriptive anchor text, CTA not counted
+- NordVPN article patched: removed duplicate disclosure paragraph after hook
+- NordVPN article patched: 5 internal links added at natural placements:
+  1. Quick Verdict → ElevenLabs pillar (AI content tools)
+  2. Meshnet section → Synthesia tutorial (remote AI video)
+  3. Privacy section → Beehiiv pillar (newsletter/email)
+  4. Comparison section → AdCreative review + ElevenLabs pillar
+  5. Final verdict → Synthesia pillar (AI content stack)
+- CF cache purged after article patch
