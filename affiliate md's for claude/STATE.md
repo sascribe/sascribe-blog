@@ -742,3 +742,13 @@ Result: articles engineered to beat page 1, not just match it
 - Haiku extracts: plan names, prices, billing periods, active promotions → pricing_verified JSON field with fetched_at timestamp
 - If /pricing 404s or returns <200 chars: pricing_status=unverified → Opus uses "check current pricing on their site"
 - Parse Brief passes through pricing_verified object and pricing_status to Generate Article1
+
+### NordVPN Logo Sizing Fix (Session 7)
+- Context: NordVPN logo is wide/horizontal; ElevenLabs/Beehiiv/Synthesia logos are taller/squarer
+- Old: uniform padding (20px featured, 10px thumb, 24px hero) — logo appeared undersized vs others
+- New: asymmetric padding — more vertical, minimal horizontal so wide logo fills container proportionally
+  - Featured: padding: 28px 8px
+  - Thumb:    padding: 14px 4px
+  - Hero:     padding: 36px 8px
+- File: static/css/sascribe.css | SHA: b453d46a
+- CF cache purged after push
