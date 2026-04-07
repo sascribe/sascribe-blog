@@ -362,3 +362,6 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 - [x] ✅ Research: Affiliate Pricing node — /pricing page fetch → Haiku pricing_verified extraction with timestamp (Session 7)
 
 - [x] ✅ NordVPN logo sizing fix — asymmetric padding (28px 8px / 14px 4px / 36px 8px) for wide horizontal logo visual weight (Session 7)
+
+- [x] ✅ Generate Article1 prompt: removed duplicate disclosure rule, added rule 9 internal links (5-8, first within 300w) (Session 7)
+- [x] ✅ NordVPN article: removed duplicate disclosure + added 5 internal links to ElevenLabs/Synthesia/Beehiiv/AdCreative (Session 7)
