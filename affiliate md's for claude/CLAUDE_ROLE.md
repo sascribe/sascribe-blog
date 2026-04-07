@@ -286,3 +286,5 @@ This applies to every session, every file, every push. No exceptions.
 47. **pricing_status=unverified is a signal to Opus** — when Haiku cannot extract verified prices, the brief includes PRICING STATUS: unverified, instructing Opus to say "check current pricing on their site" rather than publishing stale numbers.
 48. **n8n node chain insert** — to insert node B between existing A→C: update connections so A→B and B→C. Old A→C connection must be replaced. Node position should sit between A and C.
 49. **n8n PUT settings must be minimal** — PUT /workflows/{id} rejects binaryMode, callerPolicy, availableInMCP in settings object. Always strip to {executionOrder: 'v1'} only.
+
+50. **Wide logos need asymmetric padding** — horizontal logos (like NordVPN) in object-fit: contain containers appear undersized with uniform padding because the width is the constraining dimension. Fix: reduce left/right padding (e.g. 36px 8px) so the logo fills more of the container while keeping vertical spacing for visual breathing room. Standard square/tall logos use uniform 40px/20px.
