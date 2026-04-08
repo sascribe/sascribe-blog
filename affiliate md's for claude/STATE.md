@@ -755,42 +755,44 @@ Result: articles engineered to beat page 1, not just match it
 
 ---
 
-## AUDIT BASELINE — 2026-04-07 (Evening)
+## AUDIT BASELINE — 2026-04-08 01:49 UTC
 
-**vs Apr 6 morning baseline — all deltas shown**
+**vs Apr 7 evening baseline — deltas shown**
 
 ---
 
 ### GOOGLE SEARCH CONSOLE
 
-**28D totals (Mar 10 → Apr 5, newest available — 2d lag):**
+**28D totals (Mar 10 → Apr 5 — 2-day lag, no new data since evening):**
 
-| Metric | Apr 6 Baseline | Apr 7 Evening | Delta |
+| Metric | Apr 7 Evening | Apr 8 Morning | Delta |
 |---|---|---|---|
-| Impressions | 260 | 630 | **+370 (+142%)** |
+| Impressions | 630 | 630 | **0 (no new GSC data yet)** |
 | Clicks | 0 | 0 | 0 |
 | CTR | 0% | 0% | — |
-| Avg Position | 7.69 | 7.9 | -0.2 |
+| Avg Position | 7.9 | 7.9 | 0 |
+
+→ No change from evening. GSC 2-day lag means Apr 6+ data not visible yet. NordVPN article not indexed in data.
 
 **Daily impression trend (all days with data):**
 
-| Date | Impressions | Clicks | Avg Pos | vs Apr 6 |
-|---|---|---|---|---|
-| Mar 28 | 0 | 0 | — | same |
-| Mar 29 | 2 | 0 | 4.0 | same |
-| Mar 30 | 4 | 0 | 2.5 | same |
-| Mar 31 | 0 | 0 | — | same |
-| Apr 1 | 2 | 0 | 2.0 | same |
-| Apr 2 | 44 | 0 | 6.7 | same |
-| Apr 3 | 208 | 0 | 8.1 | same |
-| Apr 4 | 198 | 0 | 8.1 | **NEW** |
-| Apr 5 | 172 | 0 | 7.9 | **NEW** |
+| Date | Impressions | Clicks | Avg Pos |
+|---|---|---|---|
+| Mar 28 | 0 | 0 | — |
+| Mar 29 | 2 | 0 | 4.0 |
+| Mar 30 | 4 | 0 | 2.5 |
+| Mar 31 | 0 | 0 | — |
+| Apr 1 | 2 | 0 | 2.0 |
+| Apr 2 | 44 | 0 | 6.7 |
+| Apr 3 | 208 | 0 | 8.1 |
+| Apr 4 | 198 | 0 | 8.1 |
+| Apr 5 | 172 | 0 | 7.9 |
 
-→ Apr 4–5 now visible (2-day lag). Impressions stabilizing 170-210 range — healthy floor establishing. Apr 6 NordVPN article not yet indexed. 0 clicks still — normal for positions 8-10 range.
+→ Floor settling 170-210/day. Apr 6-7 data arrives tomorrow. Staircase: 2→4→2→44→208→198→172.
 
-**Top queries (28d):**
+**Top 10 queries (28d):**
 
-| Query | Impressions | Pos |
+| Query | Imp | Pos |
 |---|---|---|
 | elevenlabs update april 2026 | 7 | 9.7 |
 | elevenlabs update 2026 voice ai | 5 | 7.6 |
@@ -798,31 +800,83 @@ Result: articles engineered to beat page 1, not just match it
 | elevenlabs singing feature 2026 | 2 | 13.5 |
 | adcreative.ai review (advanced ops) | 3 | 2.0 |
 | adcreative.ai scam (advanced ops) | 1 | 5.0 |
+| adcreative.ai (advanced ops) | 2 | 6.0 |
+| elevenlabs changelog april 2026 | 1 | 7.0 |
+| elevenlabs announcement april 2026 | 1 | 10.0 |
+| elevenlabs marathi voice support 2026 | 1 | 10.0 |
 
-→ ElevenLabs still dominant. AdCreative queries now appearing (advanced-operator format — likely from SEO tools not real users). No NordVPN queries yet.
+→ Advanced-operator queries (with `-site:` exclusions) are from SEO tools scraping, not real users. Real user queries: ElevenLabs update/voice cloning variants.
+
+**Top 10 pages (28d):**
+
+| Page | Imp | Pos |
+|---|---|---|
+| sascribe.com/ (homepage) | 20 | 3.5 |
+| /posts/2026-04-01-elevenlabs-pillar-… | 610 | 8.0 |
+| /tags/corporate-training/ | 1 | 2.0 |
+
+→ ElevenLabs pillar = 97% of all impressions. Homepage pos 3.5 — strong brand signal.
+
+**Country breakdown (28d — top impressions):**
+
+| Country | Imp | Pos |
+|---|---|---|
+| Brazil | 41 | 9.2 |
+| Canada | 19 | 5.7 |
+| Australia | 8 | 7.9 |
+| Germany | 6 | 8.2 |
+| Spain | 7 | 5.9 |
+| Belgium | 4 | 7.5 |
+| Argentina | 4 | 10.2 |
+| Ecuador | 4 | 14.2 |
+
+→ No US in top countries yet (SaaS-forward markets leading). Expected to normalize as content expands.
 
 ---
 
-### CLOUDFLARE (24h: Apr 6 full + Apr 7 partial)
+### CLOUDFLARE
+
+**7-day view (Apr 1 → Apr 8 early):**
 
 | Date | PageViews | Requests | Uniques | Cache% | Bot% |
 |---|---|---|---|---|---|
-| Apr 6 (full day) | 1,017 | 1,128 | 188 | 9.0% | 70.9% ⚠️ |
-| Apr 7 (partial, ~21:30 UTC) | 1,171 | 1,451 | 438 | 5.8% | 24.1% |
+| Apr 1 | 4,517 | 5,570 | 240 | 0.0% | 85.4% ⚠️ |
+| Apr 2 | 1,286 | 2,042 | 313 | 0.0% | 32.1% ⚠️ |
+| Apr 3 | 724 | 977 | 204 | 0.0% | 28.7% ⚠️ |
+| Apr 4 | 404 | 622 | 167 | 0.0% | 37.1% ⚠️ |
+| Apr 5 | 455 | 1,399 | 164 | 1.9% | 66.8% ⚠️ |
+| Apr 6 | 1,017 | 1,128 | 188 | 9.0% | 70.9% ⚠️ |
+| Apr 7 (full) | 1,260 | 1,552 | 496 | 5.9% | 25.1% ⚠️ |
+| Apr 8 (01:49 UTC) | 72 | 77 | 63 | 7.8% | 22.1% ⚠️ |
+| **7D Total** | **9,735** | **13,367** | **1,835** | **1.7%** | **—** |
 
-**Deltas (Apr 7 partial vs Apr 6 full):**
-- Requests: +323 (+29%) — but Apr 7 not complete
-- Uniques: +250 (+133%) — significantly more unique IPs today
-- Cache: -3.2pp — cache cleared by NordVPN article additions
-- Bot%: -46.8pp — much cleaner traffic today vs yesterday's 70.9%
+**vs Apr 7 evening partial (1,171 PV / 438 uniques / 24.1% bot):**
+- Apr 7 full day: +89 PV, +58 uniques, +1pp bot — negligible delta (day was nearly done)
+- Apr 8 early (01:49 UTC): 72 PV, 63 uniques — day just started
 
-**Apr 7 top countries:** US (303), RU (261), DE (197), AU (178), SG (130)
-→ US now #1 today — real traffic improvement. RU+DE+AU unusual — monitor.
-→ Apr 6 was NL-dominated (662 of 1,128 = 58%) — heavy bot day.
+**Bot pattern:** Every single day flagged ⚠️ (all >20%). Apr 1 worst (85.4% — FR bot wave 4,459 req). Apr 7 best full day (25.1% — US led). Pattern: periodic NL/FR bot waves, consistent SG crawlers.
+
+**Cache trend:** 0% Apr 1-4 → 1.9% Apr 5 → 9.0% Apr 6 → 5.9% Apr 7 → 7.8% Apr 8. Rising slowly — warming as pages repeat. Still very low overall (1.7% 7d avg). Expect 10-15% sustained by end of week.
+
+**Top countries Apr 7 (full day):** US (318), RU (305), DE (197), AU (178), SG (150)
+**Top countries Apr 8 (early):** RU (41), FR (16), US (15)
 
 ---
 
-### GITHUB — CONTENT INVENTORY
+### BEEHIIV
+
+| Metric | Evening | Morning | Delta |
+|---|---|---|---|
+| Total active | 6 | 6 | 0 |
+| New today | 0 | 0 | 0 |
+
+→ No new subscribers overnight. All 6 from Mar 26-29.
+
+---
+
+### GITHUB — CONTENT
+
+**12 articles — unchanged.**
 
 | Affiliate | Articles | Published Types |
 |---|---|---|
@@ -831,46 +885,25 @@ Result: articles engineered to beat page 1, not just match it
 | Beehiiv | 3 | review, comparison, pillar |
 | Synthesia | 2 | pillar, tutorial |
 | NordVPN | 1 | review |
-| **Total** | **12** | |
 
-**Delta vs morning:** 0 new articles — pipeline was down all day (syntax error in Generate Article1 fixed this session).
-
----
-
-### BEEHIIV
-
-| Metric | Apr 6 Baseline | Apr 7 Evening | Delta |
-|---|---|---|---|
-| Total active subscribers | 6 | 6 | 0 |
-| New today | — | 0 | — |
-
-**Subscriber list (all 6 active):** sascribeblog@, blu3rror@, jessiepinedo88@, dumptikgo@, speedydumpsco@, bluefrogagr@ — all Mar 26–29.
-1 invalid sub (speedydumpco@) not counted.
+→ No article published since Apr 6 (NordVPN). Pipeline was down Apr 6-7 (syntax error). Fix live.
 
 ---
 
-### N8N PIPELINE STATUS
+### N8N PIPELINE
 
 | Check | Status |
 |---|---|
 | Active | ✅ True |
 | Cron | ✅ 0 9 * * 1,3,5 (Mon/Wed/Fri 9am UTC) |
 | Nodes | 22 |
-| Body quote fix | ✅ CONFIRMED (missing `"` after content string restored) |
-| Last execution | 1849 — Apr 7 16:15 UTC (error, 0 nodes — pre-fix) |
-| Next scheduled run | Mon Apr 13 9am UTC (ElevenLabs review) |
+| Body fix (missing `"`) | ✅ CONFIRMED |
+| Last execution | ID:1849 — Apr 7 16:15 UTC — error (pre-fix) |
+| Next scheduled | **Wed Apr 8 9am UTC (~7hrs from this audit)** |
 
-**CRITICAL FIX THIS SESSION:** Generate Article1 body expression had missing closing `"` on last string literal in content concatenation. JS syntax error caused n8n to fail expression compilation at startup → 0 nodes ran on every trigger since ~Apr 6 23:18. Fixed by restoring closing quote.
+**CRITICAL PENDING:** Apr 8 9am UTC is the first scheduled run after the body fix. If cron fires successfully and nodes run, ElevenLabs review will publish automatically. Monitor at 9am UTC.
 
-**PENDING:** Manual UI test to confirm trigger works. Go to onestepbeyond.app.n8n.cloud → Sascribe Blog Pipeline → Execute workflow button to trigger ElevenLabs article.
+**MANUAL FALLBACK:** If 9am run fails, open n8n UI (onestepbeyond.app.n8n.cloud) → Sascribe Blog Pipeline → Execute workflow to trigger manually.
 
----
-
-### PIPELINE CONTENT QUEUE
-
-| Priority | Affiliate | Content Type | Reason |
-|---|---|---|---|
-| 1 | ElevenLabs | review | Oldest LPD (Apr 2), review not yet published |
-| 2 | Synthesia | comparison or tutorial | review not done |
-| 3 | NordVPN | comparison | First published Apr 6 |
+**Pipeline will select:** ElevenLabs — review (oldest LPD Apr 2, review not yet published).
 
