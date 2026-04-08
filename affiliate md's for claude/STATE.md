@@ -755,104 +755,137 @@ Result: articles engineered to beat page 1, not just match it
 
 ---
 
-## AUDIT BASELINE — 2026-04-08 (Session 7 End)
+## AUDIT BASELINE — 2026-04-08 21:12 UTC
 
-### GOOGLE SEARCH CONSOLE (28d through Apr 5 — 2-day lag)
-
-| Metric | Value | Delta vs S6 |
-|---|---|---|
-| Impressions | 630 | +370 (+142%) |
-| Clicks | 0 | 0 |
-| CTR | 0% | — |
-| Avg Position | 7.9 | -0.2 |
-
-**Daily trend:** 2→4→2→44→208→198→172 (floor setting at 170-210/day)
-**ElevenLabs pillar:** 610 imp (97%), pos 8.0 — only article with GSC visibility
-**NordVPN (Apr 6):** not yet indexed
+**vs morning baseline — deltas shown**
 
 ---
 
-### CLOUDFLARE (7d: Apr 1-7)
+### GOOGLE SEARCH CONSOLE
 
-| Date | PV | Uniques | Cache | Bot% |
-|---|---|---|---|---|
-| Apr 1 | 4,517 | 240 | 0% | 85.4% FR wave |
-| Apr 2 | 1,286 | 313 | 0% | 32.1% |
-| Apr 3 | 724 | 204 | 0% | 28.7% |
-| Apr 4 | 404 | 167 | 0% | 37.1% |
-| Apr 5 | 455 | 164 | 1.9% | 66.8% NL wave |
-| Apr 6 | 1,017 | 188 | 9.0% | 70.9% NL wave |
-| Apr 7 | 1,260 | 496 | 5.9% | 25.1% |
-| **7D** | **9,663** | **1,772** | **1.7% avg** | — |
-
-Bot present every single day. Use GSC as truth.
-
----
-
-### N8N PIPELINE — SESSION 7 STATUS
-
-**Critical fix this session:** Generate Article1 body expression had missing closing `"` on last string literal.
-- JS syntax error caused expression compilation failure at startup
-- 0 nodes ran on every trigger since ~Apr 6 23:18 UTC
-- Fixed: restored closing `"` in body parameter
-- Body fix confirmed live in workflow
-
-**Current state:**
-- Active: True
-- Cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am UTC) — CONFIRMED
-- Nodes: 22
-- Last execution: 1849 (Apr 7 16:15 UTC — pre-fix, error)
-- Next scheduled: Wed Apr 8 9am UTC — first post-fix scheduled run
-
-**PENDING:** Manual UI test or wait for 9am run. Open onestepbeyond.app.n8n.cloud → Sascribe Blog Pipeline → Execute workflow if needed.
-
----
-
-### SESSION 7 BUILDS & FIXES
-
-1. **Research: Affiliate Pricing node** — /pricing page fetch added as source 4b
-   - Chain: Affiliate Content → Affiliate Pricing → Collect
-   - continueOnFail: True (won't break pipeline on 404)
-   - Haiku extracts pricing_verified JSON with plan names/prices/billing/promos
-
-2. **NordVPN logo CSS** — asymmetric padding for wide horizontal logo
-   - Featured: 28px 8px | Thumb: 14px 4px | Hero: 36px 8px
-   - SHA: b453d46a
-
-3. **Generate Article1 prompt fix** — rule 7 changed (no in-article disclosure), rule 9 added (internal links 5-8, first within 300w)
-
-4. **NordVPN article patch** — removed disclosure paragraph, links removed (no VPN content to link to)
-
-5. **Pipeline syntax fix** — missing `"` in body expression, 0 nodes ran → FIXED
-
-6. **SEO audit all 12 articles** — full pass, all CRITICAL issues fixed:
-   - FAQPage JSON-LD: added to 10 articles (2 already had it)
-   - BlogPosting JSON-LD: added to all 12 articles in body
-   - cover.style: added to 6 articles (adcreative-ai x4 → promo; elevenlabs-pillar, beehiiv-pillar → logo)
-   - Duplicate disclosures: removed from synthesia-pillar and synthesia-tutorial
-   - Beehiiv-pillar FAQ: was empty section — added 5 Q&A pairs
-   - All 12 SHAs confirmed pushed
-
----
-
-### CONTENT STATUS
-
-| Affiliate | Articles | Published Types | Next |
+| Metric | Morning | Evening 21:12 | Delta |
 |---|---|---|---|
-| AdCreative | 4 | review, comparison, tutorial, use-cases | alternatives or pillar |
-| ElevenLabs | 2 | pillar, comparison | review (next up) |
-| Beehiiv | 3 | review, comparison, pillar | tutorial or use-cases |
-| Synthesia | 2 | pillar, tutorial | review or comparison |
-| NordVPN | 1 | review | comparison |
-| **Total** | **12** | | **ElevenLabs review — next pipeline run** |
+| 28D Impressions | 630 | **799** | **+169 (+27%)** |
+| 28D Clicks | 0 | 0 | 0 |
+| CTR | 0% | 0% | — |
+| Avg Position | 7.9 | 8.01 | -0.11 |
+| 7D Impressions | — | 791 | — |
+
+→ **Apr 6 now visible in GSC** (169 imp, pos 8.4) — 2-day lag cleared.
+→ Staircase: 2→4→2→44→208→198→172→169. Stabilizing 170s range.
+→ Still 0 clicks across all days. Position 8.01 average — page 1 tail.
+
+**Daily trend (all days):**
+
+| Date | Imp | Clk | Pos |
+|---|---|---|---|
+| Mar 28 | 0 | 0 | — |
+| Mar 29 | 2 | 0 | 4.0 |
+| Mar 30 | 4 | 0 | 2.5 |
+| Mar 31 | 0 | 0 | — |
+| Apr 1 | 2 | 0 | 2.0 |
+| Apr 2 | 44 | 0 | 6.7 |
+| Apr 3 | 208 | 0 | 8.1 |
+| Apr 4 | 198 | 0 | 8.1 |
+| Apr 5 | 172 | 0 | 7.9 |
+| Apr 6 | 169 | 0 | 8.4 ← NEW |
+
+**Top pages (28d):**
+
+| Page | Imp | Clk | Pos |
+|---|---|---|---|
+| ElevenLabs pillar (/posts/2026-04-01-elevenlabs-pillar-…) | 776 | 0 | 8.1 |
+| Homepage (sascribe.com/) | 23 | 0 | 3.7 |
+| /tags/corporate-training/ | 2 | 0 | 6.0 |
+| /tags/saas/ | 1 | 0 | 2.0 ← NEW |
+
+**Top queries (28d, non-advanced-operator):**
+
+| Query | Imp | Pos |
+|---|---|---|
+| elevenlabs update april 2026 | ~7 | 9.7 |
+| elevenlabs 2026 updates voice cloning | 2 | 6.5 |
+| best ai voice generation 2026 elevenlabs | 1 | 10.0 |
+| best video platform with voice cloning 2025 2026 | 1 | 20.0 |
+
+**Country breakdown (28d top):** Brazil (52), Canada (22), Australia (9), Germany (7), China (7)
+→ Brazil leads consistently. No US organic signal yet.
+
+---
+
+### CLOUDFLARE
+
+| Date | PV | Req | Uniq | Cache% | Bot% |
+|---|---|---|---|---|---|
+| Apr 1 | 4,517 | 5,570 | 240 | 0.0% | 85.4% |
+| Apr 2 | 1,286 | 2,042 | 313 | 0.0% | 32.1% |
+| Apr 3 | 724 | 977 | 204 | 0.0% | 28.7% |
+| Apr 4 | 404 | 622 | 167 | 0.0% | 37.1% |
+| Apr 5 | 455 | 1,399 | 164 | 1.9% | 66.8% |
+| Apr 6 | 1,017 | 1,128 | 188 | 9.0% | 70.9% |
+| Apr 7 | 1,260 | 1,552 | 496 | 5.9% | 25.1% |
+| **Apr 8 (21:12 UTC)** | **1,196** | **1,390** | **539** | **10.1%** | **31.2%** |
+
+**Apr 8 top countries:** RU (535), FR (222), GB (175), US (174), CN (141)
+→ Bot flag: RU+FR+CN = 898 of 1,390 = 64.6%. Heavy bot day.
+→ US is #4 today (174 req) — real traffic signal.
+→ **Cache: 10.1% — new high.** Rising trend: 0%→9%→5.9%→10.1% as Cloudflare caches repeat URLs.
+
+---
+
+### GITHUB — CONTENT
+
+**13 articles** — +1 from this morning.
+
+| Affiliate | Articles | Published Types |
+|---|---|---|
+| AdCreative | 4 | review, comparison, tutorial, use-cases |
+| ElevenLabs | 3 | pillar, comparison, review ← NEW |
+| Beehiiv | 3 | review, comparison, pillar |
+| Synthesia | 2 | pillar, tutorial |
+| NordVPN | 1 | review |
+| **Total** | **13** | |
+
+**New article published today (Apr 8 9am PDT):**
+- File: `2026-04-08-elevenlabs-review-1775664089639.md`
+- Title: "ElevenLabs Review 2026: Is This the Best AI Voice Generator for Content Creators?"
+- URL: https://sascribe.com/posts/2026-04-08-elevenlabs-review-1775664089639/
+
+---
+
+### N8N PIPELINE
+
+| Execution | Status | Time | Duration | Notes |
+|---|---|---|---|---|
+| 2564 | ✅ SUCCESS | 2026-04-08 16:00 UTC | 93 sec | ElevenLabs review published |
+| 1849 | ❌ error | 2026-04-07 16:15 | 13s | pre-fix, 0 nodes |
+| 1844 | ❌ error | 2026-04-07 16:07 | 12s | pre-fix |
+| 1840 | ❌ error | 2026-04-07 16:02 | 11s | pre-fix |
+| 1836 | ❌ error | 2026-04-07 15:55 | 14s | pre-fix |
+
+**KEY FINDING: Pipeline timezone is PDT (UTC-7), not UTC.**
+- Cron `0 9 * * 1,3,5` fires at 9am PDT = 16:00 UTC on MWF
+- Bypass cron attempts during this session targeted UTC times — all missed
+- Future bypass crons must target PDT: e.g., to fire at 1pm PDT → `0 20 * * *`
+
+**Next scheduled runs:** Fri Apr 10 9am PDT (16:00 UTC), Mon Apr 13 9am PDT
+**Next article:** Synthesia or Beehiiv (oldest unpublished type)
 
 ---
 
 ### BEEHIIV
 
-| Metric | Value |
-|---|---|
-| Active subscribers | 6 |
-| New this session | 0 |
-| All subs | test accounts (Mar 26-29) — 0 organic |
+6 active subscribers — unchanged. No new organic subscribers.
+
+---
+
+### PIPELINE CONTENT QUEUE (next runs)
+
+| Priority | Affiliate | Next Type | Reason |
+|---|---|---|---|
+| 1 | Synthesia | review | Oldest unpublished type (pillar+tutorial done) |
+| 2 | Beehiiv | tutorial or use-cases | review+comparison+pillar done |
+| 3 | NordVPN | comparison | Only review published |
+| 4 | AdCreative | alternatives or pillar | 4 types done |
+| 5 | ElevenLabs | tutorial | 3 types done (pillar+comparison+review) |
 
