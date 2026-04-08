@@ -180,84 +180,33 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 
 ---
 
-## PROJECT 2: QR-PERKS.COM — Mobile Billboard Affiliate
+---
 
-### Concept
-Dynamic QR codes on 8-10 commercial truck wraps in Southern California. Each truck gets unique URL (/t1-/t10) for per-truck conversion tracking and driver profit sharing via SubID parameters. Audience is broad SoCal drivers — NOT just truckers. Bilingual EN/ES.
+## PROJECT 2: QR-PERKS.COM — Trucker Offer Cards
 
 ### Infrastructure
 - **Domain**: qr-perks.com (Cloudflare)
-- **Hosting**: Cloudflare Worker — qr-perks.com (worker name: `qrperks`, account: $CF_ACCOUNT_ID)
-- **Supabase**: `$SUPABASE_PROJECT_REF.supabase.co` (project: qrperks, region: us-west-1)
+- **Worker**: qrperks (Cloudflare Workers)
 - **GitHub repo**: sascribe/qrperks-site
-- **Admin panel**: qr-perks.com/admin (password: qrperks2026 — change this)
-- **Driver portal**: qr-perks.com/driver
-- **Email**: qrperks@gmail.com
+- **Supabase project**: fsaxluprhgmyaipaujdn
+- **Deploy**: Cloudflare Workers API (multipart PUT)
 
-### Landing Page
-- Bilingual EN/ES with auto-detect Spanish browser
-- 5 planned offer cards: Auto Insurance, Free Bank Account, Phone Plan, Business Funding, Gas Savings
-- Dark theme, mobile-first
-- Currently 3 active placeholders: INSURANCE_AFFILIATE_LINK_HERE, BANKING_AFFILIATE_LINK_HERE, PHONE_AFFILIATE_LINK_HERE
-- ROK Financial business funding already has live links (see below)
+### Active Affiliates (as of 2026-04-08)
+| ID | Name | Category | Status |
+|---|---|---|---|
+| rok-financial | ROK Financial | business_funding | active |
+| paypal-sweeps | Win $1000 PayPal Cash | sweepstakes | active |
+| auto-insurance | Save on Auto Insurance | insurance | active |
+| dinero-dinero | Dinero Dinero Préstamos | loans | active |
+| maybelline | Free Maybelline Set | sweepstakes | active |
 
-### ROK Financial — LIVE
-- Business Financing URL: https://go.mypartner.io/business-financing/?ref=001Qk00000jaDEZIA2
-- Business Financing URL Spanish: https://go.mypartner.io/business-financing/?ref=001Qk00000jaDEZIA2&lang=es
-- Referral Partner URL: https://go.mypartner.io/referral-partner/?ref=001Qk00000jaDEZIA2
-- Commission: 20% of ROK's upfront revenue on funded deals + 2.5% override on referred agents
-- Approved websites: qr-perks.com, sascribe.com, dumptikgo.com, geostransportation.com, speedydumpsco.com
-- Rules: No paid search, must get marketing materials approved, no self-referrals, no fees to customers
+All 5 offers live. All /go/ routes return 302 with s2=qrp_t{truckId} attribution.
+Tracking URLs in Supabase only — NOT in GitHub.
 
-### Affiliate Strategy
-- Model: CPL (Cost Per Lead) preferred for mobile out-of-home traffic
-- Target: Liberty Mutual/insurance CPL, free banking CPA, phone CPA, business funding CPL
-- Per-truck tracking: Cloudflare redirect rules /t1-/t10 + SubID on affiliate links
-- Driver profit sharing via SubID conversion tracking
-
-### Direct Programs Applied/Pending
-- FlexOffers: application submitted (pending) — for insurance, banking, phone
-- Mint Mobile: applied at mintmobile.com/affiliate-program (qrperks@gmail.com)
-- EverQuote: email sent to affiliates@everquote.com
-- The Zebra: email sent to partners contact
-- CJ Affiliate: account created (qrperks@gmail.com), QR-Perks publisher property set up
-
-### Offer Cards Planned (5 total)
-1. Auto Insurance — CPL via EverQuote/Liberty Mutual/The Zebra
-2. Free Bank Account — CPA via Chime/Varo/Axos
-3. Phone Plan — CPA via Mint Mobile/Tello/Cricket/AT&T
-4. Business Funding — ROK Financial (LIVE)
-5. Gas Savings — Upside or PayPal Debit Card (gas cashback angle)
-
-### Status
-- Site fully rebuilt and live at qr-perks.com ✅
-- Cloudflare Worker deployed (1228 lines) — all routes handled ✅
-- Supabase backend live — 6 tables, RLS policies ✅
-- 50 trucks seeded (t1–t10 active, t11–t50 dormant) ✅
-- 5 affiliate slots seeded in database ✅
-- ROK Financial live on offer card 1 (update URL in Supabase affiliates table) ✅
-- 4 coming soon cards live (insurance, banking, phone, gas)
-- Driver dashboard live at qr-perks.com/driver ✅
-- Admin dashboard live at qr-perks.com/admin ✅
-- All legal pages live — FTC compliant ✅
-- SubID tracking wired — every truck appends ?subid=qrp_t{n} to affiliate links ✅
-- Test driver: testdriver@qrperks.com / token: c3132d77e2447fd7f8fb3fd02407b12f57d2dd978493a5e0 / truck t1
-- QR codes not yet printed — pending driver onboarding
-- Remaining 4 offer cards pending affiliate approvals (EverQuote, Chime, Mint, Upside)
-- ROK Financial URL in Supabase needs updating to actual tracking link (go.mypartner.io/...)
-
----
-
-### Skills Library
-All skills saved to ~/Desktop/AffiliateMarketing/
-- SKILL_technical_seo_auditor.md — fetch any URL, full SEO audit, Hugo/affiliate-specific checks, auto-fix via Claude Code
-- SKILL_keyword_clustering_topic_map.md — discover + cluster keywords per affiliate, feeds n8n pipeline
-- SKILL_backlink_outreach.md — personalized outreach generation, affiliate testimonial priority, Google Sheets tracking
-- SKILL_social_media_manager.md — Blotato API + n8n, repurpose articles to social, FUTURE PHASE
-- SKILL_master_orchestration.md — weekly command center, pulls all data sources, hands off to other skills
-
----
-
+### /go/ Handler
+- Reads URL from Supabase, falls back to FALLBACK_AFFILIATES
+- Appends: s2=qrp_{truckId}, utm_source=qrperks, utm_medium=qr, utm_campaign={truckId}
+- truckId from: ?t= param → qrp_truck cookie → 'unknown'
 ## CREDENTIALS LOCATIONS
 
 ### Permanently saved in ~/.zshrc (local machine — auto-loaded every session)
