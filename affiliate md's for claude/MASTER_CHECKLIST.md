@@ -408,7 +408,29 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ⏳ PENDING | Rotate YouTube API key | Was briefly in STATE.md — regenerate at console.cloud.google.com |
 | ⏳ PENDING | Enable GCP billing | Unlocks Google CSE as research source — console.cloud.google.com |
 | ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
-| ⏳ PENDING | QR-Perks offer cards (4 remaining) | Insurance, Banking, Phone, Gas |
-| ⏳ PENDING | ROK Financial URL update in Supabase | Replace placeholder with actual tracking link |
+| ✅ DONE | QR-Perks offer cards — all 5 live | rok-financial, paypal-sweeps, auto-insurance, dinero-dinero, maybelline |
+| ✅ DONE | ROK Financial URL update in Supabase | Updated to go.mypartner.io tracking link |
+| ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
+| ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
+
+### SESSION 8 COMPLETED (2026-04-08)
+
+| Status | Task | Notes |
+|---|---|---|
+| ✅ DONE | QR-Perks — Supabase affiliates updated | Upserted 5; deleted banking, phone-plan, gas-savings |
+| ✅ DONE | QR-Perks — worker.js FALLBACK updated | New 5 affiliates, status=active, no tracking URLs in GitHub |
+| ✅ DONE | QR-Perks — isLive check updated | Now handles status 'live' OR 'active' |
+| ✅ DONE | QR-Perks — /go/ handler s2 param | Replaced subid with s2=qrp_{truckId} for proper attribution |
+| ✅ DONE | QR-Perks — worker.js deployed | Deployed to Cloudflare (script: qrperks) |
+| ✅ DONE | All 5 /go/ routes verified | 302 redirect with correct dest URL + s2 param |
+| ✅ DONE | worker.js pushed to GitHub | sascribe/qrperks-site — SHA: 3c6928fb |
+
+### SESSION 8 PENDING ITEMS
+
+| Status | Task | Notes |
+|---|---|---|
+| ⏳ PENDING | Rotate YouTube API key | Was briefly in STATE.md — regenerate at console.cloud.google.com |
+| ⏳ PENDING | Enable GCP billing | Unlocks Google CSE as research source — console.cloud.google.com |
+| ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
 | ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
 | ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
