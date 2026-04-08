@@ -291,3 +291,20 @@ This applies to every session, every file, every push. No exceptions.
 
 51. **Duplicate disclosure = double penalty** — single.html renders the affiliate disclosure automatically. Any disclosure written in the article body creates a duplicate. Remove from prompt rule 7; confirmed in NordVPN article Apr 7.
 52. **Internal links for new sites: bridge by topic, not by exact match** — when a new site only has AI tools articles and the current article is VPN/security, link to content that bridges naturally (remote work, digital creator tools, content production). Never force a link; 4 solid ones beats 8 awkward ones. First link must appear within first 300 words.
+
+
+## WORKING INSIGHTS — SESSION 7
+
+37. **n8n expression syntax validation at startup** — If ANY expression in a workflow node has a JavaScript syntax error (e.g., unclosed string literal `"`), n8n fails expression compilation at workflow init. Result: 0 nodes run, execution errors in 11-19 seconds with empty resultData. Fix: correct the syntax. This is NOT a runtime error — it happens before any node starts.
+
+38. **BlogPosting JSON-LD = frontmatter + body** — `schema: "BlogPosting"` in Hugo frontmatter is read by the template (handles structured data at page level). FAQPage JSON-LD must be added explicitly as `<script type="application/ld+json">` in the article body — the template does not generate it. Both are needed.
+
+39. **One article can carry an entire domain** — ElevenLabs pillar = 97% of sascribe.com's total GSC impressions (610 of 630). Update/news-style content targeting trending queries ("elevenlabs update april 2026") indexes fast and ranks early. Review/comparison content takes 4-8 weeks. Know the difference when evaluating article performance.
+
+40. **CF bot traffic is every day, not episodic** — Every single day of sascribe.com CF data flags >20% bot (FR/NL/SG/CN). It is not occasional spikes — it is a permanent baseline. Apr 1 was 85% (FR wave), Apr 7 was 25% (cleanest day). Never use CF PV as a measure of real traffic. GSC is the only truth.
+
+41. **Cache at near-zero = articles not being revisited** — sascribe.com cache hit rate was 0% for 4 consecutive days (Apr 1-4). This means every request fetches fresh content — no repeat visitors, no bot replay, just first-time hits. Cache rises as Google recrawls and pages repeat. 9% on Apr 6 = Google revisiting the NordVPN article. Monitor cache % as a proxy for recrawl rate.
+
+42. **Per-article GSC breakdown reveals the truth** — Running `page+query` dimensions in GSC shows exactly which articles are indexed and visible. 10 of 12 articles had 0 impressions — not because they're bad content, but because competitive review/comparison keywords take weeks to rank. Only the news/update-style pillar (ElevenLabs) indexed fast. Set expectations accordingly.
+
+43. **n8n bypass cron may miss window** — When deactivating/PUTting/reactivating a workflow with a cron bypass, n8n may not fire if the activation timestamp is within the same minute as the cron time, or if the previous cron time was in the past for the current day. Set bypass crons at least 5 minutes in the future and confirm with an execution check. Three consecutive bypass attempts (16:31, 21:17, 21:25 UTC) all failed to fire after the pipeline syntax fix — likely because n8n's scheduler got confused after multiple rapid activate/deactivate cycles.
