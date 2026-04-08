@@ -376,3 +376,39 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 - **Activation threshold:** 20+ articles published on existing affiliates AND a content angle exists that serves paid media / ecommerce marketing audience
 - **When activated:** Add to Google Sheet, create /go/cometly Cloudflare redirect, wire into n8n pipeline
 - **Do not write content for this affiliate until threshold is met** — audience mismatch with current SaaS/AI tools readership
+
+
+### SESSION 7 COMPLETED TASKS — 2026-04-08
+
+| Status | Task | Notes |
+|---|---|---|
+| ✅ DONE | Research: Affiliate Pricing node | /pricing fetch added as source 4b — continueOnFail True |
+| ✅ DONE | NordVPN logo CSS asymmetric padding | 28px 8px / 14px 4px / 36px 8px — wide logo visual parity |
+| ✅ DONE | Generate Article1 disclosure rule fix | Rule 7 → no in-body disclosure (template handles it) |
+| ✅ DONE | Internal links rule added to prompt | Rule 9: 5-8 links, first within 300w, topically relevant |
+| ✅ DONE | NordVPN article: disclosure removed | Clean body, 0 internal links (correct — no VPN content yet) |
+| ✅ DONE | Beehiiv credentials added | API key + pub ID in ~/.zshrc and CREDENTIALS.md (local only) |
+| ✅ DONE | Cometly documented in MASTER_CHECKLIST | Approved/paused — threshold: 20+ articles |
+| ✅ DONE | Pipeline syntax fix — Generate Article1 | Missing `"` in body expression → 0 nodes ran; FIXED |
+| ✅ DONE | Cron restored: 0 9 * * 1,3,5 | Confirmed in workflow after fix |
+| ✅ DONE | SEO audit all 12 articles | Full pass — all CRITICAL issues identified |
+| ✅ DONE | FAQPage JSON-LD all 12 articles | Added to 10 articles (2 already had it) |
+| ✅ DONE | BlogPosting JSON-LD all 12 articles | Added to body of all 12 (frontmatter schema field + body JSON-LD) |
+| ✅ DONE | cover.style fixed — 6 articles | adcreative-ai x4 → promo; elevenlabs-pillar + beehiiv-pillar → logo |
+| ✅ DONE | Duplicate disclosure removed — Synthesia x2 | synthesia-pillar + synthesia-tutorial |
+| ✅ DONE | Beehiiv-pillar FAQ section | Was empty — 5 Q&A pairs added |
+| ✅ DONE | CF cache purged | After all 12 article pushes |
+
+### SESSION 7 PENDING ITEMS
+
+| Status | Task | Notes |
+|---|---|---|
+| ⏳ PENDING | ElevenLabs review article | Blocked on pipeline — next scheduled run Wed Apr 8 9am UTC |
+| ⏳ PENDING | Manual pipeline test | n8n UI → onestepbeyond.app.n8n.cloud → Execute workflow |
+| ⏳ PENDING | Rotate YouTube API key | Was briefly in STATE.md — regenerate at console.cloud.google.com |
+| ⏳ PENDING | Enable GCP billing | Unlocks Google CSE as research source — console.cloud.google.com |
+| ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
+| ⏳ PENDING | QR-Perks offer cards (4 remaining) | Insurance, Banking, Phone, Gas |
+| ⏳ PENDING | ROK Financial URL update in Supabase | Replace placeholder with actual tracking link |
+| ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
+| ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
