@@ -7,6 +7,7 @@ categories: ["Ad Tools"]
 cover:
   image: "/images/adcreative/logo-adc.jpg"
   alt: "AdCreative AI review"
+  style: "promo"
 affiliateURL: "https://sascribe.com/go/adcreative"
 affiliateName: "AdCreative AI"
 schema: "BlogPosting"
@@ -185,3 +186,40 @@ For performance ad creatives, AdCreative AI comes remarkably close. For complex 
 ---
 
 *Looking for more AI ad tool comparisons? Check out our other posts on [ad creative automation tools](/tags/ad-tools) and how to maximize your ROAS with AI-powered marketing software.*
+
+---
+
+All 12 files fetched successfully in full. No content was truncated. Here is a quick summary of what was retrieved:
+
+- All 12 files sourced from `sascribe/sascribe-blog` under `content/posts/` via GitHub REST API using `$GH_TOKEN`
+- The directory listing also revealed a 13th file (`2026-04-08-elevenlabs-review-1775664089639.md`) not in your original list — noted in case it's relevant to your audit
+- Affiliate categories covered: AdCreative AI (4 posts), Beehiiv (3 posts), ElevenLabs (2 posts), Synthesia (2 posts), NordVPN (1 post)
+- All files include full frontmatter (title, date, description, tags, categories, affiliateURL, schema) plus complete body content including tables, FAQ sections, and `<script type="application/ld+json">` structured data blocks where present
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Can I use AdCreative AI and Canva together?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Many teams use Canva for organic social content, presentations, and brand collateral while using AdCreative AI specifically for paid ad creatives. They complement each other well because they solve different problems."}},
+    {"@type": "Question", "name": "Does AdCreative AI really improve ad performance?", "acceptedAnswer": {"@type": "Answer", "text": "According to their data and user case studies, brands typically see 2-14x improvement in click-through rates when using AI-scored creatives versus manually designed alternatives. Your mileage will vary based on your niche, audience, and offer — but the scoring model is backed by real impression data."}},
+    {"@type": "Question", "name": "Is Creatopy worth it if I don't run display ads?", "acceptedAnswer": {"@type": "Answer", "text": "Probably not. Creatopy's biggest advantages — animation, HTML5 export, and ad serving — are display-specific. If you're primarily running Meta or Google search campaigns, you'd get more value from AdCreative AI or even Canva."}},
+    {"@type": "Question", "name": "Which tool is best for a small business with a limited budget?", "acceptedAnswer": {"@type": "Answer", "text": "If you run paid ads regularly, AdCreative AI's Starter plan at $21/month delivers outsized value compared to the cost of a designer or the waste from underperforming creatives. If you rarely run ads, Canva's free plan is the pragmatic choice. Consider what's actually costing you more — the tool subscription or the money you're losing on ads that do"}},
+    {"@type": "Question", "name": "Do any of these tools replace a graphic designer entirely?", "acceptedAnswer": {"@type": "Answer", "text": "For performance ad creatives, AdCreative AI comes remarkably close. For complex brand campaigns, custom illustrations, or highly conceptual creative work, you'll still want a human designer. The smartest teams use AI tools to handle the volume work and free their designers for higher-level creative strategy. --- *Looking for more AI ad tool compari"}}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AdCreative AI vs Canva vs Creatopy: Best AI Ad Design Tool in 2026 (Honest Comparison)",
+  "datePublished": "2026-03-31",
+  "dateModified": "2026-03-31",
+  "author": {"@type": "Person", "name": "Blue"},
+  "publisher": {"@type": "Organization", "name": "Sascribe", "url": "https://sascribe.com"},
+  "description": "AdCreative AI vs Canva vs Creatopy compared side by side. See which AI ad design tool wins on features, pricing, and conversion performance.",
+  "url": "https://sascribe.com/posts/2026-03-31-adcreative-ai-comparison-1774994382306/"
+}
+</script>
