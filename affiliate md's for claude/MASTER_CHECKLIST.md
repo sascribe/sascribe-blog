@@ -424,6 +424,11 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ✅ DONE | QR-Perks — worker.js deployed | Deployed to Cloudflare (script: qrperks) |
 | ✅ DONE | All 5 /go/ routes verified | 302 redirect with correct dest URL + s2 param |
 | ✅ DONE | worker.js pushed to GitHub | sascribe/qrperks-site — SHA: 3c6928fb |
+| ✅ DONE | Replace dinero-dinero → slam-dunk-loans | New CPL loans offer ($9.00), Supabase + worker |
+| ✅ DONE | Replace auto-insurance → walmart-sweeps | New SOI sweepstakes ($2.50), Supabase + worker |
+| ✅ DONE | Reorder offer cards by conversion ease | SOI first, CPL middle, high-friction last |
+| ✅ DONE | worker.js redeployed | GitHub SHA: b67b6510, Cloudflare qrperks script |
+| ✅ DONE | All 5 /go/ routes verified | paypal, walmart, maybelline, slam-dunk-loans, rok-financial |
 
 ### SESSION 8 PENDING ITEMS
 
