@@ -191,17 +191,18 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 - **Supabase project**: fsaxluprhgmyaipaujdn
 - **Deploy**: Cloudflare Workers API (multipart PUT)
 
-### Active Affiliates (as of 2026-04-08)
-| ID | Name | Category | Status |
-|---|---|---|---|
-| rok-financial | ROK Financial | business_funding | active |
-| paypal-sweeps | Win $1000 PayPal Cash | sweepstakes | active |
-| auto-insurance | Save on Auto Insurance | insurance | active |
-| dinero-dinero | Dinero Dinero Préstamos | loans | active |
-| maybelline | Free Maybelline Set | sweepstakes | active |
+### Active Affiliates (as of 2026-04-08 — updated session 8b)
+| # | ID | Name | Category | Payout | Status |
+|---|---|---|---|---|---|
+| 1 | paypal-sweeps | Win $1000 PayPal Cash | sweepstakes | $2.50 SOI | active |
+| 2 | walmart-sweeps | Win $1000 Walmart Gift Card | sweepstakes | $2.50 SOI | active |
+| 3 | maybelline | Free Maybelline Set | sweepstakes | $3.00 SOI | active |
+| 4 | slam-dunk-loans | Get Cash Fast — Up to $50K | loans | $9.00 CPL | active |
+| 5 | rok-financial | ROK Financial | business_funding | rev-share | active |
 
-All 5 offers live. All /go/ routes return 302 with s2=qrp_t{truckId} attribution.
+Ordered easiest→hardest to convert. All /go/ routes return 302 with s2=qrp_t{truckId} attribution.
 Tracking URLs in Supabase only — NOT in GitHub.
+worker.js GitHub SHA: b67b6510
 
 ### /go/ Handler
 - Reads URL from Supabase, falls back to FALLBACK_AFFILIATES
