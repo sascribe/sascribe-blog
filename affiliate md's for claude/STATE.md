@@ -190,6 +190,10 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 - **GitHub repo**: sascribe/qrperks-site
 - **Supabase project**: fsaxluprhgmyaipaujdn
 - **Deploy**: Cloudflare Workers API (multipart PUT)
+- **Email provider**: Resend (RESEND_API_KEY in ~/.zshrc + Worker secret)
+- **From address**: noreply@qr-perks.com
+- **DNS records**: DKIM, SPF MX, SPF TXT, DMARC added to Cloudflare 2026-04-10
+- **Domain verification**: triggered 2026-04-10 — pending DNS propagation (up to 48hr)
 
 ### Active Affiliates (as of 2026-04-08 — updated session 8b)
 | # | ID | Name | Category | Payout | Status |
