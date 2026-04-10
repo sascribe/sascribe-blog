@@ -206,7 +206,7 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 
 Ordered easiest→hardest to convert. All /go/ routes return 302 with s2=qrp_t{truckId} attribution.
 Tracking URLs in Supabase only — NOT in GitHub.
-worker.js GitHub SHA: b67b6510
+worker.js GitHub SHA: 503a973f
 
 ### /go/ Handler
 - Reads URL from Supabase, falls back to FALLBACK_AFFILIATES
@@ -239,6 +239,34 @@ worker.js GitHub SHA: b67b6510
 ---
 
 ## CHANGELOG
+
+### 2026-04-10 — QR-Perks Full Platform Rebuild (Session 9)
+
+**QR-PERKS COMPLETE PLATFORM REBUILD — DEPLOYED:**
+- New worker.js: 2,077 lines — complete rewrite, GitHub SHA: 503a973f
+- Driver auth system: signup, email verification, login (PBKDF2-SHA256 + JWT httpOnly cookies)
+- Driver dashboard: stats, QR code download, W9 form (AES-256-GCM tax ID encryption), referrals, earnings, settings
+- Admin dashboard: driver approvals, W9 management, commission calc, offer management, email campaigns, lead captures
+- Commission engine: 20% truck conversion, 10% referral override, Cron monthly auto-calc
+- Landing page: Instant Deal Model with featured hero card, micro-bridge overlay, EN/ES bilingual toggle
+- Email system: 6 templates via Resend (welcome, verify, password reset, W9 confirm, referral signup, new deal)
+- New Supabase tables: email_captures, password_resets, email_verifications, referrals, commissions, w9_submissions, email_logs
+- New Worker secrets needed (manual): DRIVER_JWT_SECRET, W9_ENCRYPTION_KEY (set via CF dashboard)
+- Resend domain (noreply@qr-perks.com): DNS records added, verification pending ~48hr
+
+**SECURITY CHECKS PASSED:**
+- JWT: httpOnly + Secure + SameSite=Lax ✓
+- tax_id: stored only as encrypted + last4, never exposed raw ✓
+- Unsubscribe link in all email templates ✓
+- Password: PBKDF2-SHA256, 100k iterations ✓
+
+**MANUAL ACTIONS REQUIRED (Blue):**
+1. Set Worker secret: DRIVER_JWT_SECRET = `openssl rand -hex 32` output
+2. Set Worker secret: W9_ENCRYPTION_KEY = `openssl rand -hex 32` output
+3. Change ADMIN_PASSWORD from current value to something strong
+4. Confirm Resend domain verified (check resend.com dashboard ~48hr after Apr 10)
+5. Send test from noreply@qr-perks.com once domain is verified
+
 
 ### 2026-04-06 — Discord Bot Live Data + 4-Source Pipeline Complete
 
@@ -879,3 +907,4 @@ Result: articles engineered to beat page 1, not just match it
 4. QR-Perks: Admin password change + email list signup
 5. Sascribe: Investigate why only ElevenLabs pillar indexed — fix crawl if needed
 6. Future: Migrate n8n to self-hosted (not urgent)
+
