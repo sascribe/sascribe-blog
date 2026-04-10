@@ -194,6 +194,7 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 - **From address**: noreply@qr-perks.com
 - **DNS records**: DKIM, SPF MX, SPF TXT, DMARC added to Cloudflare 2026-04-10
 - **Domain verification**: triggered 2026-04-10 — pending DNS propagation (up to 48hr)
+- **Worker secrets configured 2026-04-10**: DRIVER_JWT_SECRET ✅ | W9_ENCRYPTION_KEY ✅ | ADMIN_PASSWORD (rotated) ✅
 
 ### Active Affiliates (as of 2026-04-08 — updated session 8b)
 | # | ID | Name | Category | Payout | Status |
@@ -907,4 +908,5 @@ Result: articles engineered to beat page 1, not just match it
 4. QR-Perks: Admin password change + email list signup
 5. Sascribe: Investigate why only ElevenLabs pillar indexed — fix crawl if needed
 6. Future: Migrate n8n to self-hosted (not urgent)
+
 
