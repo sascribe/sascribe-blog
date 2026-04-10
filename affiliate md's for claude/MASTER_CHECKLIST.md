@@ -78,7 +78,7 @@ Status codes:
 | ✅ DONE | SubID tracking | S5 | Per truck attribution |
 | ✅ DONE | ROK Financial offer card 1 | S3 | Live |
 | ✅ DONE | Email list signup (micro-bridge overlay) | S9 | Captures email+phone, fire-and-forget to Supabase |
-| ⏳ PENDING | Change admin password | S5 | Manual — Blue must update via CF dashboard |
+| ✅ DONE | ADMIN_PASSWORD rotated from default | S9 | Set via CF API 2026-04-10 |
 | ⏳ PENDING | ROK Financial URL update in Supabase | S5 | Use actual tracking link |
 | ⏳ PENDING | Insurance offer card | — | EverQuote/Liberty Mutual |
 | ⏳ PENDING | Banking offer card | — | Chime/Axos |
@@ -94,8 +94,8 @@ Status codes:
 | ✅ DONE | Resend email system | S9 | 6 templates, email_logs table |
 | ✅ DONE | EN/ES bilingual landing page | S9 | localStorage + navigator.language |
 | ✅ DONE | Micro-bridge overlay | S9 | Email/phone capture before affiliate redirect |
-| ⏳ PENDING | Set DRIVER_JWT_SECRET secret | S9 | Manual — Blue: CF dashboard → Workers → qrperks → secrets |
-| ⏳ PENDING | Set W9_ENCRYPTION_KEY secret | S9 | Manual — Blue: CF dashboard → Workers → qrperks → secrets |
+| ✅ DONE | DRIVER_JWT_SECRET set on qrperks Worker | S9 | Set via CF API 2026-04-10 |
+| ✅ DONE | W9_ENCRYPTION_KEY set on qrperks Worker | S9 | Set via CF API 2026-04-10 |
 | ⏳ PENDING | Confirm Resend domain verified | S9 | noreply@qr-perks.com — check resend.com ~Apr 12 |
 | ⏳ PENDING | First real driver onboarded | — | Blocked on secrets being set |
 | ⏳ PENDING | QR codes printed | — | Blocked on driver onboarding |
