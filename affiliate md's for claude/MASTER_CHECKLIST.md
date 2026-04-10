@@ -77,14 +77,28 @@ Status codes:
 | ✅ DONE | Legal pages | S5 | /privacy /terms /disclosure /contractor |
 | ✅ DONE | SubID tracking | S5 | Per truck attribution |
 | ✅ DONE | ROK Financial offer card 1 | S3 | Live |
-| ⏳ PENDING | Email list signup on landing page | S5 | High priority |
-| ⏳ PENDING | Change admin password | S5 | Currently qrperks2026 |
+| ✅ DONE | Email list signup (micro-bridge overlay) | S9 | Captures email+phone, fire-and-forget to Supabase |
+| ⏳ PENDING | Change admin password | S5 | Manual — Blue must update via CF dashboard |
 | ⏳ PENDING | ROK Financial URL update in Supabase | S5 | Use actual tracking link |
 | ⏳ PENDING | Insurance offer card | — | EverQuote/Liberty Mutual |
 | ⏳ PENDING | Banking offer card | — | Chime/Axos |
 | ⏳ PENDING | Phone plan offer card | — | Mint Mobile |
 | ⏳ PENDING | Gas savings offer card | — | Upside/PayPal |
-| ⏳ PENDING | QR codes printed | — | Blocked on offer cards |
+| ✅ DONE | Driver auth system | S9 | Signup, verify email, login, forgot/reset password |
+| ✅ DONE | PBKDF2-SHA256 passwords | S9 | 100k iterations via SubtleCrypto — no bcrypt needed |
+| ✅ DONE | JWT httpOnly sessions | S9 | HMAC-SHA256, 7-day, Secure + SameSite=Lax |
+| ✅ DONE | Driver dashboard | S9 | Stats, QR codes, W9, referrals, earnings, settings |
+| ✅ DONE | W9 form AES-256-GCM encryption | S9 | tax_id_encrypted stored, tax_id never exposed |
+| ✅ DONE | Admin dashboard rebuild | S9 | Approvals, W9 mgmt, commissions, offers, leads, campaigns |
+| ✅ DONE | Commission engine | S9 | 20% truck + 10% referral override, monthly cron |
+| ✅ DONE | Resend email system | S9 | 6 templates, email_logs table |
+| ✅ DONE | EN/ES bilingual landing page | S9 | localStorage + navigator.language |
+| ✅ DONE | Micro-bridge overlay | S9 | Email/phone capture before affiliate redirect |
+| ⏳ PENDING | Set DRIVER_JWT_SECRET secret | S9 | Manual — Blue: CF dashboard → Workers → qrperks → secrets |
+| ⏳ PENDING | Set W9_ENCRYPTION_KEY secret | S9 | Manual — Blue: CF dashboard → Workers → qrperks → secrets |
+| ⏳ PENDING | Confirm Resend domain verified | S9 | noreply@qr-perks.com — check resend.com ~Apr 12 |
+| ⏳ PENDING | First real driver onboarded | — | Blocked on secrets being set |
+| ⏳ PENDING | QR codes printed | — | Blocked on driver onboarding |
 | ⏳ PENDING | First real driver onboarded | — | Blocked on QR codes |
 
 ---
@@ -472,3 +486,4 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ⏳ PENDING | End-to-end conversion flow test | S9 | Scan QR → land on site → tap offer → verify SubID fires |
 | ⏳ PENDING | Change admin password | S9 | Currently qrperks2026 — security risk |
 | ⏳ PENDING | Email list signup on landing page | S9 | Lead capture — "Sign up for future deals" |
+
