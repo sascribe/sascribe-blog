@@ -454,6 +454,12 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 
 | Status | Task | Priority | Notes |
 |---|---|---|---|
+| ✅ DONE | Resend account connected | S9 | API key in ~/.zshrc as RESEND_API_KEY |
+| ✅ DONE | RESEND_API_KEY set as Worker secret | S9 | Confirmed on qrperks Cloudflare Worker |
+| ✅ DONE | DNS records added to Cloudflare | S9 | DKIM, SPF MX, SPF TXT, DMARC on qr-perks.com |
+| ✅ DONE | Resend domain verification triggered | S9 | Pending DNS propagation (up to 48hr) |
+| ✅ DONE | Test email sent | S9 | Sent to sascribeblog@gmail.com via onboarding@resend.dev (id: 96d5fd1c) |
+| ⏳ PENDING | Send test from noreply@qr-perks.com | S9 | Retry once domain verified (~48hr) |
 | ⏳ PENDING | Finalize QR code magnet design | S9 | Robot border vs current rocket — Blue deciding |
 | ⏳ PENDING | Print 8 magnets T1-T8 | S9 | Files ready — send to print shop 24x36 portrait |
 | ⏳ PENDING | Fix site issues (audit needed) | S9 | TBD from testing session |
