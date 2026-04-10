@@ -839,3 +839,39 @@ Result: articles engineered to beat page 1, not just match it
 | 4 | AdCreative | alternatives or pillar | 4 types done |
 | 5 | ElevenLabs | tutorial | 3 types done (pillar+comparison+review) |
 
+---
+
+### 2026-04-10 — Session 8 Complete
+
+**QR-PERKS — FULL OFFER STACK LIVE:**
+- Max Bounty approved — full offer research completed
+- 4 live offer cards wired: PayPal $1000 SOI (#25393), Walmart $1000 SOI (#25394), Maybelline SOI (#24725), Slam Dunk Loans CPL (#11384)
+- All tracking links with SubID wired in Supabase + Cloudflare Worker
+- Cards ordered by conversion likelihood (easiest → hardest)
+- ROK Financial URL updated to actual tracking link
+- All 5 /go/ routes verified 302 with s2=qrp_t{n} attribution
+
+**QR-PERKS — MAGNET FILES:**
+- 8 print-ready PNG files generated T1-T8
+- 7200px wide, 300 DPI, Level H error correction
+- All 8 URLs verified scanning correctly
+- Design: rocket with coins/cash, QR in blue frame panel
+- Print spec: 24"x36" portrait cutout — QR = 6.2" at this size
+- Files ready to send to print shop
+
+**SASCRIBE — AUDIT:**
+- Impressions: 1,020 (28d) — doubled since Session 7
+- ElevenLabs pillar: 993 impressions, pos 8.8, declining from peak 208 on Apr 3
+- 13 articles published total
+- First click: still 0 — need pos 5-6
+- Pipeline firing correctly Mon/Wed/Fri — NordVPN and ElevenLabs reviews published
+- No US impressions yet — all international (Brazil leading)
+- Next priority: get NordVPN + new ElevenLabs review indexed
+
+**SESSION 9 PRIORITIES (in order):**
+1. QR-Perks: Finalize magnet design + send to print
+2. QR-Perks: Driver self-signup + SVG QR generation + W9 collection
+3. QR-Perks: Fix site issues + verify driver login + end-to-end test
+4. QR-Perks: Admin password change + email list signup
+5. Sascribe: Investigate why only ElevenLabs pillar indexed — fix crawl if needed
+6. Future: Migrate n8n to self-hosted (not urgent)
