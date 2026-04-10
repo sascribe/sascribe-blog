@@ -439,3 +439,30 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
 | ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
 | ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
+
+---
+
+## SASCRIBE.COM — Infrastructure
+
+| Status | Task | Priority | Notes |
+|---|---|---|---|
+| ⏳ PENDING | Migrate n8n pipeline off cloud to self-hosted | Future | Eliminate monthly fees + downtime dependency. Not urgent — do after QR-Perks drivers live |
+
+---
+
+## QR-PERKS.COM — Launch Priorities (Session 9)
+
+| Status | Task | Priority | Notes |
+|---|---|---|---|
+| ⏳ PENDING | Finalize QR code magnet design | S9 | Robot border vs current rocket — Blue deciding |
+| ⏳ PENDING | Print 8 magnets T1-T8 | S9 | Files ready — send to print shop 24x36 portrait |
+| ⏳ PENDING | Fix site issues (audit needed) | S9 | TBD from testing session |
+| ⏳ PENDING | Verify driver login works end to end | S9 | Test with testdriver@qrperks.com token |
+| ⏳ PENDING | Build driver self-signup flow | S9 | Driver enters info, selects truck, gets approved |
+| ⏳ PENDING | Auto-generate SVG QR code on driver signup | S9 | Unique QR per truck, vector, downloadable |
+| ⏳ PENDING | Driver magnet rules page | S9 | What they can/cannot do per Valerie MaxBounty rules |
+| ⏳ PENDING | W9 collection flow | S9 | Required before first payout — IRS compliance |
+| ⏳ PENDING | Legal pages for drivers | S9 | Contractor agreement, payment terms, 1099 disclosure |
+| ⏳ PENDING | End-to-end conversion flow test | S9 | Scan QR → land on site → tap offer → verify SubID fires |
+| ⏳ PENDING | Change admin password | S9 | Currently qrperks2026 — security risk |
+| ⏳ PENDING | Email list signup on landing page | S9 | Lead capture — "Sign up for future deals" |
