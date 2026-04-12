@@ -506,3 +506,21 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ✅ DONE | STATE.md + CHECKLIST updated | S10 | Both pushed to GitHub |
 | ⏳ PENDING | Resend domain verified | S9 | Check resend.com dashboard ~2026-04-12 |
 | ⏳ PENDING | YouTube API key | S8 | Add YOUTUBE_API_KEY to ~/.zshrc + n8n pipeline |
+
+---
+
+## SESSION 11 — QR-Perks Functional Fixes (2026-04-12)
+
+| Status | Task | Notes |
+|--------|------|-------|
+| ✅ DONE | EN/ES toggle CSS fix | [data-lang] selectors in DS; removed .en,.es{display:none} |
+| ✅ DONE | getLang() precedence bug | Fixed: check localStorage first, key = qrp-lang |
+| ✅ DONE | All pages get data-lang | html element has data-lang='en' on all shells |
+| ✅ DONE | Driver Login in nav | EN/ES, outlined btn, links to /driver |
+| ✅ DONE | Driver Portal in footer | Links to /driver |
+| ✅ DONE | Offer CTAs open _blank | doRedirect uses window.open(...,'_blank') |
+| ✅ DONE | FALLBACK_AFFILIATES URLs | Real tracking URLs added |
+| ✅ DONE | handleGo fallback | Uses url field not hardcoded homepage |
+| ✅ DONE | GitHub pushed | SHA: 3af00bd47e |
+| ✅ DONE | All routes pass | / /driver /terms /earnings-disclaimer /contact |
+| ✅ DONE | driver@qr-perks.com login | QRDriver2026! → ok:true |
