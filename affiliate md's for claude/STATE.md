@@ -924,3 +924,15 @@ Result: articles engineered to beat page 1, not just match it
 - GitHub repo: sascribe/qrperks-site — worker.js SHA: 00c98467ca
 - All 22 route tests: PASS (0 failures)
 - Test accounts: driver@qr-perks.com / QRDriver2026! (active, truck t3)
+
+**SESSION 11 — QR-Perks Functional Fixes (2026-04-12):**
+- EN/ES toggle fixed: root cause was CSS .en,.es{display:none} + getLang() precedence bug
+- Fix: Added [data-lang] CSS selectors in DS; JS now sets data-lang attr on html element
+- getLang() fixed: localStorage.getItem('qrp-lang') checked first (key changed from qrp_lang to qrp-lang)
+- All pages (landing, legal, contact, auth, dash, admin) now have data-lang='en' on html tag
+- Driver Login link added to nav (EN: 'Driver Login' / ES: 'Acceso Conductores')
+- Driver Portal link added to footer
+- Offer CTA buttons: doRedirect() now opens in _blank (new tab) instead of same window
+- FALLBACK_AFFILIATES: real affiliate tracking URLs added
+- handleGo: now uses fallback URL field instead of hardcoded qr-perks.com
+- GitHub: sascribe/qrperks-site worker.js SHA: 3af00bd47e
