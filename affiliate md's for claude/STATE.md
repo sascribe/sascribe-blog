@@ -631,7 +631,8 @@ Result: articles engineered to beat page 1, not just match it
 - YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX added to ~/.zshrc
 
 **Discord Command Center — Fixed**
-- Root cause: Inject Live Data used .join('\n') creating literal newlines injected into JSON body string → "Input does not match expected shape" from Anthropic API
+- Root cause: Inject Live Data used .join('
+') creating literal newlines injected into JSON body string → "Input does not match expected shape" from Anthropic API
 - Fix 1: Inject Live Data rewritten to output a flat single-line liveData string using || separators
 - Fix 2: Claude Executes Command body changed from raw JSON template to JSON.stringify() expression — properly escapes all special chars including newlines and quotes
 - Fix 3: GitHub checklist base64 decode changed from manual decoder to Buffer.from(b64, 'base64').toString('utf-8')
@@ -685,7 +686,8 @@ Result: articles engineered to beat page 1, not just match it
 - Keys added to ~/.zshrc: YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX
 
 **Discord Command Center — LIVE (10 nodes, all live data)**
-- Root cause of break: Inject Live Data used .join('\n') → literal newlines injected into JSON body string → Anthropic 400 "Input does not match expected shape"
+- Root cause of break: Inject Live Data used .join('
+') → literal newlines injected into JSON body string → Anthropic 400 "Input does not match expected shape"
 - Fix: Claude Executes Command body changed to JSON.stringify() expression; Inject Live Data rewritten to flat single-line liveData string; GitHub base64 decode changed to Buffer.from()
 - All commands now pull live: CF 7-day stats, n8n pipeline executions, GitHub checklist
 
@@ -909,4 +911,16 @@ Result: articles engineered to beat page 1, not just match it
 5. Sascribe: Investigate why only ElevenLabs pillar indexed — fix crawl if needed
 6. Future: Migrate n8n to self-hosted (not urgent)
 
-
+**SESSION 10 — QR-PERKS v3 REBUILD COMPLETE (2026-04-12):**
+- Full v3 rebuild: new design system (electric green #00ff88, dark #0a0a0f bg)
+- Landing page rebuilt: "Scan. Save. Score." hero, email capture, How It Works, footer links
+- All auth pages rebuilt: login, signup, forgot/reset, verify email — JSON-based forms
+- Driver dashboard rebuilt: sticky nav, QR code preview, W9, referrals, earnings, settings
+- Admin dashboard rebuilt: defensive Supabase fetches, JSON POST login, cookie auth
+- 4 legal pages added: /privacy, /terms, /earnings-disclaimer, /contact
+- Mock data seeded: 4 drivers, trucks t1-t3 assigned, 30 scans, 8 conversions, 15 email captures
+- Bug fixed: all Response.redirect() calls converted from relative to absolute URLs
+- SUPABASE_URL Worker secret re-set with correct value
+- GitHub repo: sascribe/qrperks-site — worker.js SHA: 00c98467ca
+- All 22 route tests: PASS (0 failures)
+- Test accounts: driver@qr-perks.com / QRDriver2026! (active, truck t3)
