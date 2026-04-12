@@ -487,3 +487,22 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ⏳ PENDING | Change admin password | S9 | Currently qrperks2026 — security risk |
 | ⏳ PENDING | Email list signup on landing page | S9 | Lead capture — "Sign up for future deals" |
 
+---
+
+## SESSION 10 — QR-Perks v3 Rebuild (2026-04-12)
+
+| Status | Task | Session | Notes |
+|--------|------|---------|-------|
+| ✅ DONE | New design system | S10 | Electric green #00ff88, dark bg #0a0a0f |
+| ✅ DONE | Landing page rebuild | S10 | Scan.Save.Score. hero, email capture, How It Works |
+| ✅ DONE | Driver auth rebuild | S10 | Login/signup/forgot/reset — JSON forms, bilingual |
+| ✅ DONE | Driver dashboard rebuild | S10 | QR codes, W9, referrals, earnings, settings |
+| ✅ DONE | Admin dashboard rebuild | S10 | JSON POST login, defensive Supabase fetches |
+| ✅ DONE | 4 legal pages added | S10 | /privacy /terms /earnings-disclaimer /contact |
+| ✅ DONE | Mock data seeded | S10 | 4 drivers, t1-t3 assigned, 30 scans, 8 conversions, 15 captures |
+| ✅ DONE | Bug fix: relative redirects | S10 | All Response.redirect() now use absolute URLs |
+| ✅ DONE | All 22 route tests passing | S10 | 0 failures, including auth flows and 404 |
+| ✅ DONE | Worker deployed | S10 | SHA: 00c98467ca — live at qr-perks.com |
+| ✅ DONE | STATE.md + CHECKLIST updated | S10 | Both pushed to GitHub |
+| ⏳ PENDING | Resend domain verified | S9 | Check resend.com dashboard ~2026-04-12 |
+| ⏳ PENDING | YouTube API key | S8 | Add YOUTUBE_API_KEY to ~/.zshrc + n8n pipeline |
