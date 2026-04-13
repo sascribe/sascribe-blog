@@ -180,52 +180,97 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 
 ---
 
----
+## PROJECT 2: QR-PERKS.COM — Mobile Billboard Affiliate
 
-## PROJECT 2: QR-PERKS.COM — Trucker Offer Cards
+### Concept
+Dynamic QR codes on 8-10 commercial truck wraps in Southern California. Each truck gets unique URL (/t1-/t10) for per-truck conversion tracking and driver profit sharing via SubID parameters. Audience is broad SoCal drivers — NOT just truckers. Bilingual EN/ES.
 
 ### Infrastructure
 - **Domain**: qr-perks.com (Cloudflare)
-- **Worker**: qrperks (Cloudflare Workers)
+- **Hosting**: Cloudflare Worker — qr-perks.com (worker name: `qrperks`, account: d7da7199489efff971e5884c54e59255)
+- **Supabase**: `fsaxluprhgmyaipaujdn.supabase.co` (project: qrperks, region: us-west-1)
 - **GitHub repo**: sascribe/qrperks-site
-- **Supabase project**: fsaxluprhgmyaipaujdn
-- **Deploy**: Cloudflare Workers API (multipart PUT)
-- **Email provider**: Resend (RESEND_API_KEY in ~/.zshrc + Worker secret)
-- **From address**: noreply@qr-perks.com
-- **DNS records**: DKIM, SPF MX, SPF TXT, DMARC added to Cloudflare 2026-04-10
-- **Domain verification**: triggered 2026-04-10 — pending DNS propagation (up to 48hr)
-- **Worker secrets configured 2026-04-10**: DRIVER_JWT_SECRET ✅ | W9_ENCRYPTION_KEY ✅ | ADMIN_PASSWORD (rotated) ✅
+- **Admin panel**: qr-perks.com/admin (password: qrperks2026 — change this)
+- **Driver portal**: qr-perks.com/driver
+- **Email**: qrperks@gmail.com
 
-### Active Affiliates (as of 2026-04-08 — updated session 8b)
-| # | ID | Name | Category | Payout | Status |
-|---|---|---|---|---|---|
-| 1 | paypal-sweeps | Win $1000 PayPal Cash | sweepstakes | $2.50 SOI | active |
-| 2 | walmart-sweeps | Win $1000 Walmart Gift Card | sweepstakes | $2.50 SOI | active |
-| 3 | maybelline | Free Maybelline Set | sweepstakes | $3.00 SOI | active |
-| 4 | slam-dunk-loans | Get Cash Fast — Up to $50K | loans | $9.00 CPL | active |
-| 5 | rok-financial | ROK Financial | business_funding | rev-share | active |
+### Landing Page
+- Bilingual EN/ES with auto-detect Spanish browser
+- 5 planned offer cards: Auto Insurance, Free Bank Account, Phone Plan, Business Funding, Gas Savings
+- Dark theme, mobile-first
+- Currently 3 active placeholders: INSURANCE_AFFILIATE_LINK_HERE, BANKING_AFFILIATE_LINK_HERE, PHONE_AFFILIATE_LINK_HERE
+- ROK Financial business funding already has live links (see below)
 
-Ordered easiest→hardest to convert. All /go/ routes return 302 with s2=qrp_t{truckId} attribution.
-Tracking URLs in Supabase only — NOT in GitHub.
-worker.js GitHub SHA: 503a973f
+### ROK Financial — LIVE
+- Business Financing URL: https://go.mypartner.io/business-financing/?ref=001Qk00000jaDEZIA2
+- Business Financing URL Spanish: https://go.mypartner.io/business-financing/?ref=001Qk00000jaDEZIA2&lang=es
+- Referral Partner URL: https://go.mypartner.io/referral-partner/?ref=001Qk00000jaDEZIA2
+- Commission: 20% of ROK's upfront revenue on funded deals + 2.5% override on referred agents
+- Approved websites: qr-perks.com, sascribe.com, dumptikgo.com, geostransportation.com, speedydumpsco.com
+- Rules: No paid search, must get marketing materials approved, no self-referrals, no fees to customers
 
-### /go/ Handler
-- Reads URL from Supabase, falls back to FALLBACK_AFFILIATES
-- Appends: s2=qrp_{truckId}, utm_source=qrperks, utm_medium=qr, utm_campaign={truckId}
-- truckId from: ?t= param → qrp_truck cookie → 'unknown'
+### Affiliate Strategy
+- Model: CPL (Cost Per Lead) preferred for mobile out-of-home traffic
+- Target: Liberty Mutual/insurance CPL, free banking CPA, phone CPA, business funding CPL
+- Per-truck tracking: Cloudflare redirect rules /t1-/t10 + SubID on affiliate links
+- Driver profit sharing via SubID conversion tracking
+
+### Direct Programs Applied/Pending
+- FlexOffers: application submitted (pending) — for insurance, banking, phone
+- Mint Mobile: applied at mintmobile.com/affiliate-program (qrperks@gmail.com)
+- EverQuote: email sent to affiliates@everquote.com
+- The Zebra: email sent to partners contact
+- CJ Affiliate: account created (qrperks@gmail.com), QR-Perks publisher property set up
+
+### Offer Cards Planned (5 total)
+1. Auto Insurance — CPL via EverQuote/Liberty Mutual/The Zebra
+2. Free Bank Account — CPA via Chime/Varo/Axos
+3. Phone Plan — CPA via Mint Mobile/Tello/Cricket/AT&T
+4. Business Funding — ROK Financial (LIVE)
+5. Gas Savings — Upside or PayPal Debit Card (gas cashback angle)
+
+### Status
+- Site fully rebuilt and live at qr-perks.com ✅
+- Cloudflare Worker deployed (1228 lines) — all routes handled ✅
+- Supabase backend live — 6 tables, RLS policies ✅
+- 50 trucks seeded (t1–t10 active, t11–t50 dormant) ✅
+- 5 affiliate slots seeded in database ✅
+- ROK Financial live on offer card 1 (update URL in Supabase affiliates table) ✅
+- 4 coming soon cards live (insurance, banking, phone, gas)
+- Driver dashboard live at qr-perks.com/driver ✅
+- Admin dashboard live at qr-perks.com/admin ✅
+- All legal pages live — FTC compliant ✅
+- SubID tracking wired — every truck appends ?subid=qrp_t{n} to affiliate links ✅
+- Test driver: testdriver@qrperks.com / token: c3132d77e2447fd7f8fb3fd02407b12f57d2dd978493a5e0 / truck t1
+- QR codes not yet printed — pending driver onboarding
+- Remaining 4 offer cards pending affiliate approvals (EverQuote, Chime, Mint, Upside)
+- ROK Financial URL in Supabase needs updating to actual tracking link (go.mypartner.io/...)
+
+---
+
+### Skills Library
+All skills saved to ~/Desktop/AffiliateMarketing/
+- SKILL_technical_seo_auditor.md — fetch any URL, full SEO audit, Hugo/affiliate-specific checks, auto-fix via Claude Code
+- SKILL_keyword_clustering_topic_map.md — discover + cluster keywords per affiliate, feeds n8n pipeline
+- SKILL_backlink_outreach.md — personalized outreach generation, affiliate testimonial priority, Google Sheets tracking
+- SKILL_social_media_manager.md — Blotato API + n8n, repurpose articles to social, FUTURE PHASE
+- SKILL_master_orchestration.md — weekly command center, pulls all data sources, hands off to other skills
+
+---
+
 ## CREDENTIALS LOCATIONS
 
 ### Permanently saved in ~/.zshrc (local machine — auto-loaded every session)
 - `GH_TOKEN` — GitHub API token (repo read/write for sascribe/sascribe-blog)
 - `GOOGLE_APPLICATION_CREDENTIALS` — path to `/Users/jessiepinedo/Desktop/AffiliateMarketing/sascribe-7b5ed8c59364.json` (service account: claude-code@sascribe.iam.gserviceaccount.com)
 - `CLOUDFLARE_API_TOKEN` — Cloudflare API token (zone Transform Rules access)
-- `CF_ZONE_SASCRIBE` — Cloudflare zone ID for sascribe.com (`$CF_ZONE_SASCRIBE`)
-- `CF_ZONE_QRPERKS` — Cloudflare zone ID for qr-perks.com (`$CF_ZONE_QRPERKS`)
+- `CF_ZONE_SASCRIBE` — Cloudflare zone ID for sascribe.com (`a415e6afd4367cdcf15c1335b17cb6e0`)
+- `CF_ZONE_QRPERKS` — Cloudflare zone ID for qr-perks.com (`2c424ccc5fe93280f0d28ffdd3327dce`)
 - `N8N_API_KEY` — n8n cloud API key (onestepbeyond.app.n8n.cloud)
 - `N8N_BASE_URL` — `https://onestepbeyond.app.n8n.cloud/api/v1`
-- `CF_ACCOUNT_ID` — `$CF_ACCOUNT_ID`
+- `CF_ACCOUNT_ID` — `d7da7199489efff971e5884c54e59255`
 - `SUPABASE_ACCESS_TOKEN` — Supabase personal access token (Management API / DDL execution)
-- `SUPABASE_QRPERKS_URL` — `https://$SUPABASE_PROJECT_REF.supabase.co`
+- `SUPABASE_QRPERKS_URL` — `https://fsaxluprhgmyaipaujdn.supabase.co`
 - `SUPABASE_QRPERKS_PUBLISHABLE` — saved in ~/.zshrc (publishable/anon key)
 - `SUPABASE_QRPERKS_SECRET` — saved in ~/.zshrc (service role key)
 
@@ -241,33 +286,28 @@ worker.js GitHub SHA: 503a973f
 
 ## CHANGELOG
 
-### 2026-04-10 — QR-Perks Full Platform Rebuild (Session 9)
+### 2026-04-12 — GSC Audit + Next Session Planning
 
-**QR-PERKS COMPLETE PLATFORM REBUILD — DEPLOYED:**
-- New worker.js: 2,077 lines — complete rewrite, GitHub SHA: 503a973f
-- Driver auth system: signup, email verification, login (PBKDF2-SHA256 + JWT httpOnly cookies)
-- Driver dashboard: stats, QR code download, W9 form (AES-256-GCM tax ID encryption), referrals, earnings, settings
-- Admin dashboard: driver approvals, W9 management, commission calc, offer management, email campaigns, lead captures
-- Commission engine: 20% truck conversion, 10% referral override, Cron monthly auto-calc
-- Landing page: Instant Deal Model with featured hero card, micro-bridge overlay, EN/ES bilingual toggle
-- Email system: 6 templates via Resend (welcome, verify, password reset, W9 confirm, referral signup, new deal)
-- New Supabase tables: email_captures, password_resets, email_verifications, referrals, commissions, w9_submissions, email_logs
-- New Worker secrets needed (manual): DRIVER_JWT_SECRET, W9_ENCRYPTION_KEY (set via CF dashboard)
-- Resend domain (noreply@qr-perks.com): DNS records added, verification pending ~48hr
+**GSC FINDINGS (28-day window, pulled 2026-04-12):**
+- 0 clicks, 1,230 impressions, avg position 8.3
+- ElevenLabs pillar = 97% of all impressions, position 8.4
+- 13 articles live across 5 affiliates
+- Pipeline down — hit n8n execution limits
+- GSC indexing issues: 27 discovered not indexed, 1 crawled not indexed, 1 duplicate canonical
 
-**SECURITY CHECKS PASSED:**
-- JWT: httpOnly + Secure + SameSite=Lax ✓
-- tax_id: stored only as encrypted + last4, never exposed raw ✓
-- Unsubscribe link in all email templates ✓
-- Password: PBKDF2-SHA256, 100k iterations ✓
+**CLOUDFLARE (last 30 days):**
+- 14,290 pageviews / 4,167 uniques
+- April 1 spike confirmed as content publish event (not bot anomaly)
 
-**MANUAL ACTIONS REQUIRED (Blue):**
-1. Set Worker secret: DRIVER_JWT_SECRET = `openssl rand -hex 32` output
-2. Set Worker secret: W9_ENCRYPTION_KEY = `openssl rand -hex 32` output
-3. Change ADMIN_PASSWORD from current value to something strong
-4. Confirm Resend domain verified (check resend.com dashboard ~48hr after Apr 10)
-5. Send test from noreply@qr-perks.com once domain is verified
+**PIPELINE STATUS:**
+- n8n execution limit hit — no new articles since last run
+- Fix: migrate pipeline from n8n to GitHub Actions
 
+**NEXT SESSION PRIORITIES (Session 8):**
+1. Sascribe: migrate pipeline from n8n to GitHub Actions, run next 2 articles, fix GSC indexing issues
+2. QR-Perks: full functional audit and fix remaining broken features — complete the platform
+
+---
 
 ### 2026-04-06 — Discord Bot Live Data + 4-Source Pipeline Complete
 
@@ -328,7 +368,7 @@ worker.js GitHub SHA: 503a973f
 - Brief uses pipe-separated format (safe for JSON embedding)
 
 **API KEYS CONFIRMED:**
-- YOUTUBE_API_KEY: $YOUTUBE_API_KEY (in ~/.zshrc)
+- YOUTUBE_API_KEY: AIzaSyAfhuVMV2oB0P6UXD6_EGlVtAG3Ziff56I (in ~/.zshrc)
 - GOOGLE_CSE_KEY: same key (needs API restriction fix for Custom Search)
 - GOOGLE_CSE_CX: b5832306c3be3443d (in ~/.zshrc)
 
@@ -516,7 +556,7 @@ Result: articles engineered to beat page 1, not just match it
 
 **QR-PERKS FULL BUILD:**
 - Complete site rebuilt as Cloudflare Worker (1228 lines, single worker.js file)
-- Supabase project: $SUPABASE_PROJECT_REF (us-west-1) — schema deployed via Management API
+- Supabase project: fsaxluprhgmyaipaujdn (us-west-1) — schema deployed via Management API
 - 6 tables: affiliates, drivers, trucks, scans, conversions, admins — all with RLS
 - 50 trucks seeded (t1–t10 active), 5 affiliates seeded (ROK live, 4 coming_soon)
 - All routes live: /, /t1-t50, /driver, /driver/dashboard, /admin, /admin/dashboard, /go/{affiliate}, /privacy, /terms, /disclosure, /contractor
@@ -607,351 +647,3 @@ Result: articles engineered to beat page 1, not just match it
 ---
 
 *Update this file at the end of every session.*
-
-
-## Session 7 — 2026-04-06
-
-### What Was Built
-
-**Security Audit (completed first)**
-- Scanned all 48 files in sascribe/sascribe-blog for exposed credentials
-- Found and redacted: YouTube API key (STATE.md), CF zone IDs + account ID (STATE.md, MASTER_CHECKLIST.md, SKILL file), Supabase project ref (CLAUDE_ROLE.md + 3 other files)
-- 4 commits pushed — all files now use env var names ($YOUTUBE_API_KEY etc.), never raw values
-- CREDENTIALS.md confirmed local-only at ~/Desktop/AffiliateMarketing/CREDENTIALS.md
-
-**Research Intelligence Node — LIVE**
-- 4 research sources now feed every article before generation:
-  - Source 1: DuckDuckGo HTML scrape (competitor top results + snippets)
-  - Source 2: YouTube Data API v3 (top 3 videos by view count for affiliate + "review 2026")
-  - Source 3: Reddit JSON API (top 5 posts, no auth required)
-  - Source 4: Affiliate own site (homepage scraped, HTML stripped, first 1500 chars)
-- Research: Collect node aggregates all sources → Research: Haiku Brief (claude-haiku-4-5-20251001) → flat pipe-separated brief → injected as researchBriefText into Opus prompt
-- Blog Pipeline now 21 nodes total (was 12 before research chain)
-- Google CSE (Source 1 upgrade): API enabled in GCP, key restrictions updated. Blocked by billing requirement — DuckDuckGo fallback active until GCP billing enabled
-- YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX added to ~/.zshrc
-
-**Discord Command Center — Fixed**
-- Root cause: Inject Live Data used .join('
-') creating literal newlines injected into JSON body string → "Input does not match expected shape" from Anthropic API
-- Fix 1: Inject Live Data rewritten to output a flat single-line liveData string using || separators
-- Fix 2: Claude Executes Command body changed from raw JSON template to JSON.stringify() expression — properly escapes all special chars including newlines and quotes
-- Fix 3: GitHub checklist base64 decode changed from manual decoder to Buffer.from(b64, 'base64').toString('utf-8')
-- All commands now pull live data: CF 7-day stats, n8n pipeline executions, GitHub checklist
-
-**NordVPN First Article Published**
-- File: content/posts/2026-04-06-nordvpn-review-1775517557899.md
-- URL: https://sascribe.com/posts/2026-04-06-nordvpn-review-1775517557899/
-- Content type: review | ~1,600 words | Score: 8.7/10
-- Research brief visible in article: Reddit question "Is NordVPN actually no-logs?" directly addressed, Meshnet feature covered (competitor gap), real-world speed percentages (85-92% on NordLynx), Deloitte audit referenced, full competitor table (NordVPN vs ExpressVPN vs Surfshark)
-- FTC disclosure correctly placed after hook paragraph
-- 3 affiliate links embedded
-
-**Pipeline Bugs Fixed**
-1. JSON.stringify() on all Anthropic API calls — raw template injection breaks JSON when content has special chars; both blog pipeline and Discord bot now use JSON.stringify()
-2. ISO date format in slugs — Format Article1 now uses new Date().toISOString().split('T')[0] instead of human-readable date string
-3. Code fence stripping — Format Article1 strips ```markdown ... ``` wrappers Claude occasionally adds despite instructions
-4. continueOnFail=True on Reddit, Google Search, and Affiliate Content research nodes — n8n cloud IPs are blocked by Reddit; pipeline now continues with partial research if any source fails
-5. Deterministic affiliate selection — Pick Content Type1 now selects affiliate with oldest Last Published Date (was random, caused NordVPN to be skipped at 9am scheduled run)
-6. Discord notification syntax — content expression used escaped quotes $(\'...\') causing syntax error; fixed to $json refs
-7. Cover image frontmatter — Generate Article1 body now includes exact Hugo frontmatter template (cover: image:/style:, affiliateURL, affiliateName, schema) so Claude cannot deviate
-
-**Trigger Method for n8n Cloud (documented)**
-- n8n public API v1 has no manual execution endpoint for scheduled workflows
-- Webhook triggers do not register on n8n cloud even with proper UUID node IDs
-- Working method: temporarily override Schedule Trigger cron (in PDT timezone, not UTC), deactivate/reactivate workflow, poll until execution fires, restore original cron
-- Original cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am PDT = 16:00 UTC)
-
-### Session 7 Sascribe Pipeline State
-- Nodes: 21 total | Active: True | Schedule: Mon/Wed/Fri 9am PDT
-- Articles published: NordVPN review (Apr 6) + all previous
-- Sheet state: NordVPN Last Published Date needs update to today (pipeline Update Sheet node handles this automatically)
-- Next scheduled run: Wed Apr 9 — ElevenLabs alternatives (oldest after NordVPN)
-
-
-## Session 7 — 2026-04-06 (Final)
-
-### Completed This Session
-
-**Security Audit**
-- Scanned all 48 repo files for credentials — found and redacted: YouTube API key in STATE.md, CF zone IDs + account ID in STATE.md/MASTER_CHECKLIST.md/SKILL file, Supabase project ref in CLAUDE_ROLE.md and 3 others
-- All 4 files patched in 4 commits; env var names ($YOUTUBE_API_KEY etc.) used everywhere in repo
-- Permanent security rule added to CLAUDE_ROLE.md: raw credentials live only in ~/.zshrc and ~/Desktop/AffiliateMarketing/CREDENTIALS.md
-
-**Research Intelligence Node — LIVE (21 nodes total)**
-- 4 sources per article: DuckDuckGo HTML (competitor snippets), YouTube Data API v3 (top 3 videos), Reddit JSON (top 5 posts), Affiliate site homepage (HTML stripped, 1500 chars)
-- Haiku (claude-haiku-4-5-20251001) synthesises all sources into structured JSON brief
-- Parse Brief converts to flat pipe-separated researchBriefText injected into Opus prompt
-- NordVPN brief verified: competitor gaps (Meshnet, Threat Protection, speed benchmarks), 5 Reddit questions, 9 FAQ targets, pricing reality, affiliate emphasis — all visible in published article
-- Google CSE Source 1 upgrade pending GCP billing; DuckDuckGo fallback active
-- Keys added to ~/.zshrc: YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX
-
-**Discord Command Center — LIVE (10 nodes, all live data)**
-- Root cause of break: Inject Live Data used .join('
-') → literal newlines injected into JSON body string → Anthropic 400 "Input does not match expected shape"
-- Fix: Claude Executes Command body changed to JSON.stringify() expression; Inject Live Data rewritten to flat single-line liveData string; GitHub base64 decode changed to Buffer.from()
-- All commands now pull live: CF 7-day stats, n8n pipeline executions, GitHub checklist
-
-**NordVPN — First Article Published**
-- File: 2026-04-06-nordvpn-review-1775517557899.md
-- URL: https://sascribe.com/posts/2026-04-06-nordvpn-review-1775517557899/
-- Content type: review | ~1,600 words | Score: 8.7/10
-- Cover image: /images/nordvpn/logo-nordvpn.png — clickable hero (affiliateURL present)
-- CTA bar: "Try NordVPN Free →" — rendered via affiliateURL in single.html
-- CF cache purged post-publish
-
-**Pipeline Bugs Fixed**
-1. JSON.stringify() on all Anthropic API calls — raw {{ }} template injection breaks on special chars
-2. ISO date slugs — Format Article1 uses new Date().toISOString().split('T')[0]; was human-readable "April 6, 2026"
-3. Code fence stripping — Format Article1 strips ```markdown``` wrappers Claude adds despite instructions
-4. continueOnFail=True — Research: Reddit/Google Search/Affiliate Content; n8n cloud IPs blocked by Reddit
-5. Deterministic affiliate selection — Pick Content Type now picks oldest Last Published Date; was random (NordVPN skipped at 9am run)
-6. Discord notification syntax — fixed escaped quotes $(\'...\') in content expression
-7. Frontmatter template hardcoded — Generate Article1 body includes exact cover:/affiliateURL/affiliateName/schema fields; Claude cannot deviate
-8. max_tokens 4000 → 8000 — Haiku recommends 2000-3000 words; Opus was hitting ceiling at ~1600 words
-
-**n8n Trigger Method (documented)**
-- Public API v1 has no manual execution endpoint for scheduled workflows
-- Webhook nodes do not register on n8n cloud
-- Working: override Schedule Trigger cron in PDT (UTC-7), deactivate/reactivate, poll /executions, restore cron
-- Original cron: 0 9 * * 1,3,5 (Mon/Wed/Fri 9am PDT = 16:00 UTC)
-
-### Sascribe Blog Pipeline — Current State
-- Nodes: 22 | Active: True | Schedule: Mon/Wed/Fri 9am PDT | max_tokens: 8000
-- Articles: 7 total (AdCreative ×4, ElevenLabs ×2, Beehiiv ×3, Synthesia ×2, NordVPN ×1)
-- Next run: Wed Apr 9 — ElevenLabs alternatives (oldest unpublished type after NordVPN)
-
-### Research Intelligence — Source 4b Added (Session 7)
-- New node: Research: Affiliate Pricing (httpRequest GET, continueOnFail=true)
-- Chain: Affiliate Content → Affiliate Pricing → Collect
-- Fetches affiliate's /pricing page in addition to homepage
-- Haiku extracts: plan names, prices, billing periods, active promotions → pricing_verified JSON field with fetched_at timestamp
-- If /pricing 404s or returns <200 chars: pricing_status=unverified → Opus uses "check current pricing on their site"
-- Parse Brief passes through pricing_verified object and pricing_status to Generate Article1
-
-### NordVPN Logo Sizing Fix (Session 7)
-- Context: NordVPN logo is wide/horizontal; ElevenLabs/Beehiiv/Synthesia logos are taller/squarer
-- Old: uniform padding (20px featured, 10px thumb, 24px hero) — logo appeared undersized vs others
-- New: asymmetric padding — more vertical, minimal horizontal so wide logo fills container proportionally
-  - Featured: padding: 28px 8px
-  - Thumb:    padding: 14px 4px
-  - Hero:     padding: 36px 8px
-- File: static/css/sascribe.css | SHA: b453d46a
-- CF cache purged after push
-
----
-
-## AUDIT BASELINE — 2026-04-08 21:12 UTC
-
-**vs morning baseline — deltas shown**
-
----
-
-### GOOGLE SEARCH CONSOLE
-
-| Metric | Morning | Evening 21:12 | Delta |
-|---|---|---|---|
-| 28D Impressions | 630 | **799** | **+169 (+27%)** |
-| 28D Clicks | 0 | 0 | 0 |
-| CTR | 0% | 0% | — |
-| Avg Position | 7.9 | 8.01 | -0.11 |
-| 7D Impressions | — | 791 | — |
-
-→ **Apr 6 now visible in GSC** (169 imp, pos 8.4) — 2-day lag cleared.
-→ Staircase: 2→4→2→44→208→198→172→169. Stabilizing 170s range.
-→ Still 0 clicks across all days. Position 8.01 average — page 1 tail.
-
-**Daily trend (all days):**
-
-| Date | Imp | Clk | Pos |
-|---|---|---|---|
-| Mar 28 | 0 | 0 | — |
-| Mar 29 | 2 | 0 | 4.0 |
-| Mar 30 | 4 | 0 | 2.5 |
-| Mar 31 | 0 | 0 | — |
-| Apr 1 | 2 | 0 | 2.0 |
-| Apr 2 | 44 | 0 | 6.7 |
-| Apr 3 | 208 | 0 | 8.1 |
-| Apr 4 | 198 | 0 | 8.1 |
-| Apr 5 | 172 | 0 | 7.9 |
-| Apr 6 | 169 | 0 | 8.4 ← NEW |
-
-**Top pages (28d):**
-
-| Page | Imp | Clk | Pos |
-|---|---|---|---|
-| ElevenLabs pillar (/posts/2026-04-01-elevenlabs-pillar-…) | 776 | 0 | 8.1 |
-| Homepage (sascribe.com/) | 23 | 0 | 3.7 |
-| /tags/corporate-training/ | 2 | 0 | 6.0 |
-| /tags/saas/ | 1 | 0 | 2.0 ← NEW |
-
-**Top queries (28d, non-advanced-operator):**
-
-| Query | Imp | Pos |
-|---|---|---|
-| elevenlabs update april 2026 | ~7 | 9.7 |
-| elevenlabs 2026 updates voice cloning | 2 | 6.5 |
-| best ai voice generation 2026 elevenlabs | 1 | 10.0 |
-| best video platform with voice cloning 2025 2026 | 1 | 20.0 |
-
-**Country breakdown (28d top):** Brazil (52), Canada (22), Australia (9), Germany (7), China (7)
-→ Brazil leads consistently. No US organic signal yet.
-
----
-
-### CLOUDFLARE
-
-| Date | PV | Req | Uniq | Cache% | Bot% |
-|---|---|---|---|---|---|
-| Apr 1 | 4,517 | 5,570 | 240 | 0.0% | 85.4% |
-| Apr 2 | 1,286 | 2,042 | 313 | 0.0% | 32.1% |
-| Apr 3 | 724 | 977 | 204 | 0.0% | 28.7% |
-| Apr 4 | 404 | 622 | 167 | 0.0% | 37.1% |
-| Apr 5 | 455 | 1,399 | 164 | 1.9% | 66.8% |
-| Apr 6 | 1,017 | 1,128 | 188 | 9.0% | 70.9% |
-| Apr 7 | 1,260 | 1,552 | 496 | 5.9% | 25.1% |
-| **Apr 8 (21:12 UTC)** | **1,196** | **1,390** | **539** | **10.1%** | **31.2%** |
-
-**Apr 8 top countries:** RU (535), FR (222), GB (175), US (174), CN (141)
-→ Bot flag: RU+FR+CN = 898 of 1,390 = 64.6%. Heavy bot day.
-→ US is #4 today (174 req) — real traffic signal.
-→ **Cache: 10.1% — new high.** Rising trend: 0%→9%→5.9%→10.1% as Cloudflare caches repeat URLs.
-
----
-
-### GITHUB — CONTENT
-
-**13 articles** — +1 from this morning.
-
-| Affiliate | Articles | Published Types |
-|---|---|---|
-| AdCreative | 4 | review, comparison, tutorial, use-cases |
-| ElevenLabs | 3 | pillar, comparison, review ← NEW |
-| Beehiiv | 3 | review, comparison, pillar |
-| Synthesia | 2 | pillar, tutorial |
-| NordVPN | 1 | review |
-| **Total** | **13** | |
-
-**New article published today (Apr 8 9am PDT):**
-- File: `2026-04-08-elevenlabs-review-1775664089639.md`
-- Title: "ElevenLabs Review 2026: Is This the Best AI Voice Generator for Content Creators?"
-- URL: https://sascribe.com/posts/2026-04-08-elevenlabs-review-1775664089639/
-
----
-
-### N8N PIPELINE
-
-| Execution | Status | Time | Duration | Notes |
-|---|---|---|---|---|
-| 2564 | ✅ SUCCESS | 2026-04-08 16:00 UTC | 93 sec | ElevenLabs review published |
-| 1849 | ❌ error | 2026-04-07 16:15 | 13s | pre-fix, 0 nodes |
-| 1844 | ❌ error | 2026-04-07 16:07 | 12s | pre-fix |
-| 1840 | ❌ error | 2026-04-07 16:02 | 11s | pre-fix |
-| 1836 | ❌ error | 2026-04-07 15:55 | 14s | pre-fix |
-
-**KEY FINDING: Pipeline timezone is PDT (UTC-7), not UTC.**
-- Cron `0 9 * * 1,3,5` fires at 9am PDT = 16:00 UTC on MWF
-- Bypass cron attempts during this session targeted UTC times — all missed
-- Future bypass crons must target PDT: e.g., to fire at 1pm PDT → `0 20 * * *`
-
-**Next scheduled runs:** Fri Apr 10 9am PDT (16:00 UTC), Mon Apr 13 9am PDT
-**Next article:** Synthesia or Beehiiv (oldest unpublished type)
-
----
-
-### BEEHIIV
-
-6 active subscribers — unchanged. No new organic subscribers.
-
----
-
-### PIPELINE CONTENT QUEUE (next runs)
-
-| Priority | Affiliate | Next Type | Reason |
-|---|---|---|---|
-| 1 | Synthesia | review | Oldest unpublished type (pillar+tutorial done) |
-| 2 | Beehiiv | tutorial or use-cases | review+comparison+pillar done |
-| 3 | NordVPN | comparison | Only review published |
-| 4 | AdCreative | alternatives or pillar | 4 types done |
-| 5 | ElevenLabs | tutorial | 3 types done (pillar+comparison+review) |
-
----
-
-### 2026-04-10 — Session 8 Complete
-
-**QR-PERKS — FULL OFFER STACK LIVE:**
-- Max Bounty approved — full offer research completed
-- 4 live offer cards wired: PayPal $1000 SOI (#25393), Walmart $1000 SOI (#25394), Maybelline SOI (#24725), Slam Dunk Loans CPL (#11384)
-- All tracking links with SubID wired in Supabase + Cloudflare Worker
-- Cards ordered by conversion likelihood (easiest → hardest)
-- ROK Financial URL updated to actual tracking link
-- All 5 /go/ routes verified 302 with s2=qrp_t{n} attribution
-
-**QR-PERKS — MAGNET FILES:**
-- 8 print-ready PNG files generated T1-T8
-- 7200px wide, 300 DPI, Level H error correction
-- All 8 URLs verified scanning correctly
-- Design: rocket with coins/cash, QR in blue frame panel
-- Print spec: 24"x36" portrait cutout — QR = 6.2" at this size
-- Files ready to send to print shop
-
-**SASCRIBE — AUDIT:**
-- Impressions: 1,020 (28d) — doubled since Session 7
-- ElevenLabs pillar: 993 impressions, pos 8.8, declining from peak 208 on Apr 3
-- 13 articles published total
-- First click: still 0 — need pos 5-6
-- Pipeline firing correctly Mon/Wed/Fri — NordVPN and ElevenLabs reviews published
-- No US impressions yet — all international (Brazil leading)
-- Next priority: get NordVPN + new ElevenLabs review indexed
-
-**SESSION 9 PRIORITIES (in order):**
-1. QR-Perks: Finalize magnet design + send to print
-2. QR-Perks: Driver self-signup + SVG QR generation + W9 collection
-3. QR-Perks: Fix site issues + verify driver login + end-to-end test
-4. QR-Perks: Admin password change + email list signup
-5. Sascribe: Investigate why only ElevenLabs pillar indexed — fix crawl if needed
-6. Future: Migrate n8n to self-hosted (not urgent)
-
-**SESSION 10 — QR-PERKS v3 REBUILD COMPLETE (2026-04-12):**
-- Full v3 rebuild: new design system (electric green #00ff88, dark #0a0a0f bg)
-- Landing page rebuilt: "Scan. Save. Score." hero, email capture, How It Works, footer links
-- All auth pages rebuilt: login, signup, forgot/reset, verify email — JSON-based forms
-- Driver dashboard rebuilt: sticky nav, QR code preview, W9, referrals, earnings, settings
-- Admin dashboard rebuilt: defensive Supabase fetches, JSON POST login, cookie auth
-- 4 legal pages added: /privacy, /terms, /earnings-disclaimer, /contact
-- Mock data seeded: 4 drivers, trucks t1-t3 assigned, 30 scans, 8 conversions, 15 email captures
-- Bug fixed: all Response.redirect() calls converted from relative to absolute URLs
-- SUPABASE_URL Worker secret re-set with correct value
-- GitHub repo: sascribe/qrperks-site — worker.js SHA: 00c98467ca
-- All 22 route tests: PASS (0 failures)
-- Test accounts: driver@qr-perks.com / QRDriver2026! (active, truck t3)
-
-**SESSION 11 — QR-Perks Functional Fixes (2026-04-12):**
-- EN/ES toggle fixed: root cause was CSS .en,.es{display:none} + getLang() precedence bug
-- Fix: Added [data-lang] CSS selectors in DS; JS now sets data-lang attr on html element
-- getLang() fixed: localStorage.getItem('qrp-lang') checked first (key changed from qrp_lang to qrp-lang)
-- All pages (landing, legal, contact, auth, dash, admin) now have data-lang='en' on html tag
-- Driver Login link added to nav (EN: 'Driver Login' / ES: 'Acceso Conductores')
-- Driver Portal link added to footer
-- Offer CTA buttons: doRedirect() now opens in _blank (new tab) instead of same window
-- FALLBACK_AFFILIATES: real affiliate tracking URLs added
-- handleGo: now uses fallback URL field instead of hardcoded qr-perks.com
-- GitHub: sascribe/qrperks-site worker.js SHA: 3af00bd47e
-
-**SESSION 9 COMPLETED (QR-Perks) — 2026-04-12:**
-- EN/ES toggle fully fixed: CSS .en,.es{display:none} bug + JS getLang() operator precedence bug resolved
-- All pages toggle correctly: landing, legal, contact, auth, dash, admin — [data-lang] CSS selector approach
-- Driver Login added to nav (EN/ES) and footer (Driver Portal / Portal Conductores)
-- /driver routes verified: GET /driver 302, /driver/login 200, POST /driver/login 200
-- Offer CTA buttons: new tab (_blank), real affiliate URLs from DB, bridge overlay preserved
-- All 4 legal pages live and returning 200: /privacy /terms /earnings-disclaimer /contact
-- Language consistency pass complete — no text leaks between EN and ES
-- worker.js deployed SHA: 3af00bd47e (live at qr-perks.com)
-- 8 print-ready magnet files: T1-T8 SVG + JPG QR codes, 222–353 DPI
-- Mock data seeded: 4 drivers, 30 scans, 8 conversions, 15 email captures, trucks t1-t3 assigned
-- Test driver: driver@qr-perks.com / QRDriver2026! (active, truck T3)
-
-**QR-PERKS PENDING (next session):**
-- Full feature audit — some features not yet fully functional
-- Resend domain verification — check resend.com dashboard
-- First driver onboarding
-- Print shop submission for 8 magnets (T1-T8)
