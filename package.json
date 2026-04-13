@@ -1,0 +1,13 @@
+{
+  "name": "sascribe-pipeline",
+  "version": "1.0.0",
+  "description": "GitHub Actions content pipeline replacing n8n for sascribe.com",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generate": "node scripts/generate-article.js"
+  },
+  "dependencies": {}
+}
