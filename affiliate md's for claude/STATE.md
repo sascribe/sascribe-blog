@@ -65,29 +65,41 @@ Images handled per-affiliate using CSS attribute selectors in `AFFILIATE IMAGE O
 .article-hero__img[src*="/newaffiliate/"] { object-fit: contain; background: #0C0C0F; padding: 40px; max-height: 320px; border: none; }
 ```
 
-### n8n Pipeline
-**Workflow**: Sascribe Blog Pipeline
-**Schedule**: Monday, Wednesday, Friday at 9am
+### GitHub Actions Pipeline (ACTIVE — replaced n8n S8)
+**Script**: `scripts/generate-article.js`
+**Workflow**: `.github/workflows/content-pipeline.yml`
+**Schedule**: Mon 9am PT (long-form), Tue/Thu/Sat 9am PT (short) — cron 0 17 * * 1/2/4/6
 
-**Node flow:**
-1. Schedule Trigger
-2. Read Affiliates (Google Sheets — Return ALL Matches)
-3. Pick Content Type (Code — picks random affiliate, avoids already-published content types per affiliate, avoids repeating last affiliate)
-4. Get Images (GitHub API — reads affiliate image folder)
-5. Pick Image (Code — uses `$input.all()` to read all files, selects random image)
-6. Generate Article (HTTP Request — Anthropic API, RAW body mode)
-7. Format Article (Code — filename with Date.now() timestamp)
-8. Push to GitHub (HTTP Request — Authorization FIXED VALUE not expression)
-9. Update Sheet (Google Sheets — updates Last Content Type, Last Published Date, Total Articles Published, Published Types)
-10. Build URL (Code)
-11. IndexNow Ping (HTTP Request — RAW body mode)
+**Flags:**
+- `--type [long-form|short]` — article length/format
+- `--affiliate [slug|auto]` — specific affiliate or auto-select by oldest Last Published Date
+- `--dry-run` — print article to stdout, no commit or sheet update
 
-**Key settings:**
-- Read Affiliates: "Return All Matches"
-- Push to GitHub: FIXED VALUE header
-- Generate Article: RAW body mode
-- Rule 7 REMOVED from prompt (no in-article screenshot embeds — broken images)
-- Frontmatter includes `cover.style: "{{ $json['Image Style'] ?? 'logo' }}"`
+**Pipeline flow:**
+1. Load service account from `GSHEETS_SERVICE_ACCOUNT_JSON` env var
+2. Read Google Sheet → pick affiliate (oldest Last Published Date, skip most-recent to avoid repeat)
+3. Fetch Reddit (r/artificial, r/ChatGPT, r/MachineLearning) + YouTube trending tech
+4. Score topics by engagement × affiliate keyword relevance → pick best
+5. Pick random image from affiliate's GitHub image folder
+6. Generate article via Anthropic API (claude-opus-4-6, 8000 max_tokens)
+7. Validate: frontmatter, description 150-160c, affiliate link, FAQPage JSON-LD, internal link
+8. Commit to content/posts/ via GitHub API
+9. Update Sheet: col H (type), col I (date), col J (total+1), col L (append type)
+10. IndexNow ping: api.indexnow.org
+11. On failure: log FAILED row to Sheet + exit code 1
+
+**Secrets set in GitHub Actions (2026-04-13):**
+- `ANTHROPIC_API_KEY` ✅
+- `YOUTUBE_API_KEY` ✅
+- `GH_TOKEN` ✅
+- `GSHEETS_SERVICE_ACCOUNT_JSON` ✅
+
+**⚠️ PENDING — workflow YAML push blocked:** GH_TOKEN lacks `workflow` scope.
+File is ready at `/tmp/sascribe-pipeline/content-pipeline.yml` locally.
+Blue must: (1) go to github.com/settings/tokens → add `workflow` scope to GH_TOKEN
+OR (2) paste content-pipeline.yml into GitHub UI at sascribe/sascribe-blog/.github/workflows/
+
+**Abandoned:** n8n workflow epcaH77ZVtixXwa9 — execution credits exhausted, do not touch.
 
 ### Google Sheet
 **ID**: 1MUkQZRjOFqfpcPCnNL6sPaUETHa3I8q9okbV-wT7MXI
@@ -285,6 +297,42 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 ---
 
 ## CHANGELOG
+
+### 2026-04-13 — Session 8: Pipeline Migration + GSC Fixes
+
+**PIPELINE: n8n → GitHub Actions**
+- `scripts/generate-article.js` built — zero external deps, Node 20, native fetch + crypto
+- `package.json` created (zero deps, type: module)
+- Workflow YAML written at `.github/workflows/content-pipeline.yml`
+- ⚠️ Workflow push blocked by missing `workflow` scope on GH_TOKEN — Blue must fix manually
+- All 4 GitHub Actions secrets set: ANTHROPIC_API_KEY, YOUTUBE_API_KEY, GH_TOKEN, GSHEETS_SERVICE_ACCOUNT_JSON
+- Pipeline uses claude-opus-4-6 (consistent with previous n8n setup)
+
+**TWO ARTICLES PUBLISHED:**
+- Article 1: ElevenLabs tutorial (long-form) — LIVE
+  URL: https://sascribe.com/posts/2026-04-13-elevenlabs-tutorial-1776098862246/
+  Commit: 8f2d07a4
+- Article 2: AdCreative news (short) — LIVE
+  URL: https://sascribe.com/posts/2026-04-13-adcreative-news-1776098917281/
+  Commit: 7f76394c
+
+**GSC FIXES (all committed — CF Pages building):**
+- baseof.html: added `<link rel="canonical" href="{{ .Permalink }}">` + conditional noindex for taxonomy terms (<3 articles) and paginated pages (commit: ea567df2)
+- hugo.toml: added `[sitemap]` config (changefreq weekly, priority 0.8)
+- layouts/sitemap.xml: custom sitemap template created — excludes "taxonomy" and "term" page kinds
+- ElevenLabs pillar: title updated to target "elevenlabs update 2026" (commit: 98a9ad6e)
+- ElevenLabs pillar description: set to exactly "ElevenLabs 2026: Complete guide to every new voice AI feature, update, and use case. Hands-on review with real examples."
+- All 12 articles with short/long descriptions fixed to 150-160 chars
+
+**ARTICLES NOW LIVE: 15 total** (was 13 + 2 new today)
+Sheet updated: ElevenLabs total=4 (types: pillar,comparison,review,tutorial), AdCreative total=5
+
+**WORKING INSIGHT — SESSION 8:**
+53. **GH_TOKEN workflow scope required for CI** — GitHub Personal Access Tokens need `workflow` scope explicitly to create/modify `.github/workflows/*.yml` files. `repo` scope alone is not sufficient. When setting up GH_TOKEN for new repos with Actions, add `workflow` scope from the start.
+54. **CF Pages queues all commits as separate builds** — each git push triggers a new Pages build. When pushing many commits in rapid succession (12 commits in 5 minutes), CF Pages queues all of them. Only the latest actually matters — earlier queued builds get superseded but still queue. Plan batch commits differently in future.
+55. **n8n execution limits are permanent** — free/low tier n8n cloud accounts have hard execution ceilings. When hit, the account is blocked until next billing period. GitHub Actions is the better long-term platform: free for public repos, 2000 minutes/month on free tier for private repos, no per-execution limits.
+
+---
 
 ### 2026-04-12 — GSC Audit + Next Session Planning
 
