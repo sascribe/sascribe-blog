@@ -524,3 +524,25 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 | ✅ DONE | GitHub pushed | SHA: 3af00bd47e |
 | ✅ DONE | All routes pass | / /driver /terms /earnings-disclaimer /contact |
 | ✅ DONE | driver@qr-perks.com login | QRDriver2026! → ok:true |
+
+---
+
+## SESSION 9 — QR-Perks Final Checklist (2026-04-12)
+
+| Status | Task | Notes |
+|--------|------|-------|
+| ✅ DONE | EN/ES toggle fixed | CSS [data-lang] selector + getLang() precedence bug resolved |
+| ✅ DONE | All pages toggle correctly | Landing, legal, contact, auth, dash, admin |
+| ✅ DONE | Driver Login in nav + footer | EN: Driver Login / ES: Acceso Conductores |
+| ✅ DONE | /driver routes verified | GET 302→200, POST login 200 |
+| ✅ DONE | Offer CTAs fixed | New tab, real affiliate URLs, bridge preserved |
+| ✅ DONE | All 4 legal pages live | /privacy /terms /earnings-disclaimer /contact |
+| ✅ DONE | Language consistency pass | No EN/ES text leaks |
+| ✅ DONE | worker.js deployed | SHA: 3af00bd47e, live at qr-perks.com |
+| ✅ DONE | 8 magnet files finalized | T1-T8 SVG + JPG, 222–353 DPI, print-ready |
+| ✅ DONE | Mock data seeded | 4 drivers, 30 scans, 8 conversions, 15 captures |
+| ✅ DONE | Test driver account | driver@qr-perks.com / QRDriver2026! |
+| ⏳ PENDING | Full feature audit | Some features not yet fully functional |
+| ⏳ PENDING | Resend domain verified | Check resend.com |
+| ⏳ PENDING | First driver onboarding | Real driver, real truck |
+| ⏳ PENDING | Print shop submission | 8 magnets T1-T8 |
