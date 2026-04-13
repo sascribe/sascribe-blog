@@ -1,7 +1,7 @@
 # MASTER_CHECKLIST.md
 *Single source of truth for all tasks across the operation.*
 *Updated automatically every Claude Code session.*
-*Last updated: 2026-04-05 14:36*
+*Last updated: 2026-04-12*
 
 ---
 
@@ -33,6 +33,7 @@ Status codes:
 | ✅ DONE | Synthesia disclosure moved after hook | S5 | 2 articles fixed |
 | ✅ DONE | Hook-first rule in n8n prompt | S5 | All future articles |
 | ✅ DONE | rel=sponsored on affiliate links | S3 | single.html |
+| ⏳ PENDING | Fix GSC indexing issues | S8 | 27 discovered not indexed, 1 crawled not indexed, 1 duplicate canonical |
 | ⏳ PENDING | Backlink outreach — first 5 targets | S5 | Blue needs to send emails |
 | ⏳ PENDING | Content refresh (30-day cycle) | S5 | Logic in audit, no articles refreshed yet |
 | ⏳ PENDING | Word count audit — flag thin articles | S5 | Min threshold TBD |
@@ -41,13 +42,14 @@ Status codes:
 
 | Status | Task | Session | Notes |
 |--------|------|---------|-------|
-| ✅ DONE | n8n pipeline Mon/Wed/Fri 9am | S1 | Active — epcaH77ZVtixXwa9 |
+| ❌ DROPPED | n8n pipeline Mon/Wed/Fri 9am | S1 | Hit execution limits — migrating to GitHub Actions |
 | ✅ DONE | NordVPN as 5th affiliate | S3 | CSS, redirect, Sheet, n8n wired |
 | ✅ DONE | 2-week content queue Apr 7-18 | S4 | NordVPN first |
 | ✅ DONE | Keyword clusters all 5 affiliates | S4 | In Sheet col M |
 | ✅ DONE | NordVPN Dos/Donts in Sheet col E | S4 | Commission rates + compliant angles |
-| ✅ DONE | NordVPN first article | S4 | Auto-publishes Mon Apr 7 9am |
-| ⏳ PENDING | Expand to 6th affiliate | — | After NordVPN articles flowing |
+| ⏳ PENDING | Migrate pipeline to GitHub Actions | S8 | n8n hit execution limits — top priority |
+| ⏳ PENDING | Run next 2 articles after migration | S8 | Once GH Actions pipeline confirmed live |
+| ⏳ PENDING | Expand to 6th affiliate | — | After pipeline migrated + stable |
 
 ## SASCRIBE.COM — Affiliates
 
@@ -77,28 +79,14 @@ Status codes:
 | ✅ DONE | Legal pages | S5 | /privacy /terms /disclosure /contractor |
 | ✅ DONE | SubID tracking | S5 | Per truck attribution |
 | ✅ DONE | ROK Financial offer card 1 | S3 | Live |
-| ✅ DONE | Email list signup (micro-bridge overlay) | S9 | Captures email+phone, fire-and-forget to Supabase |
-| ✅ DONE | ADMIN_PASSWORD rotated from default | S9 | Set via CF API 2026-04-10 |
+| ⏳ PENDING | Email list signup on landing page | S5 | High priority |
+| ⏳ PENDING | Change admin password | S5 | Currently qrperks2026 |
 | ⏳ PENDING | ROK Financial URL update in Supabase | S5 | Use actual tracking link |
 | ⏳ PENDING | Insurance offer card | — | EverQuote/Liberty Mutual |
 | ⏳ PENDING | Banking offer card | — | Chime/Axos |
 | ⏳ PENDING | Phone plan offer card | — | Mint Mobile |
 | ⏳ PENDING | Gas savings offer card | — | Upside/PayPal |
-| ✅ DONE | Driver auth system | S9 | Signup, verify email, login, forgot/reset password |
-| ✅ DONE | PBKDF2-SHA256 passwords | S9 | 100k iterations via SubtleCrypto — no bcrypt needed |
-| ✅ DONE | JWT httpOnly sessions | S9 | HMAC-SHA256, 7-day, Secure + SameSite=Lax |
-| ✅ DONE | Driver dashboard | S9 | Stats, QR codes, W9, referrals, earnings, settings |
-| ✅ DONE | W9 form AES-256-GCM encryption | S9 | tax_id_encrypted stored, tax_id never exposed |
-| ✅ DONE | Admin dashboard rebuild | S9 | Approvals, W9 mgmt, commissions, offers, leads, campaigns |
-| ✅ DONE | Commission engine | S9 | 20% truck + 10% referral override, monthly cron |
-| ✅ DONE | Resend email system | S9 | 6 templates, email_logs table |
-| ✅ DONE | EN/ES bilingual landing page | S9 | localStorage + navigator.language |
-| ✅ DONE | Micro-bridge overlay | S9 | Email/phone capture before affiliate redirect |
-| ✅ DONE | DRIVER_JWT_SECRET set on qrperks Worker | S9 | Set via CF API 2026-04-10 |
-| ✅ DONE | W9_ENCRYPTION_KEY set on qrperks Worker | S9 | Set via CF API 2026-04-10 |
-| ⏳ PENDING | Confirm Resend domain verified | S9 | noreply@qr-perks.com — check resend.com ~Apr 12 |
-| ⏳ PENDING | First real driver onboarded | — | Blocked on secrets being set |
-| ⏳ PENDING | QR codes printed | — | Blocked on driver onboarding |
+| ⏳ PENDING | QR codes printed | — | Blocked on offer cards |
 | ⏳ PENDING | First real driver onboarded | — | Blocked on QR codes |
 
 ---
@@ -135,13 +123,13 @@ Status codes:
 | ✅ | GH_TOKEN | GitHub |
 | ✅ | GOOGLE_APPLICATION_CREDENTIALS | GSC + Sheets |
 | ✅ | CLOUDFLARE_API_TOKEN | CF zones + workers |
-| ✅ | CF_ZONE_SASCRIBE | $CF_ZONE_SASCRIBE |
-| ✅ | CF_ZONE_QRPERKS | $CF_ZONE_QRPERKS |
-| ✅ | CF_ACCOUNT_ID | $CF_ACCOUNT_ID |
+| ✅ | CF_ZONE_SASCRIBE | a415e6afd4367cdcf15c1335b17cb6e0 |
+| ✅ | CF_ZONE_QRPERKS | 2c424ccc5fe93280f0d28ffdd3327dce |
+| ✅ | CF_ACCOUNT_ID | d7da7199489efff971e5884c54e59255 |
 | ✅ | N8N_API_KEY | n8n cloud |
 | ✅ | N8N_BASE_URL | onestepbeyond.app.n8n.cloud/api/v1 |
 | ✅ | SUPABASE_ACCESS_TOKEN | Management API |
-| ✅ | SUPABASE_QRPERKS_URL | $SUPABASE_PROJECT_REF.supabase.co |
+| ✅ | SUPABASE_QRPERKS_URL | fsaxluprhgmyaipaujdn.supabase.co |
 | ✅ | SUPABASE_QRPERKS_SECRET | Service role key |
 | ✅ | DISCORD_BOT_TOKEN | YouTube Factory Bot |
 | ✅ | ANTHROPIC_API_KEY | Claude API |
@@ -340,209 +328,25 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 6. Test on one manual execution before activating on schedule
 7. Monitor first 3 articles for quality — adjust Haiku prompts as needed
 
-### SESSION 7 TASK QUEUE
+### SESSION 8 TASK QUEUE (Next Session — 2026-04-12)
+
+**GSC SNAPSHOT (pulled 2026-04-12):**
+- 28-day: 0 clicks, 1,230 impressions, position 8.3
+- ElevenLabs pillar = 97% of impressions, pos 8.4
+- 13 articles live across 5 affiliates
+- Cloudflare: 14,290 PV / 4,167 uniques last 30 days
+- April 1 spike = content publish event ✅ confirmed
 
 | Priority | Task | Status | Notes |
 |----------|------|--------|-------|
-| 1 | Fix Discord bot live data | ✅ DONE | !stats !credits !queue etc return static Claude text not live API data. Needs real data injection per command. |
-| 2 | NordVPN first article published | ✅ DONE | Pipeline fixed — verify article quality and Discord ping fires |
-| 3 | Get GCP API keys (YOUTUBE_API_KEY, GOOGLE_CSE_KEY, GOOGLE_CSE_CX) | ✅ DONE | YOUTUBE_API_KEY + GOOGLE_CSE_KEY + GOOGLE_CSE_CX — 5 min manual at console.cloud.google.com |
-| 4 | Build Research Intelligence Node | ✅ DONE | 3 sources live (YouTube, Reddit, Affiliate). Google CSE pending API key restriction fix. |
-| 5 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
-| 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → Credentials → edit API key → add Custom Search API to allowed APIs |
+| 1 | Migrate Sascribe pipeline: n8n → GitHub Actions | ⏳ PENDING | n8n hit execution limits — pipeline down |
+| 1 | Run next 2 articles after migration | ⏳ PENDING | Confirm GitHub Actions pipeline fires correctly |
+| 1 | Fix GSC indexing: 27 discovered not indexed | ⏳ PENDING | Check canonical tags, sitemap coverage, fetch-as-Google |
+| 1 | Fix GSC: 1 crawled not indexed + 1 duplicate canonical | ⏳ PENDING | Deduplicate canonical, check self-referential tags |
+| 2 | QR-Perks: full functional audit | ⏳ PENDING | Audit every feature, fix all broken flows |
+| 2 | QR-Perks: complete the platform | ⏳ PENDING | See QR-PERKS section for pending offer cards |
+| 3 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue return static text, not live data |
+| 4 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
+| 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → Credentials → add Custom Search API |
 | 6 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | Get from cj.com dashboard |
 
-### NEXT BUILD PRIORITIES (Session 7)
-
-| Priority | Task | Status | Notes |
-|---|---|---|---|
-| 1 | Enable GCP billing for sascribe project | ⏳ PENDING | Unlocks Google CSE as Source 1 — console.cloud.google.com → sascribe → Billing |
-| 2 | Regenerate YouTube/CSE API key in GCP | ⏳ PENDING | Old key was briefly in STATE.md — rotate at console.cloud.google.com → Credentials |
-| 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
-| 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
-| 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard |
-
-
-### SESSION 7 PRIORITIES — Next Session
-
-| Priority | Task | Status | Notes |
-|---|---|---|---|
-| 1 | Enable GCP billing for sascribe project | ⏳ PENDING | Unlocks Google CSE as Source 1 (replaces DuckDuckGo). console.cloud.google.com → sascribe → Billing |
-| 2 | Regenerate YouTube/CSE API key in GCP | ⏳ PENDING | Old key briefly exposed in STATE.md — rotate at console.cloud.google.com → Credentials |
-| 3 | Add !qrperks Discord command | ⏳ PENDING | Supabase query for truck scan/conversion stats |
-| 4 | QR-Perks offer cards | ⏳ PENDING | Insurance (EverQuote), Banking (Chime), Phone (Mint Mobile), Gas (Upside) |
-| 5 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | From cj.com dashboard — enables CJ affiliate tracking |
-
-- [x] ✅ Research: Affiliate Pricing node — /pricing page fetch → Haiku pricing_verified extraction with timestamp (Session 7)
-
-- [x] ✅ NordVPN logo sizing fix — asymmetric padding (28px 8px / 14px 4px / 36px 8px) for wide horizontal logo visual weight (Session 7)
-
-- [x] ✅ Generate Article1 prompt: removed duplicate disclosure rule, added rule 9 internal links (5-8, first within 300w) (Session 7)
-- [x] ✅ NordVPN article: removed duplicate disclosure + added 5 internal links to ElevenLabs/Synthesia/Beehiiv/AdCreative (Session 7)
-
-
-## AFFILIATES — APPROVED, PAUSED
-
-### COMETLY — APPROVED, PAUSED ⏸️
-- **Status:** Approved, not yet activated
-- **Commission:** 20% recurring, 60-day cookie
-- **Managed via:** First Promoter (cometly.firstpromoter.com)
-- **Activation threshold:** 20+ articles published on existing affiliates AND a content angle exists that serves paid media / ecommerce marketing audience
-- **When activated:** Add to Google Sheet, create /go/cometly Cloudflare redirect, wire into n8n pipeline
-- **Do not write content for this affiliate until threshold is met** — audience mismatch with current SaaS/AI tools readership
-
-
-### SESSION 7 COMPLETED TASKS — 2026-04-08
-
-| Status | Task | Notes |
-|---|---|---|
-| ✅ DONE | Research: Affiliate Pricing node | /pricing fetch added as source 4b — continueOnFail True |
-| ✅ DONE | NordVPN logo CSS asymmetric padding | 28px 8px / 14px 4px / 36px 8px — wide logo visual parity |
-| ✅ DONE | Generate Article1 disclosure rule fix | Rule 7 → no in-body disclosure (template handles it) |
-| ✅ DONE | Internal links rule added to prompt | Rule 9: 5-8 links, first within 300w, topically relevant |
-| ✅ DONE | NordVPN article: disclosure removed | Clean body, 0 internal links (correct — no VPN content yet) |
-| ✅ DONE | Beehiiv credentials added | API key + pub ID in ~/.zshrc and CREDENTIALS.md (local only) |
-| ✅ DONE | Cometly documented in MASTER_CHECKLIST | Approved/paused — threshold: 20+ articles |
-| ✅ DONE | Pipeline syntax fix — Generate Article1 | Missing `"` in body expression → 0 nodes ran; FIXED |
-| ✅ DONE | Cron restored: 0 9 * * 1,3,5 | Confirmed in workflow after fix |
-| ✅ DONE | SEO audit all 12 articles | Full pass — all CRITICAL issues identified |
-| ✅ DONE | FAQPage JSON-LD all 12 articles | Added to 10 articles (2 already had it) |
-| ✅ DONE | BlogPosting JSON-LD all 12 articles | Added to body of all 12 (frontmatter schema field + body JSON-LD) |
-| ✅ DONE | cover.style fixed — 6 articles | adcreative-ai x4 → promo; elevenlabs-pillar + beehiiv-pillar → logo |
-| ✅ DONE | Duplicate disclosure removed — Synthesia x2 | synthesia-pillar + synthesia-tutorial |
-| ✅ DONE | Beehiiv-pillar FAQ section | Was empty — 5 Q&A pairs added |
-| ✅ DONE | CF cache purged | After all 12 article pushes |
-
-### SESSION 7 PENDING ITEMS
-
-| Status | Task | Notes |
-|---|---|---|
-| ⏳ PENDING | ElevenLabs review article | Blocked on pipeline — next scheduled run Wed Apr 8 9am UTC |
-| ⏳ PENDING | Manual pipeline test | n8n UI → onestepbeyond.app.n8n.cloud → Execute workflow |
-| ⏳ PENDING | Rotate YouTube API key | Was briefly in STATE.md — regenerate at console.cloud.google.com |
-| ⏳ PENDING | Enable GCP billing | Unlocks Google CSE as research source — console.cloud.google.com |
-| ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
-| ✅ DONE | QR-Perks offer cards — all 5 live | rok-financial, paypal-sweeps, auto-insurance, dinero-dinero, maybelline |
-| ✅ DONE | ROK Financial URL update in Supabase | Updated to go.mypartner.io tracking link |
-| ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
-| ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
-
-### SESSION 8 COMPLETED (2026-04-08)
-
-| Status | Task | Notes |
-|---|---|---|
-| ✅ DONE | QR-Perks — Supabase affiliates updated | Upserted 5; deleted banking, phone-plan, gas-savings |
-| ✅ DONE | QR-Perks — worker.js FALLBACK updated | New 5 affiliates, status=active, no tracking URLs in GitHub |
-| ✅ DONE | QR-Perks — isLive check updated | Now handles status 'live' OR 'active' |
-| ✅ DONE | QR-Perks — /go/ handler s2 param | Replaced subid with s2=qrp_{truckId} for proper attribution |
-| ✅ DONE | QR-Perks — worker.js deployed | Deployed to Cloudflare (script: qrperks) |
-| ✅ DONE | All 5 /go/ routes verified | 302 redirect with correct dest URL + s2 param |
-| ✅ DONE | worker.js pushed to GitHub | sascribe/qrperks-site — SHA: 3c6928fb |
-| ✅ DONE | Replace dinero-dinero → slam-dunk-loans | New CPL loans offer ($9.00), Supabase + worker |
-| ✅ DONE | Replace auto-insurance → walmart-sweeps | New SOI sweepstakes ($2.50), Supabase + worker |
-| ✅ DONE | Reorder offer cards by conversion ease | SOI first, CPL middle, high-friction last |
-| ✅ DONE | worker.js redeployed | GitHub SHA: b67b6510, Cloudflare qrperks script |
-| ✅ DONE | All 5 /go/ routes verified | paypal, walmart, maybelline, slam-dunk-loans, rok-financial |
-
-### SESSION 8 PENDING ITEMS
-
-| Status | Task | Notes |
-|---|---|---|
-| ⏳ PENDING | Rotate YouTube API key | Was briefly in STATE.md — regenerate at console.cloud.google.com |
-| ⏳ PENDING | Enable GCP billing | Unlocks Google CSE as research source — console.cloud.google.com |
-| ⏳ PENDING | !qrperks Discord command | Supabase query for truck scan/conversion stats |
-| ⏳ PENDING | Internal links — all articles | Possible once 20+ articles exist across categories |
-| ⏳ PENDING | First organic click | Expected when ElevenLabs pillar reaches pos 5-7 |
-
----
-
-## SASCRIBE.COM — Infrastructure
-
-| Status | Task | Priority | Notes |
-|---|---|---|---|
-| ⏳ PENDING | Migrate n8n pipeline off cloud to self-hosted | Future | Eliminate monthly fees + downtime dependency. Not urgent — do after QR-Perks drivers live |
-
----
-
-## QR-PERKS.COM — Launch Priorities (Session 9)
-
-| Status | Task | Priority | Notes |
-|---|---|---|---|
-| ✅ DONE | Resend account connected | S9 | API key in ~/.zshrc as RESEND_API_KEY |
-| ✅ DONE | RESEND_API_KEY set as Worker secret | S9 | Confirmed on qrperks Cloudflare Worker |
-| ✅ DONE | DNS records added to Cloudflare | S9 | DKIM, SPF MX, SPF TXT, DMARC on qr-perks.com |
-| ✅ DONE | Resend domain verification triggered | S9 | Pending DNS propagation (up to 48hr) |
-| ✅ DONE | Test email sent | S9 | Sent to sascribeblog@gmail.com via onboarding@resend.dev (id: 96d5fd1c) |
-| ⏳ PENDING | Send test from noreply@qr-perks.com | S9 | Retry once domain verified (~48hr) |
-| ⏳ PENDING | Finalize QR code magnet design | S9 | Robot border vs current rocket — Blue deciding |
-| ⏳ PENDING | Print 8 magnets T1-T8 | S9 | Files ready — send to print shop 24x36 portrait |
-| ⏳ PENDING | Fix site issues (audit needed) | S9 | TBD from testing session |
-| ⏳ PENDING | Verify driver login works end to end | S9 | Test with testdriver@qrperks.com token |
-| ⏳ PENDING | Build driver self-signup flow | S9 | Driver enters info, selects truck, gets approved |
-| ⏳ PENDING | Auto-generate SVG QR code on driver signup | S9 | Unique QR per truck, vector, downloadable |
-| ⏳ PENDING | Driver magnet rules page | S9 | What they can/cannot do per Valerie MaxBounty rules |
-| ⏳ PENDING | W9 collection flow | S9 | Required before first payout — IRS compliance |
-| ⏳ PENDING | Legal pages for drivers | S9 | Contractor agreement, payment terms, 1099 disclosure |
-| ⏳ PENDING | End-to-end conversion flow test | S9 | Scan QR → land on site → tap offer → verify SubID fires |
-| ⏳ PENDING | Change admin password | S9 | Currently qrperks2026 — security risk |
-| ⏳ PENDING | Email list signup on landing page | S9 | Lead capture — "Sign up for future deals" |
-
----
-
-## SESSION 10 — QR-Perks v3 Rebuild (2026-04-12)
-
-| Status | Task | Session | Notes |
-|--------|------|---------|-------|
-| ✅ DONE | New design system | S10 | Electric green #00ff88, dark bg #0a0a0f |
-| ✅ DONE | Landing page rebuild | S10 | Scan.Save.Score. hero, email capture, How It Works |
-| ✅ DONE | Driver auth rebuild | S10 | Login/signup/forgot/reset — JSON forms, bilingual |
-| ✅ DONE | Driver dashboard rebuild | S10 | QR codes, W9, referrals, earnings, settings |
-| ✅ DONE | Admin dashboard rebuild | S10 | JSON POST login, defensive Supabase fetches |
-| ✅ DONE | 4 legal pages added | S10 | /privacy /terms /earnings-disclaimer /contact |
-| ✅ DONE | Mock data seeded | S10 | 4 drivers, t1-t3 assigned, 30 scans, 8 conversions, 15 captures |
-| ✅ DONE | Bug fix: relative redirects | S10 | All Response.redirect() now use absolute URLs |
-| ✅ DONE | All 22 route tests passing | S10 | 0 failures, including auth flows and 404 |
-| ✅ DONE | Worker deployed | S10 | SHA: 00c98467ca — live at qr-perks.com |
-| ✅ DONE | STATE.md + CHECKLIST updated | S10 | Both pushed to GitHub |
-| ⏳ PENDING | Resend domain verified | S9 | Check resend.com dashboard ~2026-04-12 |
-| ⏳ PENDING | YouTube API key | S8 | Add YOUTUBE_API_KEY to ~/.zshrc + n8n pipeline |
-
----
-
-## SESSION 11 — QR-Perks Functional Fixes (2026-04-12)
-
-| Status | Task | Notes |
-|--------|------|-------|
-| ✅ DONE | EN/ES toggle CSS fix | [data-lang] selectors in DS; removed .en,.es{display:none} |
-| ✅ DONE | getLang() precedence bug | Fixed: check localStorage first, key = qrp-lang |
-| ✅ DONE | All pages get data-lang | html element has data-lang='en' on all shells |
-| ✅ DONE | Driver Login in nav | EN/ES, outlined btn, links to /driver |
-| ✅ DONE | Driver Portal in footer | Links to /driver |
-| ✅ DONE | Offer CTAs open _blank | doRedirect uses window.open(...,'_blank') |
-| ✅ DONE | FALLBACK_AFFILIATES URLs | Real tracking URLs added |
-| ✅ DONE | handleGo fallback | Uses url field not hardcoded homepage |
-| ✅ DONE | GitHub pushed | SHA: 3af00bd47e |
-| ✅ DONE | All routes pass | / /driver /terms /earnings-disclaimer /contact |
-| ✅ DONE | driver@qr-perks.com login | QRDriver2026! → ok:true |
-
----
-
-## SESSION 9 — QR-Perks Final Checklist (2026-04-12)
-
-| Status | Task | Notes |
-|--------|------|-------|
-| ✅ DONE | EN/ES toggle fixed | CSS [data-lang] selector + getLang() precedence bug resolved |
-| ✅ DONE | All pages toggle correctly | Landing, legal, contact, auth, dash, admin |
-| ✅ DONE | Driver Login in nav + footer | EN: Driver Login / ES: Acceso Conductores |
-| ✅ DONE | /driver routes verified | GET 302→200, POST login 200 |
-| ✅ DONE | Offer CTAs fixed | New tab, real affiliate URLs, bridge preserved |
-| ✅ DONE | All 4 legal pages live | /privacy /terms /earnings-disclaimer /contact |
-| ✅ DONE | Language consistency pass | No EN/ES text leaks |
-| ✅ DONE | worker.js deployed | SHA: 3af00bd47e, live at qr-perks.com |
-| ✅ DONE | 8 magnet files finalized | T1-T8 SVG + JPG, 222–353 DPI, print-ready |
-| ✅ DONE | Mock data seeded | 4 drivers, 30 scans, 8 conversions, 15 captures |
-| ✅ DONE | Test driver account | driver@qr-perks.com / QRDriver2026! |
-| ⏳ PENDING | Full feature audit | Some features not yet fully functional |
-| ⏳ PENDING | Resend domain verified | Check resend.com |
-| ⏳ PENDING | First driver onboarding | Real driver, real truck |
-| ⏳ PENDING | Print shop submission | 8 magnets T1-T8 |
