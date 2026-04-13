@@ -1,7 +1,7 @@
 # MASTER_CHECKLIST.md
 *Single source of truth for all tasks across the operation.*
 *Updated automatically every Claude Code session.*
-*Last updated: 2026-04-12*
+*Last updated: 2026-04-13*
 
 ---
 
@@ -33,7 +33,12 @@ Status codes:
 | ✅ DONE | Synthesia disclosure moved after hook | S5 | 2 articles fixed |
 | ✅ DONE | Hook-first rule in n8n prompt | S5 | All future articles |
 | ✅ DONE | rel=sponsored on affiliate links | S3 | single.html |
-| ⏳ PENDING | Fix GSC indexing issues | S8 | 27 discovered not indexed, 1 crawled not indexed, 1 duplicate canonical |
+| ✅ DONE | Fix GSC canonical tag | S8 | <link rel="canonical"> added to baseof.html |
+| ✅ DONE | Fix GSC noindex (taxonomy/pagination) | S8 | Conditional noindex added to baseof.html |
+| ✅ DONE | Fix sitemap (exclude taxonomy pages) | S8 | Custom layouts/sitemap.xml + hugo.toml sitemap config |
+| ✅ DONE | Fix all article meta descriptions | S8 | 12 articles updated to 150-160c |
+| ✅ DONE | ElevenLabs pillar title optimized | S8 | Targets "elevenlabs update 2026" query |
+| ⏳ PENDING | Monitor GSC re-indexing | S9 | Allow 7-14 days after canonical/noindex fixes |
 | ⏳ PENDING | Backlink outreach — first 5 targets | S5 | Blue needs to send emails |
 | ⏳ PENDING | Content refresh (30-day cycle) | S5 | Logic in audit, no articles refreshed yet |
 | ⏳ PENDING | Word count audit — flag thin articles | S5 | Min threshold TBD |
@@ -42,14 +47,16 @@ Status codes:
 
 | Status | Task | Session | Notes |
 |--------|------|---------|-------|
-| ❌ DROPPED | n8n pipeline Mon/Wed/Fri 9am | S1 | Hit execution limits — migrating to GitHub Actions |
+| ❌ DROPPED | n8n pipeline Mon/Wed/Fri 9am | S1 | Execution limits exhausted — replaced by GitHub Actions |
 | ✅ DONE | NordVPN as 5th affiliate | S3 | CSS, redirect, Sheet, n8n wired |
 | ✅ DONE | 2-week content queue Apr 7-18 | S4 | NordVPN first |
 | ✅ DONE | Keyword clusters all 5 affiliates | S4 | In Sheet col M |
 | ✅ DONE | NordVPN Dos/Donts in Sheet col E | S4 | Commission rates + compliant angles |
-| ⏳ PENDING | Migrate pipeline to GitHub Actions | S8 | n8n hit execution limits — top priority |
-| ⏳ PENDING | Run next 2 articles after migration | S8 | Once GH Actions pipeline confirmed live |
-| ⏳ PENDING | Expand to 6th affiliate | — | After pipeline migrated + stable |
+| ✅ DONE | scripts/generate-article.js | S8 | Zero-dep Node 20 — Sheet→research→Claude→commit→IndexNow |
+| ✅ DONE | 2 articles published (ElevenLabs tutorial + AdCreative news) | S8 | Both live — 200 confirmed |
+| ⚠️ BLOCKED | .github/workflows/content-pipeline.yml | S8 | GH_TOKEN needs `workflow` scope — add at github.com/settings/tokens |
+| ✅ DONE | GitHub Actions secrets (4) | S8 | ANTHROPIC_API_KEY, YOUTUBE_API_KEY, GH_TOKEN, GSHEETS_SERVICE_ACCOUNT_JSON |
+| ⏳ PENDING | Expand to 6th affiliate | — | After pipeline confirmed stable |
 
 ## SASCRIBE.COM — Affiliates
 
@@ -328,25 +335,35 @@ Room to publish daily (30/month) for ~$13.50/month — within $20 budget
 6. Test on one manual execution before activating on schedule
 7. Monitor first 3 articles for quality — adjust Haiku prompts as needed
 
-### SESSION 8 TASK QUEUE (Next Session — 2026-04-12)
+### SESSION 8 COMPLETED — 2026-04-13
 
-**GSC SNAPSHOT (pulled 2026-04-12):**
-- 28-day: 0 clicks, 1,230 impressions, position 8.3
-- ElevenLabs pillar = 97% of impressions, pos 8.4
-- 13 articles live across 5 affiliates
-- Cloudflare: 14,290 PV / 4,167 uniques last 30 days
-- April 1 spike = content publish event ✅ confirmed
+**DONE THIS SESSION:**
+- ✅ scripts/generate-article.js — zero-dep Node 20 pipeline live
+- ✅ package.json — zero deps
+- ✅ 4 GitHub Actions secrets set
+- ✅ ElevenLabs tutorial (long-form) published + live: https://sascribe.com/posts/2026-04-13-elevenlabs-tutorial-1776098862246/
+- ✅ AdCreative news (short) published + live: https://sascribe.com/posts/2026-04-13-adcreative-news-1776098917281/
+- ✅ baseof.html: canonical tag + conditional noindex
+- ✅ hugo.toml: sitemap config added
+- ✅ layouts/sitemap.xml: custom template excludes taxonomy/term pages
+- ✅ ElevenLabs pillar: title updated to target "elevenlabs update 2026"
+- ✅ 12 articles: meta descriptions fixed to 150-160 chars
+
+**BLOCKED (one manual step):**
+- ⚠️ .github/workflows/content-pipeline.yml — needs `workflow` scope on GH_TOKEN
+  **Fix**: github.com/settings/tokens → edit token → check `workflow` → save
+  Then run in terminal: `git -C /tmp/sascribe-repo push origin main`
+
+### SESSION 9 TASK QUEUE
 
 | Priority | Task | Status | Notes |
 |----------|------|--------|-------|
-| 1 | Migrate Sascribe pipeline: n8n → GitHub Actions | ⏳ PENDING | n8n hit execution limits — pipeline down |
-| 1 | Run next 2 articles after migration | ⏳ PENDING | Confirm GitHub Actions pipeline fires correctly |
-| 1 | Fix GSC indexing: 27 discovered not indexed | ⏳ PENDING | Check canonical tags, sitemap coverage, fetch-as-Google |
-| 1 | Fix GSC: 1 crawled not indexed + 1 duplicate canonical | ⏳ PENDING | Deduplicate canonical, check self-referential tags |
-| 2 | QR-Perks: full functional audit | ⏳ PENDING | Audit every feature, fix all broken flows |
-| 2 | QR-Perks: complete the platform | ⏳ PENDING | See QR-PERKS section for pending offer cards |
-| 3 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue return static text, not live data |
-| 4 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack data in one view |
-| 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → Credentials → add Custom Search API |
+| 0 | Unblock workflow push | ⚠️ BLOCKED | Add `workflow` scope to GH_TOKEN — 2 min manual step |
+| 1 | QR-Perks: full functional audit | ⏳ PENDING | Audit every feature, fix all broken flows |
+| 1 | QR-Perks: complete the platform | ⏳ PENDING | Offer cards, email list, remaining broken features |
+| 2 | Monitor GSC re-indexing | ⏳ PENDING | Allow 7-14 days after canonical/noindex fixes |
+| 3 | Fix Discord bot live data | ⏳ PENDING | !stats !credits !queue return static text |
+| 4 | Mission 2 — unified affiliate dashboard | ⏳ PENDING | CJ + ROK + PartnerStack |
+| 5 | Fix Google CSE API key restriction | ⏳ PENDING | console.cloud.google.com → add Custom Search API |
 | 6 | CJ_API_KEY in ~/.zshrc | ⏳ PENDING | Get from cj.com dashboard |
 
