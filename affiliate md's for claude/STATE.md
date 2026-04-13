@@ -936,3 +936,22 @@ Result: articles engineered to beat page 1, not just match it
 - FALLBACK_AFFILIATES: real affiliate tracking URLs added
 - handleGo: now uses fallback URL field instead of hardcoded qr-perks.com
 - GitHub: sascribe/qrperks-site worker.js SHA: 3af00bd47e
+
+**SESSION 9 COMPLETED (QR-Perks) — 2026-04-12:**
+- EN/ES toggle fully fixed: CSS .en,.es{display:none} bug + JS getLang() operator precedence bug resolved
+- All pages toggle correctly: landing, legal, contact, auth, dash, admin — [data-lang] CSS selector approach
+- Driver Login added to nav (EN/ES) and footer (Driver Portal / Portal Conductores)
+- /driver routes verified: GET /driver 302, /driver/login 200, POST /driver/login 200
+- Offer CTA buttons: new tab (_blank), real affiliate URLs from DB, bridge overlay preserved
+- All 4 legal pages live and returning 200: /privacy /terms /earnings-disclaimer /contact
+- Language consistency pass complete — no text leaks between EN and ES
+- worker.js deployed SHA: 3af00bd47e (live at qr-perks.com)
+- 8 print-ready magnet files: T1-T8 SVG + JPG QR codes, 222–353 DPI
+- Mock data seeded: 4 drivers, 30 scans, 8 conversions, 15 email captures, trucks t1-t3 assigned
+- Test driver: driver@qr-perks.com / QRDriver2026! (active, truck T3)
+
+**QR-PERKS PENDING (next session):**
+- Full feature audit — some features not yet fully functional
+- Resend domain verification — check resend.com dashboard
+- First driver onboarding
+- Print shop submission for 8 magnets (T1-T8)
