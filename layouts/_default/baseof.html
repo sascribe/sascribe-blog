@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ if .IsHome }}{{ .Site.Title }} — SaaS Tools, AI Reviews & Digital Stack Guides{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .IsHome }}Independent reviews, tutorials and guides for the best SaaS tools, AI software and digital subscriptions. Find what actually works.{{ else }}{{ .Summary }}{{ end }}">
-  <meta name="robots" content="index, follow">
+  {{- $noindex := false -}}
+  {{- if eq .Kind "term" -}}
+    {{- if lt (len .Pages) 3 -}}{{- $noindex = true -}}{{- end -}}
+  {{- end -}}
+  {{- if and (in (slice "section" "taxonomy") .Kind) (not .IsHome) -}}
+    {{- with .Paginator -}}{{- if gt .PageNumber 1 -}}{{- $noindex = true -}}{{- end -}}{{- end -}}
+  {{- end -}}
+  <meta name="robots" content="{{ if $noindex }}noindex, follow{{ else }}index, follow{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
   <meta name="google-site-verification" content="K2Kg2CBIH-SgkuC4Rn-Xhn3X6q9axx7yusaPkNq-EI0" />
  
 
