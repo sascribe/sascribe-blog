@@ -1,0 +1,82 @@
+name: Content Pipeline
+
+on:
+  schedule:
+    # Monday 9am PT (UTC-7 PDT) = 16:00 UTC → long-form
+    - cron: '0 17 * * 1'
+    # Tuesday 9am PT = short
+    - cron: '0 17 * * 2'
+    # Thursday 9am PT = short
+    - cron: '0 17 * * 4'
+    # Saturday 9am PT = short
+    - cron: '0 17 * * 6'
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Article type (long-form or short)'
+        required: false
+        default: 'long-form'
+      affiliate:
+        description: 'Affiliate slug or "auto"'
+        required: false
+        default: 'auto'
+      dry_run:
+        description: 'Dry run — print article but do not commit'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Determine article type from schedule
+        id: article-type
+        run: |
+          # Manual dispatch uses provided inputs
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.type }}" >> $GITHUB_OUTPUT
+            echo "affiliate=${{ github.event.inputs.affiliate }}" >> $GITHUB_OUTPUT
+            echo "dry_run=${{ github.event.inputs.dry_run }}" >> $GITHUB_OUTPUT
+          else
+            # Scheduled: Monday = long-form, all others = short
+            DAY=$(date +%u)
+            if [ "$DAY" = "1" ]; then
+              echo "type=long-form" >> $GITHUB_OUTPUT
+            else
+              echo "type=short" >> $GITHUB_OUTPUT
+            fi
+            echo "affiliate=auto" >> $GITHUB_OUTPUT
+            echo "dry_run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate article
+        env:
+          GH_TOKEN:                    ${{ secrets.GH_TOKEN }}
+          ANTHROPIC_API_KEY:           ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_API_KEY:             ${{ secrets.YOUTUBE_API_KEY }}
+          GSHEETS_SERVICE_ACCOUNT_JSON: ${{ secrets.GSHEETS_SERVICE_ACCOUNT_JSON }}
+        run: |
+          TYPE="${{ steps.article-type.outputs.type }}"
+          AFFILIATE="${{ steps.article-type.outputs.affiliate }}"
+          DRY_RUN="${{ steps.article-type.outputs.dry_run }}"
+          FLAGS="--type $TYPE --affiliate $AFFILIATE"
+          if [ "$DRY_RUN" = "true" ]; then
+            FLAGS="$FLAGS --dry-run"
+          fi
+          echo "Running: node scripts/generate-article.js $FLAGS"
+          node scripts/generate-article.js $FLAGS
