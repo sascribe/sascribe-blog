@@ -1,7 +1,7 @@
 # MASTER_CHECKLIST.md
 *Single source of truth for all tasks across the operation.*
 *Updated automatically every Claude Code session.*
-*Last updated: 2026-04-13*
+*Last updated: 2026-04-14*
 
 ---
 
@@ -107,6 +107,14 @@ Status codes:
 | ✅ DONE | /admin/forgot-password route | S10 | Returns informational page (admin PW resets via CF Worker secret) |
 | ✅ DONE | Earnings breakdown (Direct/Referral/Total) | S10 | Driver earnings page shows 3-line breakdown from live Supabase |
 | ✅ DONE | 26/26 routes pass (200) | S10 | Full route test passed — all routes live |
+| ✅ DONE | ES translation root cause fixed | S11 | Apostrophe in 'You\'re' broke JS parser — changed to double-quoted string |
+| ✅ DONE | QR download Blob URL | S11 | PNG/JPG/SVG all use createObjectURL + revokeObjectURL — reliable cross-browser |
+| ✅ DONE | Truck naming system | S11 | truck_name column in Supabase; edit field on QR Codes page; POST /api/truck-name; admin dashboard Name column |
+| ✅ DONE | Referral link as anchor tag | S11 | `<a>` opens /join in new tab; copy with clipboard+execCommand fallback; /join Max-Age=2592000 |
+| ✅ DONE | Referral table shows commission | S11 | Company Name, Joined, Status, Commission Earned per referred driver |
+| ✅ DONE | Email capture thank-you message | S11 | Hero form hides, thank-you shows in EN/ES on successful POST |
+| ✅ DONE | Email capture confirmation email | S11 | Resend sends "You're on the list — QR Perks" from noreply@qr-perks.com |
+| ✅ DONE | Driver email updates | S11 | geodriver→geotransportation15@gmail.com; speedydriver→speedydumpsco@gmail.com |
 | ⏳ PENDING | Insurance offer card | — | EverQuote/Liberty Mutual — pending affiliate approval |
 | ⏳ PENDING | Banking offer card | — | Chime/Axos — pending affiliate approval |
 | ⏳ PENDING | Phone plan offer card | — | Mint Mobile — pending affiliate approval |
