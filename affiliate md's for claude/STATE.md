@@ -241,32 +241,41 @@ Dynamic QR codes on 8-10 commercial truck wraps in Southern California. Each tru
 4. Business Funding — ROK Financial (LIVE)
 5. Gas Savings — Upside or PayPal Debit Card (gas cashback angle)
 
-### Status (Updated S10 — 2026-04-14)
+### Status (Updated S11 — 2026-04-14)
 - Site fully rebuilt and live at qr-perks.com ✅
-- **Cloudflare Worker v6 deployed (2310 KB incl embedded QR PNGs)** — all routes handled, all S10 bugs fixed ✅
+- **Cloudflare Worker v7 deployed (2315 KB incl embedded QR PNGs)** — all routes handled, all S11 bugs fixed ✅
 - Supabase backend live — 6+ tables, RLS policies ✅
 - 50 trucks seeded (t1–t10 active, t11–t50 dormant) ✅
 - **Truck assignments**: Geo Transportation → t2, t3 | Speedy Dumps → t1, t4-t8 | Test driver → t9, t10 ✅
+- **truck_name column** added to trucks table — drivers can name trucks from QR Codes page, shown in admin dashboard ✅
 - 5 affiliate slots seeded in database ✅
 - ROK Financial live on offer card — offer_type='business', shows in "Need Funding?" section ✅
 - 4 sweepstakes/retail/beauty/loans cards live ✅
 - Driver dashboard live at qr-perks.com/driver ✅
-- Admin dashboard live at qr-perks.com/admin ✅ — includes truck assignment UI
+- Admin dashboard live at qr-perks.com/admin ✅ — includes truck assignment UI + truck_name column
 - All legal pages live — FTC compliant ✅ — /leads-terms added to footer
 - SubID tracking: every truck appends s2=qrp_t{n} + utm params to affiliate links ✅
 - **Real QR PNG images embedded as base64 data URIs (T1-T8)** — display + PNG/JPG/SVG download ✅
+- **QR download now uses Blob URL** — PNG/JPG/SVG all properly trigger browser download via revokeObjectURL ✅
 - /api/stats endpoint live — platform stats for Discord !qrperks command ✅
 - Resend email domain qr-perks.com VERIFIED — emails send from noreply@qr-perks.com ✅
+- **Email capture confirmation email** — POST /api/email-capture triggers Resend welcome email ✅
+- **Hero capture shows thank-you message** — form replaced by "You're on the list!" after submit ✅
 - **EN/ES dual toggle buttons always visible** — both buttons in header, active state highlights current ✅
+- **ES translation fully works** — root cause fixed (apostrophe in "You're" was breaking JS parser) ✅
 - **Password eye icon toggle** — all password inputs on all pages have show/hide button ✅
 - **Earnings breakdown** — Direct + Referral + Total on driver earnings page ✅
 - **Admin forgot-password page** at /admin/forgot-password ✅
+- **Referral link** is clickable `<a>` anchor opening /join in new tab ✅
+- **Copy button** has clipboard.writeText + execCommand fallback ✅
+- **/join cookie** Max-Age extended to 30 days (2592000) ✅
+- **Referral table** shows Company Name, Joined date, Status, Commission Earned ✅
 - Drivers in DB: 8 total, 7 active | All trucks t1-t10 assigned
 - QR codes ready to print — JPG PNGs embedded in worker
 
-**Driver accounts:**
-- geodriver@qr-perks.com / GeoDriver2026! — Geo Transportation (t2, t3) — ref: GEO001
-- speedydriver@qr-perks.com / SpeedyDriver2026! — Speedy Dumps (t1, t4-t8) — ref: SPEEDY001
+**Driver accounts (UPDATED S11):**
+- geotransportation15@gmail.com / GeoDriver2026! — Geo Transportation (t2, t3) — ref: GEO001
+- speedydumpsco@gmail.com / SpeedyDriver2026! — Speedy Dumps (t1, t4-t8) — ref: SPEEDY001
 - driver@qr-perks.com / Driver2026! — Test driver (t9, t10) — ref: DRIVER001
 - newdriver@qr-perks.com / Driver2026! — New driver (referred by driver) — ref: NEWDRV001
 
@@ -325,6 +334,30 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 ---
 
 ## CHANGELOG
+
+### 2026-04-14 — Session 11: Email updates, QR download, Truck names, Referral, Email capture, ES fix
+
+**WORKER v7 DEPLOYED — Cloudflare Worker `qrperks` (2315 KB) — commit 21149c82**
+- **ES translation root cause fixed**: `'You\'re headed to '` (single-quoted, apostrophe in You're breaks JS parser) → `"You're headed to "` (double-quoted) — setLang now works on every page load
+- **QR download Blob URL**: PNG/JPG now use `atob → Uint8Array → Blob → createObjectURL → click → revokeObjectURL` — reliable cross-browser download. SVG viewBox updated to 0 0 400 400.
+- **Truck naming**: `truck_name` column added to trucks table. QR Codes page shows truck name + text input + Save button → POST /api/truck-name. Admin dashboard shows Name column. Name shown in truck header.
+- **Referral link**: wrapped in `<a>` anchor tag opening /join in new tab. Copy button has navigator.clipboard + execCommand fallback. /join Max-Age cookie 86400→2592000 (30 days). Referral table shows Company, Joined, Status, Commission Earned.
+- **Email capture**: hero form shows "You're on the list!" thank-you message on success. handleCapture sends Resend welcome email to noreply@qr-perks.com. Logs send attempt to email_captures.
+- **Driver emails updated**: geodriver@qr-perks.com → geotransportation15@gmail.com | speedydriver@qr-perks.com → speedydumpsco@gmail.com
+
+**VERIFICATION: 8/8 CHECKS PASS**
+- Home 200 + setLang + .es spans + hero-thankyou + apostrophe fix ✅
+- POST /api/email-capture → {ok:true} ✅
+- GET /join?ref=GEO001 → 302 + Set-Cookie qrp_ref Max-Age=2592000 ✅
+- GET /driver/login → 200 + password input ✅
+- GET /api/stats → 200 + JSON keys ✅
+- GET /t1 → 200 + offers ✅
+- POST /api/truck-name → {ok:true} ✅
+- truck_name column in Supabase ✅
+
+**WORKING INSIGHTS — SESSION 11:**
+58. **Apostrophe in JS template literal** — `'You\'re'` inside template literal outputs unescaped `You're` in HTML, which breaks the browser's JS parser for the entire script block. Fix: switch to double-quoted string `"You're"`.
+59. **Python heredoc escaping** — backticks in Python heredoc `<< 'EOF'` need to NOT be escaped when writing JS template literals. Use a Python script with `cat > file.py << 'PYEOF'` wrapping, not bare heredoc.
 
 ### 2026-04-14 — Session 10: Full Platform Audit + Functional Fixes
 
