@@ -241,22 +241,50 @@ Dynamic QR codes on 8-10 commercial truck wraps in Southern California. Each tru
 4. Business Funding — ROK Financial (LIVE)
 5. Gas Savings — Upside or PayPal Debit Card (gas cashback angle)
 
-### Status
+### Status (Updated S10 — 2026-04-14)
 - Site fully rebuilt and live at qr-perks.com ✅
-- Cloudflare Worker deployed (1228 lines) — all routes handled ✅
-- Supabase backend live — 6 tables, RLS policies ✅
+- **Cloudflare Worker v6 deployed (2310 KB incl embedded QR PNGs)** — all routes handled, all S10 bugs fixed ✅
+- Supabase backend live — 6+ tables, RLS policies ✅
 - 50 trucks seeded (t1–t10 active, t11–t50 dormant) ✅
+- **Truck assignments**: Geo Transportation → t2, t3 | Speedy Dumps → t1, t4-t8 | Test driver → t9, t10 ✅
 - 5 affiliate slots seeded in database ✅
-- ROK Financial live on offer card 1 (update URL in Supabase affiliates table) ✅
-- 4 coming soon cards live (insurance, banking, phone, gas)
+- ROK Financial live on offer card — offer_type='business', shows in "Need Funding?" section ✅
+- 4 sweepstakes/retail/beauty/loans cards live ✅
 - Driver dashboard live at qr-perks.com/driver ✅
-- Admin dashboard live at qr-perks.com/admin ✅
-- All legal pages live — FTC compliant ✅
-- SubID tracking wired — every truck appends ?subid=qrp_t{n} to affiliate links ✅
-- Test driver: testdriver@qrperks.com / token: c3132d77e2447fd7f8fb3fd02407b12f57d2dd978493a5e0 / truck t1
-- QR codes not yet printed — pending driver onboarding
-- Remaining 4 offer cards pending affiliate approvals (EverQuote, Chime, Mint, Upside)
-- ROK Financial URL in Supabase needs updating to actual tracking link (go.mypartner.io/...)
+- Admin dashboard live at qr-perks.com/admin ✅ — includes truck assignment UI
+- All legal pages live — FTC compliant ✅ — /leads-terms added to footer
+- SubID tracking: every truck appends s2=qrp_t{n} + utm params to affiliate links ✅
+- **Real QR PNG images embedded as base64 data URIs (T1-T8)** — display + PNG/JPG/SVG download ✅
+- /api/stats endpoint live — platform stats for Discord !qrperks command ✅
+- Resend email domain qr-perks.com VERIFIED — emails send from noreply@qr-perks.com ✅
+- **EN/ES dual toggle buttons always visible** — both buttons in header, active state highlights current ✅
+- **Password eye icon toggle** — all password inputs on all pages have show/hide button ✅
+- **Earnings breakdown** — Direct + Referral + Total on driver earnings page ✅
+- **Admin forgot-password page** at /admin/forgot-password ✅
+- Drivers in DB: 8 total, 7 active | All trucks t1-t10 assigned
+- QR codes ready to print — JPG PNGs embedded in worker
+
+**Driver accounts:**
+- geodriver@qr-perks.com / GeoDriver2026! — Geo Transportation (t2, t3) — ref: GEO001
+- speedydriver@qr-perks.com / SpeedyDriver2026! — Speedy Dumps (t1, t4-t8) — ref: SPEEDY001
+- driver@qr-perks.com / Driver2026! — Test driver (t9, t10) — ref: DRIVER001
+- newdriver@qr-perks.com / Driver2026! — New driver (referred by driver) — ref: NEWDRV001
+
+**Admin:**
+- Login: qr-perks.com/admin/login | Password: gNNPu9OL8kvN7jArPaqS
+
+**All 5 affiliate links tested live and resolving:**
+- PayPal SOI: /go/paypal-sweeps → afflat3c1.com → 302 ✅
+- Walmart SOI: /go/walmart-sweeps → afflat3c1.com → 302 ✅
+- Maybelline SOI: /go/maybelline → afflat3c2.com → 302 ✅
+- Slam Dunk Loans: /go/slam-dunk-loans → afflat3c1.com → 302 ✅
+- ROK Financial: /go/rok-financial → go.mypartner.io → 200 ✅
+
+**Live stats as of S10:**
+- Drivers: 8 total, 7 active
+- Scans this week: 82
+- Leads total: 20
+- Commissions pending: ~$195.65
 
 ---
 
@@ -297,6 +325,46 @@ All skills saved to ~/Desktop/AffiliateMarketing/
 ---
 
 ## CHANGELOG
+
+### 2026-04-14 — Session 10: Full Platform Audit + Functional Fixes
+
+**WORKER v6 DEPLOYED — Cloudflare Worker `qrperks` (2310 KB)**
+- EN + ES language buttons now BOTH always visible in header; active button highlights green
+- ES translation fully works via [data-lang] CSS system (was already correct) — toggle now persists in localStorage
+- Password eye icon toggle added to ALL password inputs on ALL pages (authShell, dashShell, admin login) — dynamically injected via JS
+- Real QR PNG images (T1-T8 from ~/Downloads/files/) embedded as base64 data URIs in QR_PNG_DATA constant
+  - QR dashboard displays correct JPG per truck
+  - Download PNG/JPG = serves the embedded JPEG data URI; Download SVG wraps image in SVG viewBox
+- Earnings page now shows Direct Earnings, Referral Earnings, and Total Earnings from live Supabase data
+- /admin/forgot-password route added (explains to reset via CF Worker secret)
+- /leads-terms added to footer of landing page
+- GitHub: worker.js pushed to sascribe/qrperks-site — commit 38f431df
+
+**SUPABASE UPDATES:**
+- Truck t1 → reassigned from test driver to Speedy Dumps (c85bb14e)
+- Truck t9, t10 → assigned to test driver (114807b6)
+- geodriver commissions: pruned from 6→2 records, totaling $31.00 direct ✅
+- newdriver: large commission deleted, one $12.00 record kept ✅
+- newdriver referred_by set to driver@qr-perks.com ✅
+- Referral record already existed (114807b6 → bf6116c8) ✅
+
+**AFFILIATE LINKS — ALL LIVE:**
+- PayPal SOI → afflat3c1.com/trk/lnk/.../o=25393 — HTTP 302 ✅
+- Walmart SOI → afflat3c1.com/trk/lnk/.../o=25394 — HTTP 302 ✅
+- Maybelline SOI → afflat3c2.com/trk/lnk/.../o=24725 — HTTP 302 ✅
+- Slam Dunk Loans → afflat3c1.com/trk/lnk/.../o=11384 — HTTP 302 ✅
+- ROK Financial → go.mypartner.io/business-financing/ — HTTP 200 ✅
+- All links include s2=qrp_t{n} + utm_source/medium/campaign
+
+**ROUTE TEST: 26/26 PASS (200)**
+/, /t1-/t8, /driver, /driver/login, /driver/signup, /driver/dashboard, /driver/forgot-password, /driver/reset-password, /join, /admin, /admin/login, /admin/dashboard, /admin/forgot-password, /privacy, /terms, /disclosure, /contractor, /leads-terms, /api/stats
+
+**WORKING INSIGHTS — SESSION 10:**
+56. **Workers.dev cached 404 masking live 302** — Cloudflare CDN may serve stale cached responses for /go/ routes. Always test with `curl -v` not `-sI` to see actual status + Location header.
+57. **wrangler --no-bundle from /tmp picks up extra files** — Run wrangler from a clean directory containing only the worker JS to avoid accidental static asset bundling.
+58. **QR PNG at 200KB each → 2.3MB worker total** — Well within Cloudflare's 10MB limit for Workers. Use JPG originals not the 22MB PNG finals for embedding.
+
+---
 
 ### 2026-04-13 — Session 8: Pipeline Migration + GSC Fixes
 
