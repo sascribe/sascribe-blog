@@ -163,6 +163,13 @@ function parseAffiliate(row, rowIndex) {
 
 function pickAffiliate(rows, requestedSlug, type) {
   const typePool  = type === 'long-form' ? LONG_FORM_TYPES : SHORT_TYPES;
+  const COOLDOWN_DAYS = 7;
+  const now = Date.now();
+  function withinCooldown(aff) {
+    const last = new Date(aff.lastPublished).getTime();
+    return (now - last) < COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+  }
+
   // rows[0] is header — data starts at rows[1], rowNumber = index+1 for the array, but sheet row = index+1 (1-indexed)
   const affiliates = rows.slice(1)
     .map((row, idx) => parseAffiliate(row, idx + 1)) // idx+1 so rowNumber starts at 2 (row 1 = header)
@@ -176,22 +183,34 @@ function pickAffiliate(rows, requestedSlug, type) {
            a.name.toLowerCase() === requestedSlug.toLowerCase()
     );
     if (!aff) throw new Error(`Affiliate not found: ${requestedSlug}`);
+    if (withinCooldown(aff)) {
+      console.warn(`   ⚠️  Cooldown: ${aff.name} last published ${aff.lastPublished} (within ${COOLDOWN_DAYS}d) — proceeding (explicit --affiliate flag)`);
+    }
     const available = typePool.filter(t => !aff.publishedTypes.includes(t));
     const contentType = available.length ? available[0] : typePool[typePool.length - 1] + '-v2';
     return { affiliate: aff, contentType };
   }
 
-  // Auto: sort by lastPublished ASC (oldest first). Skip the single most-recently-published to avoid repeats.
+  // Auto: sort by lastPublished ASC (oldest first).
   const sorted     = [...affiliates].sort((a, b) => new Date(a.lastPublished) - new Date(b.lastPublished));
-  const mostRecent = [...affiliates].sort((a, b) => new Date(b.lastPublished) - new Date(a.lastPublished))[0];
+  const mostRecent = sorted[sorted.length - 1];
 
-  for (const aff of sorted) {
-    if (sorted.length > 1 && aff.slug === mostRecent.slug) continue;
+  // 7-day cooldown: prefer affiliates not recently published
+  const coolFree = sorted.filter(a => !withinCooldown(a));
+  const pool = coolFree.length ? coolFree : sorted; // fall back to all if all within cooldown
+  if (!coolFree.length) console.log(`   ℹ️  All affiliates within ${COOLDOWN_DAYS}-day cooldown — using oldest`);
+  else if (coolFree.length < sorted.length) {
+    const skipped = sorted.filter(a => withinCooldown(a)).map(a => a.name).join(', ');
+    console.log(`   ⏭  Cooldown skip: ${skipped}`);
+  }
+
+  for (const aff of pool) {
+    if (pool.length > 1 && aff.slug === mostRecent.slug) continue;
     const available = typePool.filter(t => !aff.publishedTypes.includes(t));
     if (available.length) return { affiliate: aff, contentType: available[0] };
   }
   // Fallback: oldest regardless of repeat prevention
-  const aff = sorted[0];
+  const aff = pool[0];
   const available = typePool.filter(t => !aff.publishedTypes.includes(t));
   return { affiliate: aff, contentType: available.length ? available[0] : typePool[0] };
 }
@@ -241,7 +260,7 @@ async function fetchYouTubeTrends() {
 
 // ─── Topic Scoring ────────────────────────────────────────────────────────────
 
-function pickBestTopic(redditPosts, ytVideos, affiliateSlug) {
+function pickBestTopic(redditPosts, ytVideos, affiliateSlug, recentHooks = new Set()) {
   const kws = AFFILIATE_KEYWORDS[affiliateSlug] || [];
   function relevance(text) {
     const t = (text || '').toLowerCase();
@@ -266,10 +285,88 @@ function pickBestTopic(redditPosts, ytVideos, affiliateSlug) {
 
   if (!topics.length) return null;
   const maxEng = Math.max(...topics.map(t => t.engagement), 1);
-  return topics
+  const sorted = topics
     .map(t => ({ ...t, score: 0.5 * (t.engagement / maxEng) + 0.5 * t.relevance }))
-    .sort((a, b) => b.score - a.score)[0];
+    .sort((a, b) => b.score - a.score);
+
+  // Dedup check: skip topics whose hook entity appears in last 10 articles
+  for (const topic of sorted) {
+    const match = topicMatchesRecentHooks(topic.title, recentHooks);
+    if (match) {
+      console.log(`   ⏭  Skipping "${topic.title.slice(0, 60)}" — hook entity "${match}" found in recent article`);
+      continue;
+    }
+    return topic;
+  }
+  console.log('   ℹ️  All scored topics matched recent hooks — using evergreen angle');
+  return null;
 }
+
+// ─── Recent Hook Deduplication ────────────────────────────────────────────────
+
+async function fetchRecentArticleHooks() {
+  // Fetch last 10 article filenames, extract named-entity fingerprints
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/content/posts`,
+      { headers: { Authorization: `token ${GH_TOKEN}` } }
+    );
+    if (!resp.ok) return new Set();
+    const files = await resp.json();
+    const posts = files
+      .filter(f => f.name.endsWith('.md') && f.name !== '.gitkeep')
+      .sort((a, b) => b.name.localeCompare(a.name))
+      .slice(0, 10);
+
+    const STOP = new Set([
+      'a','an','the','and','or','but','in','on','at','to','for','of','with','by',
+      'is','are','was','were','be','been','have','has','had','do','does','did',
+      'will','would','could','should','may','might','can','how','what','why','when',
+      'where','who','which','this','that','these','those','its','your','our','their',
+      'my','i','we','you','he','she','they','it','vs','versus','best','top','new',
+      'here','make','use','get','using','from','into','than','more','most','about',
+      'up','as','not','so','no','if','just','now','also','then','2025','2026',
+      'ai','review','guide','complete','tutorial','between','them'
+    ]);
+
+    const hooks = new Set();
+    for (const file of posts) {
+      try {
+        const r = await fetch(file.download_url, { signal: AbortSignal.timeout(6000) });
+        const text = await r.text();
+        const titleM = text.match(/^title:\s*[\"'"]?(.+?)[\"'"]?\s*$/m);
+        const descM  = text.match(/^description:\s*[\"'"](.+?)[\"'"]\s*$/m);
+        const combined = [(titleM?.[1] || ''), (descM?.[1] || '')].join(' ');
+        // Named entities: tokens starting uppercase and ≥4 chars, not stop words
+        const tokens = combined.replace(/[^\w\s]/g, ' ').split(/\s+/);
+        for (const tok of tokens) {
+          if (tok.length >= 4 && /^[A-Z]/.test(tok) && !STOP.has(tok.toLowerCase())) {
+            hooks.add(tok.toLowerCase());
+          }
+        }
+        // Whole-phrase known entities
+        const known = combined.match(/\b(Sam Altman|PlayStation|OpenAI|ChatGPT|Reddit|YouTube|Netflix|Google|Apple|Microsoft|Meta|Instagram|TikTok|Twitter|Elon Musk|Mark Zuckerberg|Jeff Bezos|Bing|Gemini|Grok|DeepSeek)\b/gi) || [];
+        for (const e of known) hooks.add(e.toLowerCase());
+      } catch { /* skip file on timeout */ }
+    }
+    return hooks;
+  } catch {
+    return new Set();
+  }
+}
+
+function topicMatchesRecentHooks(topicTitle, recentHooks) {
+  const TITLE_STOPS = new Set(['Best','Top','New','Review','Guide','Complete','Tutorial',
+    'How','What','Why','When','Where','Which','The','Get','Use','Make','Your']);
+  const entities = topicTitle.match(/\b[A-Z][a-zA-Z]{3,}(?:\s+[A-Z][a-zA-Z]{3,})?\b/g) || [];
+  for (const entity of entities) {
+    if (!TITLE_STOPS.has(entity) && recentHooks.has(entity.toLowerCase())) {
+      return entity;
+    }
+  }
+  return null;
+}
+
 
 // ─── Image Picker ─────────────────────────────────────────────────────────────
 
@@ -503,13 +600,14 @@ async function main() {
   console.log(`✅ Content type: ${contentType}`);
 
   // ── Research ──
-  console.log('🔍 Fetching trends (Reddit + YouTube)...');
-  const [redditPosts, ytVideos] = await Promise.all([
+  console.log('🔍 Fetching trends (Reddit + YouTube) + recent article hooks...');
+  const [redditPosts, ytVideos, recentHooks] = await Promise.all([
     fetchRedditTrends(affiliate.slug),
     fetchYouTubeTrends(),
+    fetchRecentArticleHooks(),
   ]);
-  console.log(`   Reddit posts: ${redditPosts.length} | YouTube videos: ${ytVideos.length}`);
-  const trendingTopic = pickBestTopic(redditPosts, ytVideos, affiliate.slug);
+  console.log(`   Reddit posts: ${redditPosts.length} | YouTube videos: ${ytVideos.length} | Hook fingerprints: ${recentHooks.size}`);
+  const trendingTopic = pickBestTopic(redditPosts, ytVideos, affiliate.slug, recentHooks);
   if (trendingTopic) {
     console.log(`✅ Best topic: "${trendingTopic.title.slice(0, 70)}" (score: ${trendingTopic.score.toFixed(2)})`);
   } else {
