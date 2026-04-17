@@ -14,7 +14,7 @@
 | Cloudflare Worker | ✅ Live | `qrperks-worker`, deployed 2026-04-17 |
 | Supabase | ✅ Live | `fsaxluprhgmyaipaujdn.supabase.co` |
 | Resend Email | ✅ Configured | `noreply@qr-perks.com`, key in worker secrets |
-| Cloudflare Email Routing | ⚠️ Needs verification | Enabled; destination `qrperks@gmail.com` must be verified in CF dashboard |
+| Cloudflare Email Routing | ✅ Live | Enabled; 3 rules active: support@, privacy@, contact@ → qrperks@gmail.com |
 
 ---
 
@@ -60,8 +60,11 @@
 
 ### Email Routing (Cloudflare)
 - Email Routing **enabled** on qr-perks.com zone via API
-- DNS records auto-synced by Cloudflare
-- ⚠️ **Requires manual step**: Log into CF dashboard → qr-perks.com → Email Routing → Add destination `qrperks@gmail.com` → verify via Gmail → create rules for `support@`, `privacy@`, `contact@`
+- `qrperks@gmail.com` verified as destination address
+- Three routing rules created via API (all `enabled:true`):
+  - `support@qr-perks.com` → `qrperks@gmail.com` (id: 09b341ec)
+  - `privacy@qr-perks.com` → `qrperks@gmail.com` (id: 2eb2eed8)
+  - `contact@qr-perks.com` → `qrperks@gmail.com` (id: ccbfac5d)
 
 ### Privacy Policy Fix
 - Removed duplicate standalone `privacy@qr-perks.com` paragraph (now appears exactly once in "Your Rights" section)
