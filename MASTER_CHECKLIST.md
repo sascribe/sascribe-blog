@@ -1,6 +1,6 @@
 # QR Perks — Master Checklist
 
-> Last updated: 2026-04-17 | Session 10
+> Last updated: 2026-04-17 | Session 10 (Email Routing finalized)
 
 ---
 
@@ -18,7 +18,7 @@
 | 8 | Unsubscribe link present in every email | ✅ PASS | `emailBase()` now accepts `recipientEmail` param; all callers updated |
 | 9 | /unsubscribe route works and flags record in Supabase | ✅ PASS | `handleUnsubscribe()` PATCHes `email_captures.status='unsubscribed'`; bilingual confirmation shown |
 | 10 | Welcome email updated — no mention of scanning trucks | ✅ PASS | New body: insider list, deals come to you, watch inbox |
-| 11 | Cloudflare email routing rules active for support@, privacy@, contact@ | ⚠️ PARTIAL | Email Routing **enabled** on zone. Rules cannot be created until `qrperks@gmail.com` is verified. **Manual step required:** CF Dashboard → Email Routing → Add `qrperks@gmail.com` → verify → create 3 rules |
+| 11 | Cloudflare email routing rules active for support@, privacy@, contact@ | ✅ PASS | `qrperks@gmail.com` verified; 3 rules created via API (IDs: 09b341ec, 2eb2eed8, ccbfac5d); all `enabled:true` |
 | 12 | Privacy policy has no duplicate `privacy@qr-perks.com` | ✅ PASS | Duplicate standalone paragraph removed; appears exactly once |
 | 13 | Logo links to homepage on every page | ✅ PASS | All nav/header logo instances wrapped in `<a href="/">` |
 | 14 | Contact form sends and returns confirmation | ✅ PASS | `handleContactPost` fires Resend API with env.RESEND_API_KEY; client checks d.ok |
@@ -95,7 +95,6 @@
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| CF Email Routing rules (support@, privacy@, contact@) | HIGH | Requires `qrperks@gmail.com` verification in CF dashboard |
 | Twilio/SMS provider integration | MEDIUM | TCPA compliance code ready, no SMS provider configured |
 | Resend domain verification confirmation | LOW | DNS records added 2026-04-10, check verification status |
 | Production QR codes T9-T50 | LOW | Auto-generated on first driver access; verify scanability |
