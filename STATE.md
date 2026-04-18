@@ -1,15 +1,14 @@
 # Project State — QR Perks + Sascribe
 
-**Last updated:** 2026-04-17
+**Last updated:** 2026-04-17 (Session 3)
 **Projects:** qr-perks.com (Cloudflare Worker) · sascribe.com (Hugo + GitHub Actions pipeline)
 
 ---
 
 ## QR PERKS — qr-perks.com
 
-**Worker version:** v6 (Session 10, finalized)
-**Deployed to:** Cloudflare Worker `qrperks` (serving qr-perks.com/*)
-**All 14 Session 10 verification items passed: 14/14**
+**Worker version:** v6 (Session 10, fully finalized)
+**All 14 Session 10 verification items passed: 14/14 ✅**
 
 ### Infrastructure
 
@@ -17,119 +16,36 @@
 |---------|--------|-------|
 | Cloudflare Worker | ✅ Live | `qrperks`, deployed 2026-04-17 |
 | Supabase | ✅ Live | `fsaxluprhgmyaipaujdn.supabase.co` |
-| Resend Email | ✅ Live | `noreply@qr-perks.com`, key in worker secrets |
+| Resend Email | ✅ Live | `noreply@qr-perks.com` |
 | Cloudflare Email Routing | ✅ Live | 3 rules active — support@, privacy@, contact@ → qrperks@gmail.com |
 
-### Cloudflare Email Routing Rules
+### Email Routing Rules
 
-| Address | Destination | Rule ID | Status |
-|---------|-------------|---------|--------|
-| support@qr-perks.com | qrperks@gmail.com | 09b341ec | enabled |
-| privacy@qr-perks.com | qrperks@gmail.com | 2eb2eed8 | enabled |
-| contact@qr-perks.com | qrperks@gmail.com | ccbfac5d | enabled |
-
-Destination `qrperks@gmail.com` verified 2026-04-17. Rules created via CF API same day.
-
-### Session 10 Changes (2026-04-17) — Complete
-
-#### Countdown Interstitial Flow
-- Timer: 5s → **8 seconds**
-- Countdown completion and "No Thank You" both redirect to **offer URL** — never homepage
-- Homepage email form sets `localStorage qrp_lead_captured=true` + 30-day cookie
-- Offer CTAs check `hasLeadCapture()` — if set, skip interstitial entirely
-- Timer pauses on input focus, resumes after 3s inactivity (`scheduleResume()`)
-- Form submit inside interstitial cancels timer, goes directly to offer
-
-#### QR Code Auto-Generation (T9+)
-- Pure-JS QR code generator built into worker (no external deps)
-- Encodes `https://qr-perks.com/{truck_id}` as inline SVG
-- On first load, saves SVG to `trucks.qr_code_svg` via `/api/save-qr-code`
-- Subsequent loads read from Supabase
-- Four download formats: **SVG, PDF, JPEG, PNG** (blob URL pattern)
-- Filenames: `QR-Perks-T{n}.{ext}`
-- EN/ES scan-and-test notice below every QR card
-
-#### Email Unsubscribe
-- Every email footer includes `/unsubscribe?email={encoded}` link
-- `/unsubscribe?email=...` flags `email_captures.status='unsubscribed'`
-- Bilingual (EN/ES) confirmation page
-- `sendEmail()` and `handleCapture` both check unsubscribed status before sending
-
-#### SMS Legal Compliance (TCPA)
-- `/api/sms-webhook` handles STOP / CANCEL / UNSUBSCRIBE / END / QUIT
-- Flags `email_captures.sms_unsubscribed=true` in Supabase
-- Returns TwiML confirmation response
-- **Pending:** No SMS provider (Twilio) connected yet — webhook ready, sending not active
-
-#### Welcome Email Rewrite
-- Subject: "You're In ✅ — QR Perks"
-- Body: insider list, deals come to inbox — no mention of scanning trucks
-- EN/ES based on `lang` column in `email_captures`
-
-#### Cloudflare Email Routing
-- Zone-level Email Routing enabled via API
-- `qrperks@gmail.com` verified as destination
-- Three rules created and confirmed active (see table above)
-
-#### Privacy Policy Fix
-- Duplicate `privacy@qr-perks.com` paragraph removed — appears exactly once in "Your Rights" section
-
-#### Logo Links
-- Every QR PERKS logo/name in header/nav wrapped in `<a href="/">`:
-  - Landing page header, auth shell, driver dashboard nav, admin nav, legal shell, contact page
-
-#### Contact Form Fix
-- `handleContactPost` uses `env.RESEND_API_KEY`, fires Resend API correctly
-- Sends to `support@qr-perks.com` with `reply_to` set to submitter's email
-- Client-side checks `d.ok` before showing confirmation
-
-### Supabase Schema (Session 10 additions)
-
-```sql
-ALTER TABLE trucks ADD COLUMN IF NOT EXISTS qr_code_svg TEXT;
-ALTER TABLE email_captures ADD COLUMN IF NOT EXISTS status TEXT DEFAULT NULL;
-ALTER TABLE email_captures ADD COLUMN IF NOT EXISTS lang TEXT DEFAULT NULL;
-ALTER TABLE email_captures ADD COLUMN IF NOT EXISTS sms_unsubscribed BOOLEAN DEFAULT FALSE;
-ALTER TABLE email_captures ADD COLUMN IF NOT EXISTS sms_unsubscribed_at TIMESTAMPTZ DEFAULT NULL;
-```
-
-### QR Code State
-
-| Trucks | Type | Notes |
-|--------|------|-------|
-| T1–T8 | Pre-embedded SVG + PNG | Stored in worker constants |
-| T9–T50 | Auto-generated | `generateQRSvg()` on first access, saved to Supabase |
-
-### Worker Secrets
-
-| Key | Purpose |
-|-----|---------|
-| SUPABASE_URL | Supabase project URL |
-| SUPABASE_SECRET | Supabase service key |
-| ADMIN_PASSWORD | Admin dashboard password |
-| RESEND_API_KEY | Email sends via Resend |
-| DRIVER_JWT_SECRET | Driver session JWTs |
-| W9_ENCRYPTION_KEY | W9 tax ID encryption |
+| Address | Destination | Rule ID |
+|---------|-------------|---------|
+| support@qr-perks.com | qrperks@gmail.com | 09b341ec |
+| privacy@qr-perks.com | qrperks@gmail.com | 2eb2eed8 |
+| contact@qr-perks.com | qrperks@gmail.com | ccbfac5d |
 
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| Twilio/SMS provider integration | MEDIUM | TCPA webhook ready; no provider configured — next session |
-| Resend domain verification | LOW | DNS added 2026-04-10; confirm verified in Resend dashboard |
-| T9–T50 QR scanability | LOW | Auto-generated on first driver access; verify real-world scan |
+| Twilio/SMS provider integration | MEDIUM | TCPA webhook ready; no provider configured |
+| Resend domain verification | LOW | DNS added 2026-04-10; confirm in Resend dashboard |
+| T9–T50 QR scanability | LOW | Auto-generated on first driver access |
 
 ### Architecture
 
 ```
 qr-perks.com → Cloudflare Worker (qrperks)
   ├── / → Landing page (EN/ES, interstitial bridge)
-  ├── /t{1-50} → Truck scan landing (records scan, shows deals)
+  ├── /t{1-50} → Truck scan landing
   ├── /go/{affiliate_id} → Redirect with UTM tracking
   ├── /driver/* → Driver portal (auth-protected JWT)
   ├── /admin/* → Admin portal (password-protected)
-  ├── /api/* → JSON APIs (capture, stats, truck-name, save-qr-code, sms-webhook)
-  ├── /unsubscribe → Email unsubscribe (EN/ES, flags Supabase)
+  ├── /api/* → capture, stats, truck-name, save-qr-code, sms-webhook
+  ├── /unsubscribe → Email unsubscribe (EN/ES)
   ├── /contact → Contact form → Resend → support@qr-perks.com
   └── /privacy|/terms|/disclosure|/earnings-disclaimer|/contractor|/leads-terms
 ```
@@ -138,47 +54,41 @@ qr-perks.com → Cloudflare Worker (qrperks)
 
 ## SASCRIBE — sascribe.com
 
-**Stack:** Hugo static site · GitHub Actions content pipeline · Cloudflare CDN
+**Stack:** Hugo · GitHub Actions · Cloudflare CDN
 **Repo:** sascribe/sascribe-blog
-**Last pipeline run:** 2026-04-16T20:06:23Z (success)
 
 ### Infrastructure
 
 | Service | Status | Notes |
 |---------|--------|-------|
-| Hugo Site | ✅ Live | sascribe.com via Cloudflare |
-| GitHub Actions Pipeline | ✅ Live | content-pipeline.yml — 2 total runs, both success |
-| GSC (Search Console) | ⚠️ Active, 0 indexed | 31 URLs submitted, 0 indexed as of 2026-04-16 |
-| Resend / Email | — | Not configured for Sascribe |
+| Hugo Site | ✅ Live | sascribe.com via Cloudflare Pages |
+| GitHub Actions Pipeline | ✅ Live | content-pipeline.yml — scheduled runs active |
+| GSC | ✅ 2 pages indexed | Homepage + ElevenLabs pillar confirmed INDEXED |
+| IndexNow | ✅ Active | Key: `sascribe2026xK9mP3qR7nL5vT` |
 
-### Traffic Snapshot (as of 2026-04-16)
+### Workflow Schedule
 
-#### Google Search Console — Last 28 Days
-| Metric | Value |
-|--------|-------|
-| Total Impressions | 1,432 |
-| Total Clicks | 0 |
-| CTR | 0.00% |
-| Avg Position | 8.3 |
+```
+Cron: 0 17 * * 1 → Monday long-form (17:00 UTC = 10am PDT / 9am PST)
+      0 17 * * 2 → Tuesday short
+      0 17 * * 4 → Thursday short
+      0 17 * * 6 → Saturday short
+```
+Note: cron comment says "9am PT" but during PDT (summer) this fires at 10am PDT. Off by 1hr in summer — non-critical.
 
-- ElevenLabs pillar post alone: **1,381 impressions at position 8.3, zero clicks** — showing in search, not converting
-- 5 pages total with any impressions; all others undiscovered
-- 31 URLs in sitemap — **0 indexed** (entire site in "discovered, not indexed" state)
-- Sitemap last submitted: 2026-04-04 · last downloaded by Google: 2026-04-05
+### GSC Status (as of 2026-04-17)
 
-#### Cloudflare Analytics — Last 28 Days
-| Metric | Value |
-|--------|-------|
-| Total Page Views | 16,234 |
-| Total Requests | 28,174 |
-| Bandwidth | 213.4 MB |
+| Page | Verdict | Coverage | Last Crawl |
+|------|---------|----------|------------|
+| Homepage | PASS | Submitted and indexed | 2026-04-10 |
+| ElevenLabs Pillar | PASS | Submitted and indexed | 2026-04-12 |
+| NordVPN Review | NEUTRAL | URL is unknown to Google | never |
+| Beehiiv Pillar | NEUTRAL | Discovered - currently not indexed | never |
+| AdCreative Review | NEUTRAL | Discovered - currently not indexed | never |
 
-- Traffic spikes align directly with pipeline publish days (Apr 2, 6–8, 15) — confirms bot/pipeline traffic, not organic
-- Non-publish days: 172–477 PV/day · Publish days: 1,000–1,810 PV/day
+### Content State (as of 2026-04-17 Session 3)
 
-### Content State (as of 2026-04-16)
-
-**17 articles published** across 5 affiliates:
+**20 articles published** across 5 affiliates (5 rewritten in Session 3):
 
 | Affiliate | Articles | Last Published | Types Completed |
 |-----------|----------|----------------|-----------------|
@@ -186,32 +96,83 @@ qr-perks.com → Cloudflare Worker (qrperks)
 | ElevenLabs | 4 | 2026-04-13 | pillar, comparison, review, tutorial |
 | Beehiiv | 4 | 2026-04-14 | review, comparison, pillar, news |
 | Synthesia | 3 | 2026-04-16 | pillar, tutorial, news |
-| NordVPN | 1 | 2026-04-06 | review only |
+| NordVPN | 4 | 2026-04-17 | review, pillar, comparison, news |
 
-**Content gaps:**
-- NordVPN: missing comparison, tutorial, use-cases, pillar, news (5 types)
-- Synthesia: missing review, comparison, use-cases (3 types)
-- ElevenLabs: missing use-cases (1 type)
+**Content gaps remaining:**
+- NordVPN: tutorial, use-cases, alternatives, guide (4 types)
+- Synthesia: review, comparison, use-cases (3 types)
+- ElevenLabs: use-cases (1 type)
 
-**Duplicate news hook problem identified:**
-- 2026-04-13: Sam Altman Reddit thread used as hook for both AdCreative AI news AND ElevenLabs tutorial
-- 2026-04-14/16: PlayStation viral video used as hook for both Beehiiv news AND Synthesia news
-- Root cause: pipeline `generate-article.js` has no deduplication logic — fix queued for next session
+### Session 3 Rewrites (2026-04-17)
 
-### GitHub Actions
+All 5 rewritten in-place (same filename/slug/URL — no redirect needed):
 
-| Workflow | File | Total Runs | Last Run | Status |
-|----------|------|-----------|----------|--------|
-| Content Pipeline | .github/workflows/content-pipeline.yml | 2 | 2026-04-16T20:06:23Z | success |
+| File | Old Title (problem) | New Title | Commit |
+|------|---------------------|-----------|--------|
+| nordvpn-pillar | "...meme circulating on Reddit..." hook | The Complete NordVPN Guide for 2026: Privacy, Streaming, Torrenting & Everything In Between | 4da9b316 |
+| nordvpn-news | Claude meme = entire article premise; fabricated EFF stat | NordVPN 2026: What's Actually Changed and Is It Still Worth It? | 1c19a6fd |
+| nordvpn-comparison | Claude meme hook (3rd use) | NordVPN vs Surfshark vs ExpressVPN vs Proton VPN: The Only Comparison You Need in 2026 | a82349ac |
+| synthesia-news | PlayStation meme title (zero SEO intent) | Synthesia 2026: What the 3.0 Platform Overhaul Means for Corporate Video Teams | 940aeed1 |
+| beehiiv-news | PlayStation meme title (zero SEO intent) | Beehiiv 2026: What's New, What's Changed, and Why Newsletter Creators Are Switching | 5832cc78 |
+
+### Session 3 Pipeline Overhaul (2026-04-17)
+
+**generate-article.js refactor — commit f8f48a2f**
+
+Key changes from Session 2 version:
+- `fetchRedditTrends()` → `fetchRedditSignals()`: adds Google CSE call for affiliate-specific Reddit threads (`site:reddit.com ${slug} review`)
+- `fetchYouTubeTrends()` → `fetchYouTubeSignals()`: replaced generic `mostPopular category=28` with affiliate-targeted YouTube search (`${name} review 2026`, `${name} honest review`)
+- `pickBestTopic()` → `buildResearchBrief()`: outputs structured brief with TRENDING_HOOK, REAL_USER_SIGNAL, YOUTUBE_COVERAGE, COMPETITOR_AFFILIATE_ANGLES
+- New `fetchCompetitorAngles()`: Google CSE search across bloggingwizard.com, authorityhacker.com, nichepursuits.com, pcmag.com, tomsguide.com
+- `generateArticle()` prompt rewritten: TRENDING_HOOK demoted to supporting context only; lead must be value-first; explicit prohibition on event-first openers
+- `validateArticle()` adds hook quality check: warns if opening contains "this week", "went viral", "meme", "internet lost its mind"
+
+**Standing rules established:**
+1. Trending topics are SUPPORTING CONTEXT only — never the article premise
+2. Titles must target real search queries — never reference viral events or memes
+3. CSE returned 0 results for Reddit threads and competitor angles in Session 3 (likely CSE configuration issue) — YouTube search working (10 results per article)
+
+### Session 2 Changes (2026-04-17) — previously committed but not in STATE.md
+
+#### Mission 1 — ElevenLabs Pillar CTR Fix
+- Title: 97 chars → 55 chars: "ElevenLabs 2026: Best AI Voice Generator? (I Tested It)"
+- Description: 121 chars → 151 chars: first-person tested copy
+- Commit: `bd96132d39`
+
+#### Mission 2 — Pipeline Deduplication + Cooldown Fix
+- `fetchRecentArticleHooks()` at line 307 — extracts named entity fingerprints from last 10 articles
+- `topicMatchesRecentHooks()` at line 358 — dedup check
+- `pickAffiliate()` — 7-day cooldown; explicit `--affiliate` flag logs warning but proceeds
+- Commit: `c6e505e55a`
+
+#### Mission 3 — NordVPN Content Push (3 articles, now rewritten)
+
+| Article | Type | Commit |
+|---------|------|--------|
+| nordvpn-pillar | pillar | 34a790b0f9 (original) → 4da9b316 (rewrite) |
+| nordvpn-comparison | comparison | d37420e906 (original) → a82349ac (rewrite) |
+| nordvpn-news | news | 9e1fb5483c (original) → 1c19a6fd (rewrite) |
+
+#### Mission 4 — GSC Indexing Investigation
+- 2 pages indexed confirmed (homepage, ElevenLabs pillar)
+- Sitemap resubmitted, IndexNow 21 URLs pinged
+
+#### Mission 5 — GitHub Actions Verification
+- Workflow active, cron correct, 2 runs both success
+
+#### Mission 6 — Internal Linking Audit
+- 2 ElevenLabs articles fixed (elevenlabs-comparison, elevenlabs-review)
+- 0 zero-link articles
 
 ### Pending (Sascribe)
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| GSC indexing — 0/31 indexed | CRITICAL | Investigate canonicals, resubmit sitemap, IndexNow ping all 17 articles |
-| ElevenLabs pillar CTR fix | HIGH | 1,381 impr, 0 clicks — rewrite title/meta for click-through |
-| Pipeline deduplication fix | HIGH | `scripts/generate-article.js` — dedupe news hooks across affiliates |
-| NordVPN content expansion | HIGH | Run comparison, tutorial, news immediately (3 articles) |
-| Internal linking audit | MEDIUM | Verify all 17 articles have internal links; ElevenLabs pillar must be linked from all ElevenLabs posts |
-| GitHub Actions cron UTC offset | MEDIUM | Verify cron schedule matches intended publish times |
-| ElevenLabs use-cases article | LOW | Only missing content type for ElevenLabs |
+| ElevenLabs pillar CTR | MONITOR | Title/meta fixed 2026-04-17 — monitor GSC 7-14 days |
+| NordVPN tutorial | HIGH | Next content type for NordVPN |
+| Synthesia review + comparison + use-cases | HIGH | 3 types remaining |
+| ElevenLabs use-cases | MEDIUM | 1 type remaining |
+| GSC indexing — remaining URLs | MEDIUM | Sitemap resubmitted + IndexNow pinged; allow 7-14 days |
+| CSE configuration | MEDIUM | Reddit thread + competitor CSE searches returned 0 results — verify cx scope |
+| NordVPN comparison desc fix | LOW | Was 138 chars (rewrite may have corrected) |
+| Cron PDT offset | LOW | 0 17 fires at 10am PDT in summer — adjust to 0 16 if 9am PDT desired |
