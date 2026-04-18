@@ -9,7 +9,7 @@
  * Secrets (env vars):
  *   GH_TOKEN                    — GitHub personal access token
  *   ANTHROPIC_API_KEY           — Claude API key (uses claude-opus-4-6)
- *   YOUTUBE_API_KEY             — YouTube Data API v3 key
+ *   YOUTUBE_API_KEY             — Google API key (YouTube Data API v3 + Custom Search API)
  *   GSHEETS_SERVICE_ACCOUNT_JSON — Full service account JSON (GitHub Actions)
  *   GOOGLE_APPLICATION_CREDENTIALS — Path to service account file (local)
  */
@@ -20,12 +20,13 @@ import { argv, env, exit } from 'node:process';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const SHEET_ID     = '1MUkQZRjOFqfpcPCnNL6sPaUETHa3I8q9okbV-wT7MXI';
-const REPO         = 'sascribe/sascribe-blog';
-const GH_TOKEN     = env.GH_TOKEN;
-const ANTHROPIC    = env.ANTHROPIC_API_KEY;
-const YOUTUBE_KEY  = env.YOUTUBE_API_KEY;
-const INDEXNOW_KEY = 'sascribe2026xK9mP3qR7nL5vT';
+const SHEET_ID      = '1MUkQZRjOFqfpcPCnNL6sPaUETHa3I8q9okbV-wT7MXI';
+const REPO          = 'sascribe/sascribe-blog';
+const GH_TOKEN      = env.GH_TOKEN;
+const ANTHROPIC     = env.ANTHROPIC_API_KEY;
+const GOOGLE_KEY    = env.YOUTUBE_API_KEY; // Used for both YouTube Search + Custom Search API
+const GOOGLE_CSE_CX = 'b5832306c3be3443d';
+const INDEXNOW_KEY  = 'sascribe2026xK9mP3qR7nL5vT';
 
 const LONG_FORM_TYPES = ['pillar', 'review', 'comparison', 'tutorial', 'use-cases', 'alternatives', 'guide'];
 const SHORT_TYPES     = ['news', 'tips', 'quick-guide', 'roundup'];
@@ -119,7 +120,6 @@ async function readSheet(token) {
 }
 
 async function updateSheetRow(token, sheetRowNumber, contentType, newTotal, publishedTypes) {
-  // sheetRowNumber is 1-based (row 1 = header, row 2 = first data row)
   const today = new Date().toISOString().split('T')[0];
   const range = `Sheet1!H${sheetRowNumber}:L${sheetRowNumber}`;
   const url   = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}?valueInputOption=RAW`;
@@ -147,7 +147,7 @@ async function logFailureToSheet(token, affiliateName, errorMsg) {
 
 function parseAffiliate(row, rowIndex) {
   return {
-    rowNumber:      rowIndex + 1,        // 1-based sheet row (header = row 1, first data = row 2)
+    rowNumber:      rowIndex + 1,
     name:           row[0] || '',
     slug:           (row[3] || '').toLowerCase().trim(),
     dosAndDonts:    row[4] || '',
@@ -170,9 +170,8 @@ function pickAffiliate(rows, requestedSlug, type) {
     return (now - last) < COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
   }
 
-  // rows[0] is header — data starts at rows[1], rowNumber = index+1 for the array, but sheet row = index+1 (1-indexed)
   const affiliates = rows.slice(1)
-    .map((row, idx) => parseAffiliate(row, idx + 1)) // idx+1 so rowNumber starts at 2 (row 1 = header)
+    .map((row, idx) => parseAffiliate(row, idx + 1))
     .filter(a => a.status === 'active');
 
   if (!affiliates.length) throw new Error('No active affiliates in Sheet');
@@ -191,13 +190,11 @@ function pickAffiliate(rows, requestedSlug, type) {
     return { affiliate: aff, contentType };
   }
 
-  // Auto: sort by lastPublished ASC (oldest first).
   const sorted     = [...affiliates].sort((a, b) => new Date(a.lastPublished) - new Date(b.lastPublished));
   const mostRecent = sorted[sorted.length - 1];
 
-  // 7-day cooldown: prefer affiliates not recently published
   const coolFree = sorted.filter(a => !withinCooldown(a));
-  const pool = coolFree.length ? coolFree : sorted; // fall back to all if all within cooldown
+  const pool = coolFree.length ? coolFree : sorted;
   if (!coolFree.length) console.log(`   ℹ️  All affiliates within ${COOLDOWN_DAYS}-day cooldown — using oldest`);
   else if (coolFree.length < sorted.length) {
     const skipped = sorted.filter(a => withinCooldown(a)).map(a => a.name).join(', ');
@@ -209,21 +206,22 @@ function pickAffiliate(rows, requestedSlug, type) {
     const available = typePool.filter(t => !aff.publishedTypes.includes(t));
     if (available.length) return { affiliate: aff, contentType: available[0] };
   }
-  // Fallback: oldest regardless of repeat prevention
   const aff = pool[0];
   const available = typePool.filter(t => !aff.publishedTypes.includes(t));
   return { affiliate: aff, contentType: available.length ? available[0] : typePool[0] };
 }
 
-// ─── Research: Reddit ─────────────────────────────────────────────────────────
+// ─── Research: Reddit signals ─────────────────────────────────────────────────
 
-async function fetchRedditTrends(affiliateSlug) {
+async function fetchRedditSignals(affiliateSlug) {
+  const signals = [];
+
+  // 1. General AI/tech trending posts (for supporting context only — NOT the article premise)
   const subs = ['artificial', 'ChatGPT', 'MachineLearning'];
-  const posts = [];
   for (const sub of subs) {
     try {
       const resp = await fetch(
-        `https://www.reddit.com/r/${sub}/top.json?t=week&limit=10`,
+        `https://www.reddit.com/r/${sub}/top.json?t=week&limit=5`,
         {
           headers: { 'User-Agent': 'SascribeBot/1.0 (+https://sascribe.com; content research)' },
           signal:  AbortSignal.timeout(8000),
@@ -232,80 +230,105 @@ async function fetchRedditTrends(affiliateSlug) {
       if (!resp.ok) continue;
       const data = await resp.json();
       for (const c of (data?.data?.children || [])) {
-        posts.push({ title: c.data.title, score: c.data.score, comments: c.data.num_comments, sub });
+        signals.push({
+          type:     'trending',
+          title:    c.data.title,
+          score:    c.data.score,
+          comments: c.data.num_comments,
+          sub,
+        });
       }
-    } catch { /* n8n working insight: Reddit may block — continue */ }
-  }
-  return posts;
-}
-
-// ─── Research: YouTube ────────────────────────────────────────────────────────
-
-async function fetchYouTubeTrends() {
-  if (!YOUTUBE_KEY) return [];
-  try {
-    const resp = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&videoCategoryId=28&maxResults=20&key=${YOUTUBE_KEY}`,
-      { signal: AbortSignal.timeout(8000) }
-    );
-    if (!resp.ok) return [];
-    const data = await resp.json();
-    return (data.items || []).map(v => ({
-      title:   v.snippet.title,
-      snippet: (v.snippet.description || '').slice(0, 300),
-      views:   parseInt(v.statistics?.viewCount || '0', 10),
-    }));
-  } catch { return []; }
-}
-
-// ─── Topic Scoring ────────────────────────────────────────────────────────────
-
-function pickBestTopic(redditPosts, ytVideos, affiliateSlug, recentHooks = new Set()) {
-  const kws = AFFILIATE_KEYWORDS[affiliateSlug] || [];
-  function relevance(text) {
-    const t = (text || '').toLowerCase();
-    const hits = kws.filter(k => t.includes(k)).length;
-    return hits / Math.max(kws.length, 1);
+    } catch { /* Reddit may block — continue */ }
   }
 
-  const topics = [
-    ...redditPosts.map(p => ({
-      source:     'reddit',
-      title:      p.title,
-      engagement: p.score + p.comments * 2,
-      relevance:  relevance(p.title),
-    })),
-    ...ytVideos.map(v => ({
-      source:     'youtube',
-      title:      v.title,
-      engagement: v.views / 1000,
-      relevance:  relevance(v.title + ' ' + v.snippet),
-    })),
+  // 2. Affiliate-specific Reddit threads via CSE — real user opinions
+  if (GOOGLE_KEY) {
+    try {
+      const query = encodeURIComponent(`site:reddit.com ${affiliateSlug} review`);
+      const url   = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_KEY}&cx=${GOOGLE_CSE_CX}&q=${query}&num=5`;
+      const resp  = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      if (resp.ok) {
+        const data = await resp.json();
+        for (const item of (data.items || [])) {
+          signals.push({
+            type:    'user_thread',
+            title:   item.title,
+            snippet: (item.snippet || '').slice(0, 250),
+            url:     item.link,
+          });
+        }
+      }
+    } catch { /* CSE failure is non-fatal */ }
+  }
+
+  return signals;
+}
+
+// ─── Research: YouTube signals ────────────────────────────────────────────────
+
+async function fetchYouTubeSignals(affiliateSlug, affiliateName) {
+  const signals = [];
+  if (!GOOGLE_KEY) return signals;
+
+  // Affiliate-targeted YouTube search (replaces generic mostPopular category 28)
+  const queries = [
+    `${affiliateName} review 2026`,
+    `${affiliateName} honest review`,
   ];
 
-  if (!topics.length) return null;
-  const maxEng = Math.max(...topics.map(t => t.engagement), 1);
-  const sorted = topics
-    .map(t => ({ ...t, score: 0.5 * (t.engagement / maxEng) + 0.5 * t.relevance }))
-    .sort((a, b) => b.score - a.score);
-
-  // Dedup check: skip topics whose hook entity appears in last 10 articles
-  for (const topic of sorted) {
-    const match = topicMatchesRecentHooks(topic.title, recentHooks);
-    if (match) {
-      console.log(`   ⏭  Skipping "${topic.title.slice(0, 60)}" — hook entity "${match}" found in recent article`);
-      continue;
-    }
-    return topic;
+  for (const q of queries) {
+    try {
+      const resp = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(q)}&type=video&order=viewCount&maxResults=5&key=${GOOGLE_KEY}`,
+        { signal: AbortSignal.timeout(8000) }
+      );
+      if (!resp.ok) continue;
+      const data = await resp.json();
+      for (const item of (data.items || [])) {
+        signals.push({
+          type:         'youtube',
+          title:        item.snippet.title,
+          snippet:      (item.snippet.description || '').slice(0, 300),
+          channelTitle: item.snippet.channelTitle,
+          query:        q,
+        });
+      }
+    } catch { /* non-fatal */ }
   }
-  console.log('   ℹ️  All scored topics matched recent hooks — using evergreen angle');
-  return null;
+
+  return signals;
 }
 
-// ─── Recent Hook Deduplication ────────────────────────────────────────────────
+// ─── Research: Competitor affiliate angles ────────────────────────────────────
+
+async function fetchCompetitorAngles(affiliateName, contentType) {
+  if (!GOOGLE_KEY) return [];
+  const angles = [];
+  try {
+    const siteFilter = 'site:bloggingwizard.com OR site:authorityhacker.com OR site:nichepursuits.com OR site:affiliatefix.com OR site:pcmag.com OR site:tomsguide.com';
+    const q = encodeURIComponent(`${affiliateName} ${contentType} ${siteFilter}`);
+    const resp = await fetch(
+      `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_KEY}&cx=${GOOGLE_CSE_CX}&q=${q}&num=5`,
+      { signal: AbortSignal.timeout(8000) }
+    );
+    if (!resp.ok) return angles;
+    const data = await resp.json();
+    for (const item of (data.items || [])) {
+      let hostname = item.link;
+      try { hostname = new URL(item.link).hostname; } catch {}
+      angles.push({
+        title:   item.title,
+        snippet: (item.snippet || '').slice(0, 250),
+        site:    hostname,
+      });
+    }
+  } catch { /* non-fatal */ }
+  return angles;
+}
+
+// ─── Research: Recent article hook deduplication ──────────────────────────────
 
 async function fetchRecentArticleHooks() {
-  // Fetch last 10 article filenames, extract named-entity fingerprints
   try {
     const resp = await fetch(
       `https://api.github.com/repos/${REPO}/contents/content/posts`,
@@ -337,14 +360,12 @@ async function fetchRecentArticleHooks() {
         const titleM = text.match(/^title:\s*[\"'"]?(.+?)[\"'"]?\s*$/m);
         const descM  = text.match(/^description:\s*[\"'"](.+?)[\"'"]\s*$/m);
         const combined = [(titleM?.[1] || ''), (descM?.[1] || '')].join(' ');
-        // Named entities: tokens starting uppercase and ≥4 chars, not stop words
         const tokens = combined.replace(/[^\w\s]/g, ' ').split(/\s+/);
         for (const tok of tokens) {
           if (tok.length >= 4 && /^[A-Z]/.test(tok) && !STOP.has(tok.toLowerCase())) {
             hooks.add(tok.toLowerCase());
           }
         }
-        // Whole-phrase known entities
         const known = combined.match(/\b(Sam Altman|PlayStation|OpenAI|ChatGPT|Reddit|YouTube|Netflix|Google|Apple|Microsoft|Meta|Instagram|TikTok|Twitter|Elon Musk|Mark Zuckerberg|Jeff Bezos|Bing|Gemini|Grok|DeepSeek)\b/gi) || [];
         for (const e of known) hooks.add(e.toLowerCase());
       } catch { /* skip file on timeout */ }
@@ -367,14 +388,69 @@ function topicMatchesRecentHooks(topicTitle, recentHooks) {
   return null;
 }
 
+// ─── Research Brief Builder ───────────────────────────────────────────────────
+
+async function buildResearchBrief(affiliate, contentType, recentHooks) {
+  const { slug, name } = affiliate;
+
+  console.log(`   📡 Fetching Reddit signals, YouTube signals, competitor angles...`);
+
+  const [redditSignals, ytSignals, competitorAngles] = await Promise.all([
+    fetchRedditSignals(slug),
+    fetchYouTubeSignals(slug, name),
+    fetchCompetitorAngles(name, contentType),
+  ]);
+
+  // Trending posts — sorted by engagement, for SUPPORTING CONTEXT ONLY
+  const trendingPosts = redditSignals
+    .filter(s => s.type === 'trending')
+    .sort((a, b) => (b.score + b.comments * 2) - (a.score + a.comments * 2));
+
+  // Dedup: skip trending hooks that appear in recent articles
+  let trendingHook = null;
+  for (const post of trendingPosts) {
+    const match = topicMatchesRecentHooks(post.title, recentHooks);
+    if (match) {
+      console.log(`   ⏭  Skipping trending hook "${post.title.slice(0, 60)}" — entity "${match}" in recent articles`);
+      continue;
+    }
+    trendingHook = post;
+    break;
+  }
+
+  const userThreads = redditSignals.filter(s => s.type === 'user_thread');
+  const ytResults   = ytSignals.filter(s => s.type === 'youtube');
+
+  const brief = {
+    TARGET_KEYWORD: `${name.toLowerCase()} ${contentType === 'news' ? '2026' : contentType + ' 2026'}`,
+
+    TRENDING_HOOK: trendingHook
+      ? `"${trendingHook.title}" (r/${trendingHook.sub}, score ${trendingHook.score}) — supporting context only, ONE paragraph max, NOT the article premise or opening hook`
+      : 'No trending hook available — use an evergreen, problem-first opening',
+
+    REAL_USER_SIGNAL: userThreads.length
+      ? userThreads.slice(0, 3).map(t => `- "${t.title}"\n  ${t.snippet}`).join('\n')
+      : `No direct Reddit threads found for ${name} — synthesize from known user pain points and common questions`,
+
+    YOUTUBE_COVERAGE: ytResults.length
+      ? ytResults.slice(0, 5).map(v => `- [${v.channelTitle}] "${v.title}": ${v.snippet}`).join('\n')
+      : `No YouTube results found — reference known ${name} features and use cases`,
+
+    COMPETITOR_AFFILIATE_ANGLES: competitorAngles.length
+      ? competitorAngles.slice(0, 4).map(a => `- [${a.site}] "${a.title}": ${a.snippet}`).join('\n')
+      : `No competitor results found — focus on ${name}'s differentiating features vs alternatives`,
+  };
+
+  console.log(`   ✅ Brief: ${userThreads.length} user threads, ${ytResults.length} YT signals, ${competitorAngles.length} competitor angles, trending hook: ${trendingHook ? `"${trendingHook.title.slice(0,50)}..."` : 'none (evergreen)'}`);
+
+  return brief;
+}
 
 // ─── Image Picker ─────────────────────────────────────────────────────────────
 
 async function pickImage(affiliateImagePath) {
-  // If it's already a full file path (has extension), return as-is
   if (/\.(png|jpg|jpeg|webp|svg)$/i.test(affiliateImagePath)) return affiliateImagePath;
 
-  // Directory — list and pick random image
   const dir  = affiliateImagePath.replace(/^\//, '').replace(/\/$/, '');
   const url  = `https://api.github.com/repos/${REPO}/contents/static/${dir}`;
   try {
@@ -392,13 +468,10 @@ async function pickImage(affiliateImagePath) {
 
 // ─── Article Generation ───────────────────────────────────────────────────────
 
-async function generateArticle({ affiliate, contentType, trendingTopic, imagePath, type }) {
-  const wordCount   = type === 'long-form' ? '2000–2500' : '800–1000';
-  const today       = new Date().toISOString().split('T')[0];
-  const link        = INTERNAL_LINKS[affiliate.slug];
-  const topicLine   = trendingTopic
-    ? `TRENDING ANGLE: "${trendingTopic.title}" (${trendingTopic.source}, score: ${trendingTopic.score.toFixed(2)})`
-    : 'TRENDING ANGLE: Use a current 2026 angle relevant to the affiliate.';
+async function generateArticle({ affiliate, contentType, brief, imagePath, type }) {
+  const wordCount = type === 'long-form' ? '2000–2500' : '800–1000';
+  const today     = new Date().toISOString().split('T')[0];
+  const link      = INTERNAL_LINKS[affiliate.slug];
 
   const prompt = `You are Sascribe's expert affiliate content writer. Write a complete Hugo markdown article. Output ONLY the article — no preamble, no explanation, no \`\`\`markdown fences.
 
@@ -407,14 +480,36 @@ AFFILIATE:       ${affiliate.name}
 CONTENT TYPE:    ${contentType}
 WORD COUNT:      ${wordCount} words
 DATE:            ${today}
-${topicLine}
+TARGET KEYWORD:  ${brief.TARGET_KEYWORD}
+
+═══ RESEARCH BRIEF ═══
+Use this brief to drive the article's editorial angle. The article must emerge from this research — not from a trending event.
+
+TRENDING HOOK (supporting context only — see rules below):
+${brief.TRENDING_HOOK}
+
+REAL USER SIGNALS — ground the article in actual reader experience. Use ≥2 of these:
+${brief.REAL_USER_SIGNAL}
+
+YOUTUBE COVERAGE — what existing video content covers. Find the angle they missed:
+${brief.YOUTUBE_COVERAGE}
+
+COMPETITOR AFFILIATE ANGLES — what top affiliate blogs say. Do NOT repeat these framings:
+${brief.COMPETITOR_AFFILIATE_ANGLES}
+
+═══ CRITICAL EDITORIAL RULES ═══
+1. LEAD WITH VALUE, NOT A TREND: Your opening paragraph must state the reader's problem or the opportunity directly. Do NOT open with "This week on Reddit..." or "A viral video shows..." or any event-first framing. Start with what the reader needs to know.
+2. DIFFERENTIATE: The competitor angles above represent what is already covered. Write what they missed — a sharper angle, a specific use case, a comparison they skipped, or a real user concern they glossed over.
+3. USE REAL DATA: Include specific feature names, pricing tiers, and verifiable facts about ${affiliate.name}. Do not write generic filler like "this powerful tool" or "game-changing solution."
+4. TRENDING HOOK — if used: One paragraph only. Appears in the second or third section as supporting context, not as the article's premise. Its job is to make the affiliate topic feel timely, not to lead the story.
+5. EXPERT VOICE: Write like someone who has used the product for months and has formed concrete opinions, not someone summarizing a marketing page.
 
 ═══ AFFILIATE RULES (follow strictly) ═══
 ${affiliate.dosAndDonts}
 
 ═══ REQUIRED FRONTMATTER (copy structure exactly) ═══
 ---
-title: "[Compelling click-worthy H1 title targeting primary keyword for ${contentType} about ${affiliate.name}]"
+title: "[Compelling H1 title targeting the primary search query for ${contentType} about ${affiliate.name} — must answer a real search query, must NOT reference a trending event or meme]"
 date: ${today}
 draft: false
 description: "[EXACTLY 150-160 characters — keyword-rich, compelling, includes ${affiliate.name} and year 2026]"
@@ -430,29 +525,26 @@ schema: "BlogPosting"
 ---
 
 ═══ ARTICLE BODY RULES ═══
-1. FIRST PARAGRAPH: Strong, specific hook that establishes the problem/opportunity. NO affiliate link in first paragraph.
-2. STRUCTURE: H1 is the title above. Use 3–5 H2 headings with secondary keywords. H3 allowed for sub-sections.
-3. AFFILIATE LINK: Include at least once in body (not first paragraph): [Try ${affiliate.name}](https://sascribe.com/go/${affiliate.slug})
-4. INTERNAL LINK: Include exactly once, placed naturally in a relevant section:
+1. FIRST PARAGRAPH: Problem-first or benefit-first. What specific problem does ${affiliate.name} solve? What outcome does it unlock? No affiliate link. No event references.
+2. STRUCTURE: H1 is the title. Use 3–5 H2 headings with secondary keywords. H3 for sub-sections.
+3. AFFILIATE LINK: At least once in body (not first paragraph): [Try ${affiliate.name}](https://sascribe.com/go/${affiliate.slug})
+4. INTERNAL LINK: Exactly once, placed naturally:
    [${link?.title || affiliate.name + ' overview'}](${link?.url || 'https://sascribe.com/posts/'})
-5. NO FTC DISCLOSURE in body — the site template renders it automatically. Do not add it.
+5. NO FTC DISCLOSURE in body — site template renders it automatically.
 6. NO screenshot embeds. No placeholder image tags.
-7. BE SPECIFIC: Real feature names, real pricing tiers, real use cases. No generic filler.
+7. BE SPECIFIC: Real feature names, real pricing, real use cases with specifics.
 
-═══ FAQ SECTION (required at end of article) ═══
-Add a visible H2 FAQ section followed immediately by FAQPage JSON-LD.
-
-Format:
+═══ FAQ SECTION (required at end) ═══
 ## Frequently Asked Questions
 
-### [Question 1?]
-[Answer 1 — 2–3 sentences, specific and helpful]
+### [Real question real users search about ${affiliate.name}?]
+[Answer — 2–3 sentences, specific]
 
 ### [Question 2?]
-[Answer 2]
+[Answer]
 
 ### [Question 3?]
-[Answer 3]
+[Answer]
 
 <script type="application/ld+json">
 {
@@ -483,9 +575,9 @@ Format:
   const resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'x-api-key':          ANTHROPIC,
-      'anthropic-version':  '2023-06-01',
-      'content-type':       'application/json',
+      'x-api-key':         ANTHROPIC,
+      'anthropic-version': '2023-06-01',
+      'content-type':      'application/json',
     },
     body: JSON.stringify({
       model:      'claude-opus-4-6',
@@ -503,7 +595,7 @@ Format:
   let content = data.content?.[0]?.text;
   if (!content) throw new Error(`Empty response from Anthropic: ${JSON.stringify(data)}`);
 
-  // Strip code fences (Working Insight #43)
+  // Strip code fences if Claude added them
   content = content.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '');
 
   return content;
@@ -514,14 +606,14 @@ Format:
 function validateArticle(content, affiliate) {
   const issues = [];
 
-  if (!content.startsWith('---'))                          issues.push('CRITICAL: Missing YAML frontmatter');
-  if (!content.includes('draft: false'))                   issues.push('Missing draft: false');
-  if (!content.includes('affiliateURL:'))                  issues.push('CRITICAL: Missing affiliateURL');
-  if (!content.includes('affiliateName:'))                 issues.push('Missing affiliateName');
-  if (!content.includes('schema: "BlogPosting"'))          issues.push('Missing schema: BlogPosting');
-  if (!content.includes('cover:'))                         issues.push('CRITICAL: Missing cover block');
-  if (!content.includes(`sascribe.com/go/${affiliate.slug}`)) issues.push('CRITICAL: Missing affiliate link');
-  if (!content.includes('FAQPage'))                        issues.push('Missing FAQPage JSON-LD');
+  if (!content.startsWith('---'))                               issues.push('CRITICAL: Missing YAML frontmatter');
+  if (!content.includes('draft: false'))                        issues.push('Missing draft: false');
+  if (!content.includes('affiliateURL:'))                       issues.push('CRITICAL: Missing affiliateURL');
+  if (!content.includes('affiliateName:'))                      issues.push('Missing affiliateName');
+  if (!content.includes('schema: "BlogPosting"'))               issues.push('Missing schema: BlogPosting');
+  if (!content.includes('cover:'))                              issues.push('CRITICAL: Missing cover block');
+  if (!content.includes(`sascribe.com/go/${affiliate.slug}`))   issues.push('CRITICAL: Missing affiliate link');
+  if (!content.includes('FAQPage'))                             issues.push('Missing FAQPage JSON-LD');
 
   const descMatch = content.match(/description:\s*"([^"]+)"/);
   if (descMatch) {
@@ -533,6 +625,17 @@ function validateArticle(content, affiliate) {
 
   const link = INTERNAL_LINKS[affiliate.slug];
   if (link && !content.includes(link.url)) issues.push(`Missing internal link to ${link.url}`);
+
+  // Hook quality check: warn if opening paragraph contains event-first framing
+  const bodyStart = content.indexOf('---', 3);
+  const bodySlice = content.slice(bodyStart + 3, bodyStart + 600).trim();
+  const hookPatterns = [/this week/i, /went viral/i, /\bmeme\b/i, /reddit.*now/i, /internet.*lost.*mind/i];
+  for (const p of hookPatterns) {
+    if (p.test(bodySlice.slice(0, 300))) {
+      issues.push(`WARN: Opening paragraph may contain event-first framing — review before publishing`);
+      break;
+    }
+  }
 
   return issues;
 }
@@ -600,19 +703,10 @@ async function main() {
   console.log(`✅ Content type: ${contentType}`);
 
   // ── Research ──
-  console.log('🔍 Fetching trends (Reddit + YouTube) + recent article hooks...');
-  const [redditPosts, ytVideos, recentHooks] = await Promise.all([
-    fetchRedditTrends(affiliate.slug),
-    fetchYouTubeTrends(),
-    fetchRecentArticleHooks(),
-  ]);
-  console.log(`   Reddit posts: ${redditPosts.length} | YouTube videos: ${ytVideos.length} | Hook fingerprints: ${recentHooks.size}`);
-  const trendingTopic = pickBestTopic(redditPosts, ytVideos, affiliate.slug, recentHooks);
-  if (trendingTopic) {
-    console.log(`✅ Best topic: "${trendingTopic.title.slice(0, 70)}" (score: ${trendingTopic.score.toFixed(2)})`);
-  } else {
-    console.log('⚠️  No trending topics found — using evergreen angle');
-  }
+  console.log('🔍 Building research brief (Reddit + YouTube + CSE + recent hooks)...');
+  const recentHooks = await fetchRecentArticleHooks();
+  console.log(`   Hook fingerprints: ${recentHooks.size}`);
+  const brief = await buildResearchBrief(affiliate, contentType, recentHooks);
 
   // ── Image ──
   const imagePath = await pickImage(affiliate.imagePath);
@@ -621,19 +715,15 @@ async function main() {
   // ── Generate ──
   console.log(`\n🤖 Generating article with claude-opus-4-6...`);
   const articleContent = await generateArticle({
-    affiliate, contentType, trendingTopic, imagePath, type: opts.type,
+    affiliate, contentType, brief, imagePath, type: opts.type,
   });
   console.log(`✅ Article generated (${articleContent.length} chars)`);
 
   // ── Validate ──
-  const issues = validateArticle(articleContent, affiliate);
+  const issues   = validateArticle(articleContent, affiliate);
   const critical = issues.filter(i => i.startsWith('CRITICAL'));
-  if (issues.length > 0) {
-    issues.forEach(i => console.warn(`   ⚠️  ${i}`));
-  }
-  if (critical.length > 0) {
-    throw new Error(`Critical validation failures: ${critical.join('; ')}`);
-  }
+  if (issues.length > 0) issues.forEach(i => console.warn(`   ⚠️  ${i}`));
+  if (critical.length > 0) throw new Error(`Critical validation failures: ${critical.join('; ')}`);
   if (issues.length === 0) console.log('✅ Validation passed');
 
   // ── Dry run ──
@@ -654,7 +744,7 @@ async function main() {
   console.log(`   Commit SHA: ${commitSha}`);
 
   // ── Sheet update ──
-  const newTotal         = affiliate.totalPublished + 1;
+  const newTotal          = affiliate.totalPublished + 1;
   const newPublishedTypes = [...affiliate.publishedTypes, contentType].join(',');
   await updateSheetRow(token, affiliate.rowNumber, contentType, newTotal, newPublishedTypes);
   console.log(`✅ Sheet updated — total: ${newTotal}, types: ${newPublishedTypes}`);
