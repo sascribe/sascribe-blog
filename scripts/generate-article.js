@@ -25,7 +25,7 @@ const REPO          = 'sascribe/sascribe-blog';
 const GH_TOKEN      = env.GH_TOKEN;
 const ANTHROPIC     = env.ANTHROPIC_API_KEY;
 const GOOGLE_KEY    = env.YOUTUBE_API_KEY; // Used for both YouTube Search + Custom Search API
-const GOOGLE_CSE_CX = 'b5832306c3be3443d';
+const GOOGLE_CSE_CX = 'a1bc31d3704974b95';
 const INDEXNOW_KEY  = 'sascribe2026xK9mP3qR7nL5vT';
 
 const LONG_FORM_TYPES = ['pillar', 'review', 'comparison', 'tutorial', 'use-cases', 'alternatives', 'guide'];
