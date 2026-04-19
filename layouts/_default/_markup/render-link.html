@@ -1,0 +1,6 @@
+{{- $url := .Destination -}}
+{{- if hasPrefix $url "https://sascribe.com/go/" -}}
+<a href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }} rel="nofollow sponsored" target="_blank">{{ .Text | safeHTML }}</a>
+{{- else -}}
+<a href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}
