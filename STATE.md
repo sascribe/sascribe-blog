@@ -158,3 +158,57 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | ElevenLabs pillar CTR | MONITOR | pos 8.4, 1489 imp, 0 clicks — needs to crack top 5 |
 | QR Perks postback endpoint | NEXT SESSION | Primary mission next session |
 | CLAUDE_ROLE.md | LOW | Does not exist in repo |
+
+---
+
+## QR Perks Platform — Sessions 6–8 (2026-04-19)
+
+### Working Insights
+
+**Working Insight #45:** The `affiliate_id` column on the `conversions` table has a FK to the `affiliates` table — never store MaxBounty campaign IDs there; use `offer_name` instead.
+
+**Working Insight #46:** TCPA consent placement is outcome-determinative — consent language must appear ABOVE or ADJACENT to the submit button, never below it. Courts have invalidated consent where disclosure appeared below the button. Button label in consent text must match exactly (e.g., "By tapping 'Get My Deal'" requires the button to say exactly "Get My Deal").
+
+### Session 6 — MaxBounty Postback (2026-04-19)
+
+| Fix | Result | Notes |
+|-----|--------|-------|
+| `/api/conversion` endpoint | ✅ DONE | Token validation, subid parse, truck→driver lookup, conversions insert, commissions row, driver earnings update, referral 10% |
+| Postback deduplication | ✅ DONE | 60-second window check prevents MaxBounty retry double-writes |
+| `offer_name` not `affiliate_id` | ✅ DONE | FK violation fix — store campaign ID in `offer_name` |
+| Admin `/admin/conversions/mark-paid` | ✅ DONE | Mark conversions paid, clear commission_calculated |
+
+**MaxBounty postback URL:** `https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#&token=oBMUWDyEwW2HBpX1KpXYuWkn3RNHbIsX`
+
+### Session 7 — Platform Audit (2026-04-19)
+
+| Area | Result | Notes |
+|------|--------|-------|
+| Security: timingSafeEqual | ✅ DONE | XOR-based constant-time admin password comparison |
+| CAN-SPAM: physical address | ✅ DONE | Added to all email footers |
+| Fleet management | ✅ DONE | Drivers self-add trucks (max 10), auto QR generation |
+| Leads CSV export | ✅ DONE | `/admin/leads/export` with status/lang filters |
+| Admin nav | ✅ DONE | All sections linked and working |
+
+### Session 8 — TCPA/CIPA Compliance (2026-04-19)
+
+| Fix | Result | Commit |
+|-----|--------|--------|
+| Physical address → `1945 S. Laurel Pl., Ontario, CA 91762` | ✅ DONE | cab1856 |
+| Hero form: phone field + TCPA consent ABOVE button | ✅ DONE | cab1856 |
+| Bridge overlay: TCPA with exact button name | ✅ DONE | cab1856 |
+| Driver signup: TCPA consent ABOVE 'Apply Now' | ✅ DONE | cab1856 |
+| SMS STOP acknowledgment: CIPA-compliant text | ✅ DONE | cab1856 |
+| leads-terms page: full TCPA disclosures rewrite | ✅ DONE | cab1856 |
+| Privacy policy: SMS section + CIPA section | ✅ DONE | cab1856 |
+| CF Worker deployed | ✅ DONE | 2026-04-19 |
+| GitHub commit | ✅ DONE | cab185695e3525512a380b3a318428d22235a456 |
+
+### Pending (QR Perks)
+
+| Item | Priority | Notes |
+|------|----------|-------|
+| Rate limiting on login/signup | MEDIUM | Needs Durable Objects or KV — no persistent state in CF Workers otherwise |
+| Admin session tokens | MEDIUM | Currently stores raw ADMIN_PASSWORD in cookie — should use short-lived signed JWT |
+| Twilio SMS setup | LOW | 5 manual steps documented in worker comments |
+| Register MaxBounty postback URL | ACTION | Add to MaxBounty dashboard: see URL above |
