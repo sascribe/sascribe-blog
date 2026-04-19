@@ -54,16 +54,31 @@
 
 ---
 
+## QR PERKS — SESSION 6 (2026-04-19)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | /api/conversion endpoint | ✅ DONE | GET, token-gated, 200 OK verified |
+| 2 | POSTBACK_SECRET CF secret | ✅ DONE | Deployed to qrperks worker |
+| 3 | conversions schema (offer_name, commission_amount_cents, paid_at) | ✅ DONE | ALTER TABLE confirmed |
+| 4 | Admin conversions tab with Mark Paid | ✅ DONE | Revenue/commission stats + table |
+| 5 | Driver earnings conversion history | ✅ DONE | Per-conversion breakdown with totals |
+| 6 | /api/stats conversion fields | ✅ DONE | total_conversions, total_revenue_cents, conversions_by_offer |
+| 7 | End-to-end test | ✅ DONE | 200 OK, row in Supabase, driver earnings updated, test cleaned up |
+| 8 | GitHub worker.js push | ✅ DONE | commit 42014799 |
+
+---
+
 ## SASCRIBE — NEXT SESSION PRIORITIES
 
 | # | Item | Priority |
 |---|------|----------|
-| 1 | QR Perks postback endpoint | PRIMARY MISSION |
-| 2 | ElevenLabs use-cases article | HIGH |
-| 3 | NordVPN alternatives article | HIGH |
-| 4 | Beehiiv tutorial article | HIGH |
-| 5 | Monitor GSC indexing (7–14d from 2026-04-19) | MONITOR |
-| 6 | Monitor ElevenLabs pillar CTR (pos 8.4) | MONITOR |
+| 1 | Register MaxBounty postback URL in dashboard | HIGH | Paste new URL with token into MaxBounty → Account → Postback |
+| 2 | ElevenLabs use-cases article | HIGH | |
+| 3 | NordVPN alternatives article | HIGH | |
+| 4 | Beehiiv tutorial article | HIGH | |
+| 5 | Monitor GSC indexing (7–14d from 2026-04-19) | MONITOR | |
+| 6 | Monitor ElevenLabs pillar CTR (pos 8.4) | MONITOR | |
 
 ---
 
