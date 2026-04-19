@@ -1,6 +1,6 @@
 # Project State — QR Perks + Sascribe
 
-**Last updated:** 2026-04-19 (Session 5 — 7 Fixes)
+**Last updated:** 2026-04-19 (Session 6 — MaxBounty Postback)
 **Projects:** qr-perks.com (Cloudflare Worker) · sascribe.com (Hugo + GitHub Actions pipeline)
 
 ---
@@ -19,10 +19,27 @@
 | Resend Email | ✅ Live | `noreply@qr-perks.com` |
 | Cloudflare Email Routing | ✅ Live | 3 rules active — support@, privacy@, contact@ → qrperks@gmail.com |
 
+### Conversion Tracking (QR Perks)
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| /api/conversion endpoint | ✅ LIVE | GET, token-gated, returns 200 |
+| POSTBACK_SECRET | ✅ Set | CF Worker secret deployed |
+| conversions table schema | ✅ Updated | offer_name, commission_amount_cents, paid_at added |
+| Admin conversions tab | ✅ LIVE | With Mark Paid button |
+| Driver earnings conversion history | ✅ LIVE | Per-driver breakdown |
+| /api/stats conversions fields | ✅ LIVE | total_conversions, total_revenue_cents, conversions_by_offer |
+
+**MaxBounty Global Postback URL:**
+```
+https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#&token=oBMUWDyEwW2HBpX1KpXYuWkn3RNHbIsX
+```
+
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
 |------|----------|-------|
+| Update MaxBounty dashboard with postback URL | HIGH | Register new token URL in MaxBounty → Account → Postback |
 | Twilio/SMS provider integration | MEDIUM | TCPA webhook ready; no provider configured |
 | Resend domain verification | LOW | DNS added 2026-04-10; confirm in Resend dashboard |
 
@@ -68,6 +85,8 @@
 | synthesia | 301 | synthesia.io | ✅ OK |
 | beehiiv | 301 | beehiiv.com | ✅ OK |
 | nordvpn | 302 | go.nordvpn.net | ✅ FIXED (was tkqlhce.com — CJ legacy domain 403) |
+
+**Working Insight #45 (2026-04-19):** MaxBounty postback fires GET to /api/conversion — must return 200 immediately or MB retries. Token validation prevents fake conversions. SubID format qrp_t{n} maps directly to truck_id. The `affiliate_id` column on the conversions table has a FK to the affiliates table — never store MaxBounty campaign IDs there; use `offer_name` instead.
 
 **Working Insight #44:** CJ tracking domains change — always verify /go/ redirects resolve end-to-end. `tkqlhce.com` was a legacy CJ domain that returned 403. Use `go.nordvpn.net` direct NordVPN network links instead.
 
