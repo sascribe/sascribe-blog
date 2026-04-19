@@ -69,16 +69,45 @@
 
 ---
 
+## QR PERKS — SESSION 7 AUDIT (2026-04-19)
+
+### AUDIT RESULTS SUMMARY
+
+| Audit | Finding | Status |
+|-------|---------|--------|
+| 1 — Routes | All routes return correct status; /go/ works with correct IDs (paypal-sweeps not paypal) | ✅ |
+| 2 — Driver Dashboard | Fleet management MISSING → BUILT | ✅ Fixed |
+| 3 — Admin Dashboard | Leads export MISSING → BUILT; Leads section upgraded | ✅ Fixed |
+| 4 — Commission Logic | 20% direct ✅, 10% referral ✅, mark paid ✅, dedup MISSING → FIXED | ✅ Fixed |
+| 5 — Referral System | Full chain working: /join → cookie → signup → commission ✅ | ✅ |
+| 6 — Email CAN-SPAM | Physical address MISSING → ADDED; Privacy link MISSING → ADDED | ✅ Fixed |
+| 7 — SMS/TCPA | Phone field present ✅; TCPA consent inline MISSING → ADDED | ✅ Fixed |
+| 8 — Legal Pages | Privacy policy thin → FULL REWRITE with CCPA + GDPR + retention | ✅ Fixed |
+| 9 — Security | Timing attack on admin auth → FIXED; PII in logs → FIXED; Rate limiting — FLAGGED | ⚠️ |
+
+### NEEDS ATTENTION (Blue action required)
+
+| Item | Urgency | Action |
+|------|---------|--------|
+| PHYSICAL_ADDRESS in worker.js | HIGH | Update line 3 of worker.js to real registered agent address before scaling email |
+| MaxBounty postback URL | HIGH | Paste new URL with token into MaxBounty dashboard |
+| Rate limiting on login | MEDIUM | CF Worker needs Durable Objects or KV for persistent rate limiting |
+| Admin cookie = raw password | LOW | If admin password is compromised via cookie theft, attacker gets password directly |
+| Twilio SMS setup | MEDIUM | See Twilio setup steps below |
+
+---
+
 ## SASCRIBE — NEXT SESSION PRIORITIES
 
 | # | Item | Priority |
 |---|------|----------|
-| 1 | Register MaxBounty postback URL in dashboard | HIGH | Paste new URL with token into MaxBounty → Account → Postback |
-| 2 | ElevenLabs use-cases article | HIGH | |
-| 3 | NordVPN alternatives article | HIGH | |
-| 4 | Beehiiv tutorial article | HIGH | |
-| 5 | Monitor GSC indexing (7–14d from 2026-04-19) | MONITOR | |
-| 6 | Monitor ElevenLabs pillar CTR (pos 8.4) | MONITOR | |
+| 1 | Register MaxBounty postback URL in dashboard | HIGH | Paste URL with token into MaxBounty → Account → Postback |
+| 2 | Update PHYSICAL_ADDRESS in worker.js line 3 | HIGH | Required before scaling email sends |
+| 3 | ElevenLabs use-cases article | HIGH | |
+| 4 | NordVPN alternatives article | HIGH | |
+| 5 | Beehiiv tutorial article | HIGH | |
+| 6 | Monitor GSC indexing (7–14d from 2026-04-19) | MONITOR | |
+| 7 | Monitor ElevenLabs pillar CTR (pos 8.4) | MONITOR | |
 
 ---
 
