@@ -1,13 +1,13 @@
 # Project State — QR Perks + Sascribe
 
-**Last updated:** 2026-04-17 (Session 3)
+**Last updated:** 2026-04-19 (Session 4 — Full Site Audit)
 **Projects:** qr-perks.com (Cloudflare Worker) · sascribe.com (Hugo + GitHub Actions pipeline)
 
 ---
 
 ## QR PERKS — qr-perks.com
 
-**Worker version:** v6 (Session 10, fully finalized)
+**Worker version:** v6 (Session 10, fully finalized)**
 **All 14 Session 10 verification items passed: 14/14 ✅**
 
 ### Infrastructure
@@ -19,36 +19,12 @@
 | Resend Email | ✅ Live | `noreply@qr-perks.com` |
 | Cloudflare Email Routing | ✅ Live | 3 rules active — support@, privacy@, contact@ → qrperks@gmail.com |
 
-### Email Routing Rules
-
-| Address | Destination | Rule ID |
-|---------|-------------|---------|
-| support@qr-perks.com | qrperks@gmail.com | 09b341ec |
-| privacy@qr-perks.com | qrperks@gmail.com | 2eb2eed8 |
-| contact@qr-perks.com | qrperks@gmail.com | ccbfac5d |
-
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
 |------|----------|-------|
 | Twilio/SMS provider integration | MEDIUM | TCPA webhook ready; no provider configured |
 | Resend domain verification | LOW | DNS added 2026-04-10; confirm in Resend dashboard |
-| T9–T50 QR scanability | LOW | Auto-generated on first driver access |
-
-### Architecture
-
-```
-qr-perks.com → Cloudflare Worker (qrperks)
-  ├── / → Landing page (EN/ES, interstitial bridge)
-  ├── /t{1-50} → Truck scan landing
-  ├── /go/{affiliate_id} → Redirect with UTM tracking
-  ├── /driver/* → Driver portal (auth-protected JWT)
-  ├── /admin/* → Admin portal (password-protected)
-  ├── /api/* → capture, stats, truck-name, save-qr-code, sms-webhook
-  ├── /unsubscribe → Email unsubscribe (EN/ES)
-  ├── /contact → Contact form → Resend → support@qr-perks.com
-  └── /privacy|/terms|/disclosure|/earnings-disclaimer|/contractor|/leads-terms
-```
 
 ---
 
@@ -62,117 +38,119 @@ qr-perks.com → Cloudflare Worker (qrperks)
 | Service | Status | Notes |
 |---------|--------|-------|
 | Hugo Site | ✅ Live | sascribe.com via Cloudflare Pages |
-| GitHub Actions Pipeline | ✅ Live | content-pipeline.yml — scheduled runs active |
-| GSC | ✅ 2 pages indexed | Homepage + ElevenLabs pillar confirmed INDEXED |
+| GitHub Actions Pipeline | ✅ Live | content-pipeline.yml — 3 runs, all SUCCESS |
+| GSC | ✅ 4 pages indexed | homepage, elevenlabs-pillar, beehiiv-news, synthesia-news |
 | IndexNow | ✅ Active | Key: `sascribe2026xK9mP3qR7nL5vT` |
+| CF Analytics | ✅ Live | Beacon token: 027c2dc081f04fd3a6b5fee36918122a |
 
 ### Workflow Schedule
 
 ```
-Cron: 0 17 * * 1 → Monday long-form (17:00 UTC = 10am PDT / 9am PST)
+Cron: 0 17 * * 1 → Monday long-form
       0 17 * * 2 → Tuesday short
       0 17 * * 4 → Thursday short
       0 17 * * 6 → Saturday short
 ```
-Note: cron comment says "9am PT" but during PDT (summer) this fires at 10am PDT. Off by 1hr in summer — non-critical.
 
-### GSC Status (as of 2026-04-17)
+### GSC Status (as of 2026-04-19 — Session 4 Audit)
 
-| Page | Verdict | Coverage | Last Crawl |
-|------|---------|----------|------------|
-| Homepage | PASS | Submitted and indexed | 2026-04-10 |
-| ElevenLabs Pillar | PASS | Submitted and indexed | 2026-04-12 |
-| NordVPN Review | NEUTRAL | URL is unknown to Google | never |
-| Beehiiv Pillar | NEUTRAL | Discovered - currently not indexed | never |
-| AdCreative Review | NEUTRAL | Discovered - currently not indexed | never |
+| Page | Verdict | Impressions (28d) | Clicks | Position |
+|------|---------|-------------------|--------|----------|
+| Homepage | INDEXED | 56 | 0 | 7.6 |
+| ElevenLabs Pillar | INDEXED | 1489 | 0 | 8.4 |
+| Beehiiv News | INDEXED | — | — | — |
+| Synthesia News | INDEXED | — | — | — |
+| AdCreative Review | Discovered, not indexed | — | — | — |
+| NordVPN Review | Discovered, not indexed | — | — | — |
+| NordVPN Pillar | Discovered, not indexed | — | — | — |
+| NordVPN Comparison | Discovered, not indexed | — | — | — |
+| NordVPN News | Discovered, not indexed | — | — | — |
+| AdCreative Comparison | Discovered, not indexed | — | — | — |
+| Beehiiv Pillar | URL unknown to Google | — | — | — |
+| AdCreative Tips | URL unknown to Google | — | — | — |
 
-### Content State (as of 2026-04-17 Session 3)
+**Top GSC queries (28d):** elevenlabs 2026 (pos 6–11), elevenlabs voice cloning 2026, adcreative.ai review (pos 2)
+**Sitemap resubmitted:** 2026-04-19
+**IndexNow ping:** 22 URLs — 2026-04-19
 
-**20 articles published** across 5 affiliates (5 rewritten in Session 3):
+### Technical SEO State (Session 4 Audit)
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Canonical tags | ✅ All present, self-referential | |
+| Noindex on published pages | ✅ None present | |
+| OG tags (title, desc, image) | ✅ All present | Double slash fixed 2026-04-19 |
+| Twitter card | ✅ Added 2026-04-19 | Was missing on all pages |
+| Homepage OG description | ✅ Fixed 2026-04-19 | Was missing |
+| robots meta | ✅ index, follow | |
+| CF Web Analytics | ✅ Present | Beacon in baseof.html |
+| BlogPosting schema | ✅ Present | Injected via baseof.html template |
+| Sitemap | ✅ 26 URLs, no taxonomy pages | Custom layout works |
+| Cache rules | ✅ Configured with TTL overrides | Static: 1mo edge, HTML: 4hr edge |
+| Cache hit rate | ⚠️ 8% (7-day) | Low — new site with cold cache; rules properly configured |
+
+### Affiliate Redirects (Session 4 Audit)
+
+| Affiliate | /go/ redirect | Destination HTTP | Status |
+|-----------|--------------|-----------------|--------|
+| adcreative | 301 → free-trial.adcreative.ai | 200 | ✅ OK |
+| elevenlabs | 301 → try.elevenlabs.io | 200 | ✅ OK |
+| synthesia | 301 → synthesia.io | 200 | ✅ OK |
+| beehiiv | 301 → beehiiv.com | 200 | ✅ OK |
+| nordvpn | 302 → tkqlhce.com | 403 | ⚠️ NEEDS CHECK |
+
+NordVPN Impact Radius link returns 403. May be bot detection or expired link. Check NordVPN affiliate dashboard.
+
+### Content State (as of 2026-04-19 Session 4)
+
+**21 articles published** across 5 affiliates:
 
 | Affiliate | Articles | Last Published | Types Completed |
 |-----------|----------|----------------|-----------------|
-| AdCreative AI | 5 | 2026-04-13 | review, comparison, tutorial, use-cases, news |
+| AdCreative AI | 6 | 2026-04-18 | review, comparison, tutorial, use-cases, news, tips |
 | ElevenLabs | 4 | 2026-04-13 | pillar, comparison, review, tutorial |
 | Beehiiv | 4 | 2026-04-14 | review, comparison, pillar, news |
 | Synthesia | 3 | 2026-04-16 | pillar, tutorial, news |
 | NordVPN | 4 | 2026-04-17 | review, pillar, comparison, news |
 
 **Content gaps remaining:**
-- NordVPN: tutorial, use-cases, alternatives, guide (4 types)
-- Synthesia: review, comparison, use-cases (3 types)
-- ElevenLabs: use-cases (1 type)
+- AdCreative: alternatives, guide
+- ElevenLabs: use-cases, alternatives, guide, tips
+- Synthesia: review, comparison, use-cases, alternatives, guide, tips
+- Beehiiv: tutorial, use-cases, alternatives, guide, tips
+- NordVPN: tutorial, use-cases, alternatives, guide, tips
 
-### Session 3 Rewrites (2026-04-17)
+### Session 4 Auto-Fixes Applied (2026-04-19)
 
-All 5 rewritten in-place (same filename/slug/URL — no redirect needed):
-
-| File | Old Title (problem) | New Title | Commit |
-|------|---------------------|-----------|--------|
-| nordvpn-pillar | "...meme circulating on Reddit..." hook | The Complete NordVPN Guide for 2026: Privacy, Streaming, Torrenting & Everything In Between | 4da9b316 |
-| nordvpn-news | Claude meme = entire article premise; fabricated EFF stat | NordVPN 2026: What's Actually Changed and Is It Still Worth It? | 1c19a6fd |
-| nordvpn-comparison | Claude meme hook (3rd use) | NordVPN vs Surfshark vs ExpressVPN vs Proton VPN: The Only Comparison You Need in 2026 | a82349ac |
-| synthesia-news | PlayStation meme title (zero SEO intent) | Synthesia 2026: What the 3.0 Platform Overhaul Means for Corporate Video Teams | 940aeed1 |
-| beehiiv-news | PlayStation meme title (zero SEO intent) | Beehiiv 2026: What's New, What's Changed, and Why Newsletter Creators Are Switching | 5832cc78 |
-
-### Session 3 Pipeline Overhaul (2026-04-17)
-
-**generate-article.js refactor — commit f8f48a2f**
-
-Key changes from Session 2 version:
-- `fetchRedditTrends()` → `fetchRedditSignals()`: adds Google CSE call for affiliate-specific Reddit threads (`site:reddit.com ${slug} review`)
-- `fetchYouTubeTrends()` → `fetchYouTubeSignals()`: replaced generic `mostPopular category=28` with affiliate-targeted YouTube search (`${name} review 2026`, `${name} honest review`)
-- `pickBestTopic()` → `buildResearchBrief()`: outputs structured brief with TRENDING_HOOK, REAL_USER_SIGNAL, YOUTUBE_COVERAGE, COMPETITOR_AFFILIATE_ANGLES
-- New `fetchCompetitorAngles()`: Google CSE search across bloggingwizard.com, authorityhacker.com, nichepursuits.com, pcmag.com, tomsguide.com
-- `generateArticle()` prompt rewritten: TRENDING_HOOK demoted to supporting context only; lead must be value-first; explicit prohibition on event-first openers
-- `validateArticle()` adds hook quality check: warns if opening contains "this week", "went viral", "meme", "internet lost its mind"
-
-**Standing rules established:**
-1. Trending topics are SUPPORTING CONTEXT only — never the article premise
-2. Titles must target real search queries — never reference viral events or memes
-3. CSE returned 0 results for Reddit threads and competitor angles in Session 3 (likely CSE configuration issue) — YouTube search working (10 results per article)
-
-### Session 2 Changes (2026-04-17) — previously committed but not in STATE.md
-
-#### Mission 1 — ElevenLabs Pillar CTR Fix
-- Title: 97 chars → 55 chars: "ElevenLabs 2026: Best AI Voice Generator? (I Tested It)"
-- Description: 121 chars → 151 chars: first-person tested copy
-- Commit: `bd96132d39`
-
-#### Mission 2 — Pipeline Deduplication + Cooldown Fix
-- `fetchRecentArticleHooks()` at line 307 — extracts named entity fingerprints from last 10 articles
-- `topicMatchesRecentHooks()` at line 358 — dedup check
-- `pickAffiliate()` — 7-day cooldown; explicit `--affiliate` flag logs warning but proceeds
-- Commit: `c6e505e55a`
-
-#### Mission 3 — NordVPN Content Push (3 articles, now rewritten)
-
-| Article | Type | Commit |
-|---------|------|--------|
-| nordvpn-pillar | pillar | 34a790b0f9 (original) → 4da9b316 (rewrite) |
-| nordvpn-comparison | comparison | d37420e906 (original) → a82349ac (rewrite) |
-| nordvpn-news | news | 9e1fb5483c (original) → 1c19a6fd (rewrite) |
-
-#### Mission 4 — GSC Indexing Investigation
-- 2 pages indexed confirmed (homepage, ElevenLabs pillar)
-- Sitemap resubmitted, IndexNow 21 URLs pinged
-
-#### Mission 5 — GitHub Actions Verification
-- Workflow active, cron correct, 2 runs both success
-
-#### Mission 6 — Internal Linking Audit
-- 2 ElevenLabs articles fixed (elevenlabs-comparison, elevenlabs-review)
-- 0 zero-link articles
+| Fix | Files Affected | Commits |
+|-----|---------------|---------|
+| `draft: false` added | 11 articles | multiple |
+| Meta description fixed (150–160 chars) | synthesia-news, nordvpn-pillar, adcreative-tips | b21dc9ce, 973faf6d, da93da36 |
+| Cover image fixed (ads-38.png → logo-adc.jpg) | adcreative-tips | 64367877 |
+| JSON-LD garbage script tag removed | adcreative-comparison | 613f74d8 |
+| FAQPage JSON-LD added | elevenlabs-review | 0f0953ba |
+| Twitter card meta tags added | layouts/baseof.html | 98b481f8 |
+| OG image double slash fixed | layouts/baseof.html | 98b481f8 |
+| Homepage OG description fallback added | layouts/baseof.html | 98b481f8 |
+| IndexNow batch ping | 22 URLs | HTTP 200 |
+| GSC sitemap resubmitted | sitemap.xml | HTTP 204 |
+| web_search replaces dead CSE | scripts/generate-article.js | 7f81f7b2 |
 
 ### Pending (Sascribe)
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| ElevenLabs pillar CTR | MONITOR | Title/meta fixed 2026-04-17 — monitor GSC 7-14 days |
-| NordVPN tutorial | HIGH | Next content type for NordVPN |
-| Synthesia review + comparison + use-cases | HIGH | 3 types remaining |
-| ElevenLabs use-cases | MEDIUM | 1 type remaining |
-| GSC indexing — remaining URLs | MEDIUM | Sitemap resubmitted + IndexNow pinged; allow 7-14 days |
-| CSE configuration | MEDIUM | Reddit thread + competitor CSE searches returned 0 results — verify cx scope |
-| NordVPN comparison desc fix | LOW | Was 138 chars (rewrite may have corrected) |
-| Cron PDT offset | LOW | 0 17 fires at 10am PDT in summer — adjust to 0 16 if 9am PDT desired |
+| NordVPN affiliate link 403 | HIGH | tkqlhce.com returns 403 — verify in NordVPN affiliate dashboard (Impact Radius) |
+| Internal links (0–1 on most articles) | HIGH | All pre-NordVPN articles need ≥2 internal links added contextually |
+| adcreative-news rewrite | HIGH | Event-first hook (Sam Altman Reddit thread) — score 6/10 |
+| elevenlabs-tutorial rewrite | HIGH | Event-first hook (Reddit thread) — score 6/10 |
+| Title lengths > 60 chars | MEDIUM | 20/21 articles exceed 60 chars — Google truncates display only, not a ranking penalty |
+| NordVPN tutorial article | HIGH | Priority content gap — run with `--type long-form --affiliate nordvpn` |
+| Synthesia review + comparison | HIGH | 2 of 3 most-needed types |
+| ElevenLabs use-cases | MEDIUM | 1 article fills complete coverage |
+| GSC indexing — remaining URLs | MEDIUM | 12 articles still not indexed; IndexNow + sitemap pinged 2026-04-19 |
+| Cache hit rate | MONITOR | 8% (7-day); rules properly configured; will warm up organically |
+| CLAUDE_ROLE.md | LOW | Does not exist in repo |
+| Privacy policy footer link | LOW | Exists at /privacy but not linked from footer layout |
+| rel=sponsored on inline body links | LOW | Template adds rel=sponsored on cover+CTA; body markdown links do not have it |
+| ElevenLabs pillar CTR | MONITOR | 1489 impressions, 0 clicks at pos 8.4 — needs to crack top 5 |
