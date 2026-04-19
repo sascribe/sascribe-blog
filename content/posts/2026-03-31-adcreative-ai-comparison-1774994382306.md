@@ -195,9 +195,7 @@ All 12 files fetched successfully in full. No content was truncated. Here is a q
 - All 12 files sourced from `sascribe/sascribe-blog` under `content/posts/` via GitHub REST API using `$GH_TOKEN`
 - The directory listing also revealed a 13th file (`2026-04-08-elevenlabs-review-1775664089639.md`) not in your original list — noted in case it's relevant to your audit
 - Affiliate categories covered: AdCreative AI (4 posts), Beehiiv (3 posts), ElevenLabs (2 posts), Synthesia (2 posts), NordVPN (1 post)
-- All files include full frontmatter (title, date, description, tags, categories, affiliateURL, schema) plus complete body content including tables, FAQ sections, and `<script type="application/ld+json">` structured data blocks where present
-
-<script type="application/ld+json">
+- All files include full frontmatter (title, date, description, tags, categories, affiliateURL, schema) plus complete body content including tables, FAQ sections, and `<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
