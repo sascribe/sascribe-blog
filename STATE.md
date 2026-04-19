@@ -1,6 +1,6 @@
 # Project State — QR Perks + Sascribe
 
-**Last updated:** 2026-04-19 (Session 6 — MaxBounty Postback)
+**Last updated:** 2026-04-19 (Session 7 — Full Platform Audit)
 **Projects:** qr-perks.com (Cloudflare Worker) · sascribe.com (Hugo + GitHub Actions pipeline)
 
 ---
@@ -35,12 +35,31 @@
 https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#&token=oBMUWDyEwW2HBpX1KpXYuWkn3RNHbIsX
 ```
 
+### Session 7 Audit Fixes Applied
+
+| Fix | Status | Notes |
+|-----|--------|-------|
+| Fleet management (/driver/fleet) | ✅ LIVE | Driver self-add/deactivate trucks; QR auto-generated |
+| Admin leads export (/admin/leads/export) | ✅ LIVE | CSV download with status/lang filters |
+| Admin leads tab upgraded | ✅ LIVE | Stats summary + 6 export buttons |
+| CAN-SPAM physical address in emails | ✅ FIXED | PHYSICAL_ADDRESS constant in emailBase footer |
+| Privacy link in email footer | ✅ FIXED | All emails now link /privacy |
+| TCPA consent inline (bridge phone field) | ✅ FIXED | Text adjacent to phone input |
+| Timing-safe admin password comparison | ✅ FIXED | timingSafeEqual() replaces === on auth |
+| Postback deduplication (60s window) | ✅ FIXED | Prevents MaxBounty retry double-charges |
+| PII masked in console.log | ✅ FIXED | Email no longer logged |
+| Privacy policy — CCPA + GDPR + cookies + retention | ✅ FIXED | Full rewrite |
+| Driver dashboard "no trucks" links to /driver/fleet | ✅ FIXED | Was "contact support" |
+
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| Update MaxBounty dashboard with postback URL | HIGH | Register new token URL in MaxBounty → Account → Postback |
+| Update MaxBounty dashboard with postback URL | HIGH | Paste URL with token into MaxBounty → Account → Postback |
+| PHYSICAL_ADDRESS in worker.js | HIGH | Line 3 of worker.js — update to registered business address |
 | Twilio/SMS provider integration | MEDIUM | TCPA webhook ready; no provider configured |
+| Rate limiting on login/signup | MEDIUM | No rate limiting — needs Durable Objects or KV |
+| Admin cookie stores raw password | LOW | Cookie value = ADMIN_PASSWORD; use hashed session token for hardened security |
 | Resend domain verification | LOW | DNS added 2026-04-10; confirm in Resend dashboard |
 
 ---
@@ -85,6 +104,8 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | synthesia | 301 | synthesia.io | ✅ OK |
 | beehiiv | 301 | beehiiv.com | ✅ OK |
 | nordvpn | 302 | go.nordvpn.net | ✅ FIXED (was tkqlhce.com — CJ legacy domain 403) |
+
+**Working Insight #46 (2026-04-19):** Admin auth used plain `===` for password comparison — susceptible to timing attacks. Always use constant-time comparison (XOR over all chars regardless of first mismatch) for any secret comparison. CF Workers don't have Node's `crypto.timingSafeEqual` but a simple XOR loop achieves the same protection.
 
 **Working Insight #45 (2026-04-19):** MaxBounty postback fires GET to /api/conversion — must return 200 immediately or MB retries. Token validation prevents fake conversions. SubID format qrp_t{n} maps directly to truck_id. The `affiliate_id` column on the conversions table has a FK to the affiliates table — never store MaxBounty campaign IDs there; use `offer_name` instead.
 
