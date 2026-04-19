@@ -339,7 +339,7 @@ schema: "BlogPosting"
   if (!content) throw new Error(`Empty response from Anthropic: ${JSON.stringify(data).slice(0, 500)}`);
 
   // Strip code fences if Claude added them
-  content = content.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '');
+  content = content.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trimStart();
 
   return content;
 }
