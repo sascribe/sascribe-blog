@@ -274,3 +274,45 @@ Note: `tax_id_last4` and `payment_method_set_at` do not exist as columns in the 
 | Admin cookie stores raw password | LOW | Use signed session token for hardened security |
 | Twilio SMS setup | LOW | 5 manual steps documented |
 | Register MaxBounty postback URL | ACTION | See URL in Working Insight #45 |
+
+---
+
+## QR Perks — Session 10 (2026-04-22)
+
+### Working Insights
+
+**Working Insight #49:** Hero subtext "just scan the QR code on the truck" is redundant post-scan — the user is already on the page because they scanned. Copy for a post-scan landing page should speak to what comes next (deals sent directly to their phone), not repeat what they just did.
+
+**Working Insight #50:** Supabase DELETE with PostgREST requires at least one filter — `DELETE /table?id=neq.00000000...` is the safe pattern to delete all rows without a specific filter. Never use bare DELETE without a WHERE clause.
+
+### Session 10 — Copy Fix + Test Data Cleanup (2026-04-22)
+
+**Landing Page Copy:**
+- Old: "Exclusive deals delivered straight to your phone — just scan the QR code on the truck."
+- New: "You're in. Sign up to get exclusive deals sent directly to your phone — even when you're not near a truck."
+- ES: "Ya estás adentro. Regístrate para recibir ofertas exclusivas directamente en tu teléfono — aunque no estés cerca del camión."
+
+**GitHub commit:** `b8100cc256f44ac98daf8d7bcd8f9e32c79ebc8d`
+
+### Test Data Cleanup Results (2026-04-22)
+
+| Table | Before | After | Deleted | Method |
+|-------|--------|-------|---------|--------|
+| scans | 162 | 43 | 119 | UA patterns: 'Test', 'Mock Scan', 'curl', 'verify/1.0', empty; IP pattern 1.2.3.x |
+| conversions | 8 | 0 | 8 | All seeded: no truck_id, no offer_name, round amounts |
+| email_captures | 24 | 1 | 23 | Kept only blu3rror@gmail.com (real hero submission) |
+| commissions | 22 | 0 | 22 | All seeded from test conversion events |
+| referrals | 1 | 0 | 1 | Test referral: Driver One → New Driver (both test accounts) |
+
+**Driver earnings reset:** All drivers set to `direct_earnings=0`, `referral_earnings=0`, `total_earnings_cents=0`, `total_paid_cents=0`
+
+**Preserved intact:**
+- All 8 driver accounts
+- All 50 truck rows (t1–t50)
+- All affiliate rows
+- All contractor_agreed_at / w9_submitted / payment method records
+- Speedy Dumps TCPA + pre-payment checklist from Session 9
+
+**Real scan data kept (43 rows):**
+- 38 rows: `Mozilla/5.0 (Linux; Android 10; K)` from IPv6 addresses — real mobile QR scans
+- 5 rows: `Mozilla/5.0` from real IPv6 range — likely real abbreviated mobile UA
