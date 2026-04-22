@@ -147,3 +147,22 @@ All items previously verified. See full history in git log.
 **Not completed:**
 - `tax_id_last4` column does not exist on `drivers` table (exists in `w9_submissions` instead) — noted in STATE.md
 - `payment_method_set_at` column does not exist on `drivers` table — noted in STATE.md
+
+---
+
+## QR PERKS — SESSION 10 (2026-04-22) — Copy Fix + Test Data Cleanup
+
+### SESSION 10 VERIFICATION RESULTS
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Landing page subtext updated (no 'scan the truck') | ✅ PASS | "You're in. Sign up to get exclusive deals sent directly to your phone — even when you're not near a truck." — verified live |
+| 2 | TCPA consent block unchanged | ✅ PASS | Identical — no changes to tcpa-disc class or consent text |
+| 3 | scans table row count after cleanup | ✅ PASS | 162 → 43 (119 test rows removed) |
+| 4 | conversions table row count after cleanup | ✅ PASS | 8 → 0 (all seeded rows removed) |
+| 5 | email_captures row count after cleanup | ✅ PASS | 24 → 1 (kept blu3rror@gmail.com only) |
+| 6 | Driver direct_earnings and referral_earnings = 0 | ✅ PASS | All 8 drivers reset confirmed |
+| 7 | Driver accounts, trucks, structural data intact | ✅ PASS | 8 drivers, 50 trucks, all affiliates, all W9/payment records preserved |
+| 8 | All routes return 200 | ✅ PASS | /, /t1, /driver/dashboard, /admin/dashboard all verified |
+
+**GitHub commit:** b8100cc256f44ac98daf8d7bcd8f9e32c79ebc8d
