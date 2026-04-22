@@ -54,6 +54,46 @@
 
 ---
 
+## QR PERKS — SESSION 12 (2026-04-22)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Admin dashboard Internal Server Error fixed | ✅ DONE | payouts scoping bug (declared inside try) + GEO_DRIVER_ID undefined alias |
+| 2 | Homepage: Bridge email placeholder "Enter your email (optional)" | ✅ DONE | br-email input |
+| 3 | Homepage: Phone placeholder "Phone number (optional)" | ✅ DONE | Already set, confirmed |
+| 4 | Homepage: TCPA block not cut off | ✅ DONE | #hero-capture-wrap{overflow:visible;max-height:none} |
+| 5 | Homepage: Get My Deal → opens bridge interstitial | ✅ DONE | heroGetMyDeal() function, type=button |
+| 6 | Driver checklist: always shows even when all steps complete | ✅ DONE | Removed !allStepsDone condition |
+| 7 | Driver checklist: all green + "All set — eligible for payout!" | ✅ DONE | Speedy Dumps shows complete |
+| 8 | Driver dashboard: period toggle JS in 4th dashShell arg (was ignored) | ✅ DONE | Removed empty string 4th arg |
+| 9 | Driver dashboard: per-truck stats section | ✅ DONE | Updates with period toggle |
+| 10 | My Fleet: inline truck name editing per truck | ✅ DONE | saveFleetTruckName() + tnf- inputs |
+| 11 | QR code: white background container | ✅ DONE | padding 16px, border-radius 8px |
+| 12 | /api/period-stats: by_truck breakdown for driver scope | ✅ DONE | Fetched in dSetPeriod |
+| 13 | t51 and t52 deleted from Supabase | ✅ DONE | Confirmed empty after DELETE |
+| 14 | CF Worker deployed | ✅ DONE | commit a33ac6f9 |
+| 15 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
+
+### VERIFICATION RESULTS (2026-04-22)
+
+| # | Item | Result |
+|---|------|--------|
+| 1 | Admin dashboard 200 with content | ✅ PASS — 82KB, no ISE |
+| 2 | Homepage email (optional) placeholder | ✅ PASS |
+| 3 | Homepage phone (optional) placeholder | ✅ PASS |
+| 4 | TCPA block fully visible | ✅ PASS |
+| 5 | Get My Deal → bridge interstitial | ✅ PASS |
+| 6 | Speedy Dumps pre-payment checklist all green | ✅ PASS |
+| 7 | Payout eligible message shows | ✅ PASS |
+| 8 | Driver period toggle clickable + updates stats | ✅ PASS |
+| 9 | Per-truck stats breakdown | ✅ PASS |
+| 10 | Truck name field on each fleet card | ✅ PASS |
+| 11 | QR codes white background container | ✅ PASS |
+| 12 | t51 and t52 deleted | ✅ PASS |
+| 13 | Route checks: /, /t1, /driver/dashboard, /admin/dashboard, /api/stats | ✅ ALL 200 |
+
+---
+
 ## QR PERKS — SESSION 6 (2026-04-19)
 
 | # | Item | Status | Notes |

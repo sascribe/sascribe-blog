@@ -204,6 +204,27 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | CF Worker deployed | ✅ DONE | 2026-04-19 |
 | GitHub commit | ✅ DONE | cab185695e3525512a380b3a318428d22235a456 |
 
+### Session 12 — Bug Fixes + Dashboard Improvements (2026-04-22)
+
+| Fix | Result | Notes |
+|-----|--------|-------|
+| Admin 500 — payouts scoping + GEO_DRIVER_ID undefined | ✅ DONE | `let payouts` inside try block → hoisted out; added alias consts |
+| Bridge email placeholder | ✅ DONE | "Enter your email (optional)" |
+| Hero Get My Deal → openBridge (interstitial) | ✅ DONE | heroGetMyDeal() function |
+| Hero TCPA no clipping | ✅ DONE | overflow:visible + max-height:none on capture-wrap |
+| Driver checklist always visible + complete state | ✅ DONE | Shows all green + payout-ready msg for Speedy |
+| Driver dashboard JS hoisted to 4th dashShell arg | ✅ DONE | Was passed as 5th (ignored) — stats toggle now works |
+| Per-truck stats section + by_truck in period-stats API | ✅ DONE | Updates with Day/Week/Month/Year |
+| My Fleet: inline truck name editing | ✅ DONE | saveFleetTruckName(), tnf- inputs |
+| QR code white background container | ✅ DONE | padding 16px, border-radius 8px, max-width 220px |
+| t51, t52 deleted from Supabase | ✅ DONE | Confirmed absent |
+| CF Worker deployed | ✅ DONE | 2026-04-22 |
+| GitHub commit | ✅ DONE | a33ac6f9 (sascribe/qrperks-site) |
+
+**Working Insight #49 (2026-04-22):** dashShell(title, active, content, script='') — the 4th param is script. Passing 5 args (with '' as 4th) silently drops the script block. Always verify argument count when using functions with optional parameters.
+
+**Working Insight #50 (2026-04-22):** Template variables must exist in JS scope at render time. Admin dashboard used GEO_DRIVER_ID/SPEEDY_DRIVER_ID in the payout ledger template but only declared GEO_ID/SPEEDY_ID. ReferenceError → 500. Fix: add const aliases immediately after the original declarations.
+
 ### Session 11 — Payout System (2026-04-22)
 
 | Fix | Result | Notes |
