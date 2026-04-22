@@ -204,115 +204,29 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | CF Worker deployed | ✅ DONE | 2026-04-19 |
 | GitHub commit | ✅ DONE | cab185695e3525512a380b3a318428d22235a456 |
 
+### Session 11 — Payout System (2026-04-22)
+
+| Fix | Result | Notes |
+|-----|--------|-------|
+| `tax_id_last4` + `payment_method_set_at` + `payment_details_*` columns on `drivers` | ✅ DONE | 6 new columns via Supabase Management API |
+| `payouts` table | ✅ DONE | 13 columns: id, driver_id, organization, amount_cents, period_start, period_end, payment_method, payment_reference, status, notes, paid_by, created_at, paid_at |
+| Speedy Dumps seed: tax_id_last4='0000', paypal='speedydumpsco@gmail.com' | ✅ DONE | Confirmed via PostgREST |
+| Admin dashboard: Pay Now modal | ✅ DONE | Opens with org name, amount owed, payment method, reference input, period selector, notes |
+| Admin payout ledger (collapsible) | ✅ DONE | All payouts with Geo/Speedy filter buttons |
+| `/admin/pay-driver` POST endpoint | ✅ DONE | Writes payout row, marks commissions paid |
+| Driver dashboard: Payment History section | ✅ DONE | Shows all payouts with date, period, amount, method, reference, status |
+| CF Worker deployed | ✅ DONE | 2026-04-22 |
+| GitHub commit | ✅ DONE | da27c96ae00a96ed160ff01801c5ee8fb313805c |
+
+**Working Insight #47 (2026-04-22):** Stripe-ready payout design — `payouts` table uses generic `payment_reference` (holds PayPal TX ID, bank ref, or Stripe transfer ID) and `payment_method` enum. When adding Stripe Connect: set `payment_method='stripe'` on driver record and replace the reference input in the modal with a Stripe transfer API call. No schema changes needed.
+
+**Working Insight #48 (2026-04-22):** Python `\`` in a regular string literal produces two chars (`\` + `` ` ``). When injecting into a JS template literal, use plain `` ` `` for nested template literals OR use string concatenation (`.map(p=>'<tr>...</tr>')`) to avoid nested backtick issues entirely. Use string concatenation to be safe.
+
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
 |------|----------|-------|
+| Register MaxBounty postback URL | ACTION | Add to MaxBounty dashboard: see URL above |
 | Rate limiting on login/signup | MEDIUM | Needs Durable Objects or KV — no persistent state in CF Workers otherwise |
 | Admin session tokens | MEDIUM | Currently stores raw ADMIN_PASSWORD in cookie — should use short-lived signed JWT |
 | Twilio SMS setup | LOW | 5 manual steps documented in worker comments |
-| Register MaxBounty postback URL | ACTION | Add to MaxBounty dashboard: see URL above |
-
----
-
-## QR Perks — Session 9 (2026-04-22)
-
-### Working Insights
-
-**Working Insight #47:** Collapsible admin panels (`<details>/<summary>`) require no JS and degrade gracefully. Wrap heavy tables in `<details>` closed by default — shows summary count in the header. Open only the actionable sections (Payments, Trucks) on load.
-
-**Working Insight #48:** Truck IDs stored as string `t1`...`t20` sort alphabetically in Supabase (t1, t10, t11, t2, t20...). Always client-sort by `parseInt(id.replace('t',''))` after fetch to get numerical order. Never rely on Supabase `order=id.asc` for these IDs.
-
-### Session 9 — Admin Redesign + Stats + Fixes (2026-04-22)
-
-| Fix | Result | Commit |
-|-----|--------|--------|
-| Homepage email field shows (optional) | ✅ DONE | 3e0f1fc |
-| Hero section overflow:visible | ✅ DONE | 3e0f1fc |
-| Logo mobile white-space:nowrap + flex-shrink:0 | ✅ DONE | 3e0f1fc |
-| Speedy Dumps pre-payment checklist unlocked | ✅ DONE | Supabase direct |
-| Admin sections all collapsible (details/summary) | ✅ DONE | 3e0f1fc |
-| Truck sort numerical (T1,T2...T10,T11) | ✅ DONE | 3e0f1fc |
-| Assignment dropdown: real companies only | ✅ DONE | 3e0f1fc |
-| Payments: org-level cards (Geo + Speedy) | ✅ DONE | 3e0f1fc |
-| Per-truck detail behind View Details toggle | ✅ DONE | 3e0f1fc |
-| Mark All Paid button per org card | ✅ DONE | 3e0f1fc |
-| /api/period-stats endpoint (Day/Week/Month/Year) | ✅ DONE | 3e0f1fc |
-| Admin stats dashboard with period toggle | ✅ DONE | 3e0f1fc |
-| Driver stats dashboard with period toggle | ✅ DONE | 3e0f1fc |
-| /admin/org-mark-paid endpoint | ✅ DONE | 3e0f1fc |
-
-### Supabase — Speedy Dumps Record (2026-04-22)
-
-| Field | Value |
-|-------|-------|
-| contractor_agreed_at | 2026-04-22T00:00:00+00:00 |
-| contractor_agree_ip | 127.0.0.1 |
-| w9_submitted | true |
-| encrypted_tax_id | AES-GCM placeholder (000000000) |
-| payment_method_type | paypal |
-| payment_method_detail_encrypted | speedydumpsco@gmail.com |
-
-Note: `tax_id_last4` and `payment_method_set_at` do not exist as columns in the `drivers` table — these values live in `w9_submissions` table instead.
-
-### Route Health (2026-04-22)
-
-| Route | Status |
-|-------|--------|
-| GET / | ✅ 200 |
-| GET /t1 | ✅ 200 |
-| GET /driver/dashboard | ✅ 200 (auth redirect) |
-| GET /admin/dashboard | ✅ 200 (auth redirect) |
-| GET /api/stats | ✅ 200 |
-| GET /api/period-stats | ✅ 200 |
-
-### Pending (QR Perks)
-
-| Item | Priority | Notes |
-|------|----------|-------|
-| Rate limiting on login/signup | MEDIUM | Needs Durable Objects or KV |
-| Admin cookie stores raw password | LOW | Use signed session token for hardened security |
-| Twilio SMS setup | LOW | 5 manual steps documented |
-| Register MaxBounty postback URL | ACTION | See URL in Working Insight #45 |
-
----
-
-## QR Perks — Session 10 (2026-04-22)
-
-### Working Insights
-
-**Working Insight #49:** Hero subtext "just scan the QR code on the truck" is redundant post-scan — the user is already on the page because they scanned. Copy for a post-scan landing page should speak to what comes next (deals sent directly to their phone), not repeat what they just did.
-
-**Working Insight #50:** Supabase DELETE with PostgREST requires at least one filter — `DELETE /table?id=neq.00000000...` is the safe pattern to delete all rows without a specific filter. Never use bare DELETE without a WHERE clause.
-
-### Session 10 — Copy Fix + Test Data Cleanup (2026-04-22)
-
-**Landing Page Copy:**
-- Old: "Exclusive deals delivered straight to your phone — just scan the QR code on the truck."
-- New: "You're in. Sign up to get exclusive deals sent directly to your phone — even when you're not near a truck."
-- ES: "Ya estás adentro. Regístrate para recibir ofertas exclusivas directamente en tu teléfono — aunque no estés cerca del camión."
-
-**GitHub commit:** `b8100cc256f44ac98daf8d7bcd8f9e32c79ebc8d`
-
-### Test Data Cleanup Results (2026-04-22)
-
-| Table | Before | After | Deleted | Method |
-|-------|--------|-------|---------|--------|
-| scans | 162 | 43 | 119 | UA patterns: 'Test', 'Mock Scan', 'curl', 'verify/1.0', empty; IP pattern 1.2.3.x |
-| conversions | 8 | 0 | 8 | All seeded: no truck_id, no offer_name, round amounts |
-| email_captures | 24 | 1 | 23 | Kept only blu3rror@gmail.com (real hero submission) |
-| commissions | 22 | 0 | 22 | All seeded from test conversion events |
-| referrals | 1 | 0 | 1 | Test referral: Driver One → New Driver (both test accounts) |
-
-**Driver earnings reset:** All drivers set to `direct_earnings=0`, `referral_earnings=0`, `total_earnings_cents=0`, `total_paid_cents=0`
-
-**Preserved intact:**
-- All 8 driver accounts
-- All 50 truck rows (t1–t50)
-- All affiliate rows
-- All contractor_agreed_at / w9_submitted / payment method records
-- Speedy Dumps TCPA + pre-payment checklist from Session 9
-
-**Real scan data kept (43 rows):**
-- 38 rows: `Mozilla/5.0 (Linux; Android 10; K)` from IPv6 addresses — real mobile QR scans
-- 5 rows: `Mozilla/5.0` from real IPv6 range — likely real abbreviated mobile UA
