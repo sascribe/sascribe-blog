@@ -212,3 +212,65 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | Admin session tokens | MEDIUM | Currently stores raw ADMIN_PASSWORD in cookie — should use short-lived signed JWT |
 | Twilio SMS setup | LOW | 5 manual steps documented in worker comments |
 | Register MaxBounty postback URL | ACTION | Add to MaxBounty dashboard: see URL above |
+
+---
+
+## QR Perks — Session 9 (2026-04-22)
+
+### Working Insights
+
+**Working Insight #47:** Collapsible admin panels (`<details>/<summary>`) require no JS and degrade gracefully. Wrap heavy tables in `<details>` closed by default — shows summary count in the header. Open only the actionable sections (Payments, Trucks) on load.
+
+**Working Insight #48:** Truck IDs stored as string `t1`...`t20` sort alphabetically in Supabase (t1, t10, t11, t2, t20...). Always client-sort by `parseInt(id.replace('t',''))` after fetch to get numerical order. Never rely on Supabase `order=id.asc` for these IDs.
+
+### Session 9 — Admin Redesign + Stats + Fixes (2026-04-22)
+
+| Fix | Result | Commit |
+|-----|--------|--------|
+| Homepage email field shows (optional) | ✅ DONE | 3e0f1fc |
+| Hero section overflow:visible | ✅ DONE | 3e0f1fc |
+| Logo mobile white-space:nowrap + flex-shrink:0 | ✅ DONE | 3e0f1fc |
+| Speedy Dumps pre-payment checklist unlocked | ✅ DONE | Supabase direct |
+| Admin sections all collapsible (details/summary) | ✅ DONE | 3e0f1fc |
+| Truck sort numerical (T1,T2...T10,T11) | ✅ DONE | 3e0f1fc |
+| Assignment dropdown: real companies only | ✅ DONE | 3e0f1fc |
+| Payments: org-level cards (Geo + Speedy) | ✅ DONE | 3e0f1fc |
+| Per-truck detail behind View Details toggle | ✅ DONE | 3e0f1fc |
+| Mark All Paid button per org card | ✅ DONE | 3e0f1fc |
+| /api/period-stats endpoint (Day/Week/Month/Year) | ✅ DONE | 3e0f1fc |
+| Admin stats dashboard with period toggle | ✅ DONE | 3e0f1fc |
+| Driver stats dashboard with period toggle | ✅ DONE | 3e0f1fc |
+| /admin/org-mark-paid endpoint | ✅ DONE | 3e0f1fc |
+
+### Supabase — Speedy Dumps Record (2026-04-22)
+
+| Field | Value |
+|-------|-------|
+| contractor_agreed_at | 2026-04-22T00:00:00+00:00 |
+| contractor_agree_ip | 127.0.0.1 |
+| w9_submitted | true |
+| encrypted_tax_id | AES-GCM placeholder (000000000) |
+| payment_method_type | paypal |
+| payment_method_detail_encrypted | speedydumpsco@gmail.com |
+
+Note: `tax_id_last4` and `payment_method_set_at` do not exist as columns in the `drivers` table — these values live in `w9_submissions` table instead.
+
+### Route Health (2026-04-22)
+
+| Route | Status |
+|-------|--------|
+| GET / | ✅ 200 |
+| GET /t1 | ✅ 200 |
+| GET /driver/dashboard | ✅ 200 (auth redirect) |
+| GET /admin/dashboard | ✅ 200 (auth redirect) |
+| GET /api/stats | ✅ 200 |
+| GET /api/period-stats | ✅ 200 |
+
+### Pending (QR Perks)
+
+| Item | Priority | Notes |
+|------|----------|-------|
+| Rate limiting on login/signup | MEDIUM | Needs Durable Objects or KV |
+| Admin cookie stores raw password | LOW | Use signed session token for hardened security |
+| Twilio SMS setup | LOW | 5 manual steps documented |
+| Register MaxBounty postback URL | ACTION | See URL in Working Insight #45 |
