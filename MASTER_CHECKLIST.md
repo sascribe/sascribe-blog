@@ -120,3 +120,30 @@ All items previously verified. See full history in git log.
 ## WORKING INSIGHTS
 
 **#44 (2026-04-19):** CJ tracking domains change — always verify /go/ redirects resolve end-to-end, not just 301. `tkqlhce.com` was a legacy Commission Junction domain that returned 403. Use `go.nordvpn.net` direct network links instead of CJ intermediaries when available.
+
+---
+
+## QR PERKS — SESSION 9 (2026-04-22) — Admin Redesign
+
+### SESSION 9 VERIFICATION RESULTS
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Homepage email shows (optional) | ✅ PASS | placeholder="Enter your email (optional)" |
+| 2 | Homepage text fully visible | ✅ PASS | overflow:visible on .hero + .hero-sub |
+| 3 | Logo no-wrap on mobile (ES toggle) | ✅ PASS | white-space:nowrap;flex-shrink:0 added |
+| 4 | Speedy Dumps contractor/w9/payment set | ✅ PASS | All 3 fields set in Supabase |
+| 5 | Speedy Dumps payout steps complete | ✅ PASS | contractor_agreed_at, w9_submitted, payment_method_type all set |
+| 6 | Admin truck sort numerical | ✅ PASS | trucks.sort() by parseInt(id.replace('t','')) |
+| 7 | T3–T9 visible in truck list | ✅ PASS | All trucks returned with limit:100, sorted numerically |
+| 8 | Assignment dropdown real companies only | ✅ PASS | Filtered to GEO_ID + SPEEDY_ID only |
+| 9 | Payments org cards (Geo + Speedy) | ✅ PASS | org-level summary cards with totals |
+| 10 | Per-truck detail behind View Details | ✅ PASS | toggleDetail() JS function |
+| 11 | Driver dashboard Day/Week/Month/Year toggle | ✅ PASS | /api/period-stats?scope=driver |
+| 12 | Admin dashboard Day/Week/Month/Year toggle | ✅ PASS | /api/period-stats?scope=admin |
+| 13 | Stats update on period toggle | ✅ PASS | Live fetch from /api/period-stats on button click |
+| 14 | All existing routes still 200 | ✅ PASS | /,/t1,/driver/dashboard,/admin/dashboard,/api/stats verified |
+
+**Not completed:**
+- `tax_id_last4` column does not exist on `drivers` table (exists in `w9_submissions` instead) — noted in STATE.md
+- `payment_method_set_at` column does not exist on `drivers` table — noted in STATE.md
