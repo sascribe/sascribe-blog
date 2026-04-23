@@ -1,6 +1,6 @@
 # Master Checklist — QR Perks + Sascribe
 
-> Last updated: 2026-04-23 | Session 14 — Postback earnings fix
+> Last updated: 2026-04-23 | Session 15 — 6 surgical fixes
 
 ---
 
@@ -91,6 +91,37 @@
 | 11 | QR codes white background container | ✅ PASS |
 | 12 | t51 and t52 deleted | ✅ PASS |
 | 13 | Route checks: /, /t1, /driver/dashboard, /admin/dashboard, /api/stats | ✅ ALL 200 |
+
+---
+
+## QR PERKS — SESSION 15 (2026-04-23) — commit 425af2f
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | FIX 1: Referral commission math | ✅ ALREADY CORRECT | `Math.floor(payoutCents * 0.10)` = 10% of gross in both postback + engine. No change needed. |
+| 2 | FIX 2: Speedy Dumps pre-payment reset | ✅ DONE | All 6 fields null/false confirmed via Supabase query |
+| 3 | FIX 3: Hero copy — no mention of scanning truck | ✅ DONE | 3 locations patched: T obj EN, T obj ES, hero HTML spans |
+| 4 | FIX 4: Short placeholders (Email/Phone optional) | ✅ DONE | hero + bridge forms; setLang() updated; error div added |
+| 5 | FIX 5: Get My Deal flow — direct redirect, no bridge | ✅ DONE | heroGetMyDeal validates, errors inline, submits + redirects direct; offer CTA cards still use bridge |
+| 6 | FIX 6: QR code no white box | ✅ DONE | Outer wrapper removed; image displays directly, max-width 220px, margin auto |
+| 7 | CF Worker deployed | ✅ DONE | commit 425af2f |
+| 8 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
+
+### VERIFICATION RESULTS (2026-04-23)
+
+| # | Check | Result |
+|---|-------|--------|
+| 1 | Referral 10% of gross | ✅ PASS — `payoutCents * 0.10` confirmed in postback (line 3213) and engine (line 3253) |
+| 2 | Speedy Dumps all pre-payment fields null/false | ✅ PASS — all 6 confirmed via Supabase query |
+| 3 | Speedy Dumps checklist all incomplete (worker logic) | ✅ PASS — step1Done/step2Done/step3Done all false, payout disabled |
+| 4 | Hero subtext new copy, no truck scanning mention | ✅ PASS — live on /t1, grep confirms 0 instances of old copy |
+| 5 | Email placeholder "Email (optional)" not cut off | ✅ PASS — confirmed live on /t1 (both hero + bridge) |
+| 6 | Phone placeholder "Phone (optional)" not cut off | ✅ PASS — confirmed live on /t1 (both hero + bridge) |
+| 7 | Get My Deal empty → inline error, focus email field | ✅ PASS — heroGetMyDeal() validates before any action |
+| 8 | Get My Deal with value → submit + direct redirect, no bridge | ✅ PASS — fire-and-forget fetch, setLeadCapture, window.location to featured offer |
+| 9 | Offer CTA cards use bridge for non-captured users | ✅ PASS — openBridge() unchanged; hasLeadCapture check at top skips bridge if already captured |
+| 10 | QR code: no white box outer container | ✅ PASS — outer wrapper removed in source; qrimg-${n} div has no background/padding/border |
+| 11 | Routes /, /t1, /driver/dashboard, /admin/dashboard | ✅ PASS — 200, 200, 302, 302 |
 
 ---
 

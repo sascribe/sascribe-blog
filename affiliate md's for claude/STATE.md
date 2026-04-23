@@ -1,20 +1,20 @@
 # Project State — QR Perks + Sascribe
 
-**Last updated:** 2026-04-23 (Session 13 — Dashboard + Admin Fixes)
+**Last updated:** 2026-04-23 (Session 15 — Hero/flow/QR surgical fixes)
 **Projects:** qr-perks.com (Cloudflare Worker) · sascribe.com (Hugo + GitHub Actions pipeline)
 
 ---
 
 ## QR PERKS — qr-perks.com
 
-**Worker version:** v9 (Session 13, commit abfcaf9)**
+**Worker version:** v10 (Session 15, commit 425af2f)**
 **All 14 Session 10 verification items passed: 14/14 ✅**
 
 ### Infrastructure
 
 | Service | Status | Notes |
 |---------|--------|-------|
-| Cloudflare Worker | ✅ Live | `qrperks`, deployed 2026-04-23 (commit abfcaf9) |
+| Cloudflare Worker | ✅ Live | `qrperks`, deployed 2026-04-23 (commit 425af2f) |
 | Supabase | ✅ Live | `fsaxluprhgmyaipaujdn.supabase.co` |
 | Resend Email | ✅ Live | `noreply@qr-perks.com` |
 | Cloudflare Email Routing | ✅ Live | 3 rules active — support@, privacy@, contact@ → qrperks@gmail.com |
@@ -242,6 +242,22 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 **Working Insight #47 (2026-04-22):** Stripe-ready payout design — `payouts` table uses generic `payment_reference` (holds PayPal TX ID, bank ref, or Stripe transfer ID) and `payment_method` enum. When adding Stripe Connect: set `payment_method='stripe'` on driver record and replace the reference input in the modal with a Stripe transfer API call. No schema changes needed.
 
 **Working Insight #48 (2026-04-22):** Python `\`` in a regular string literal produces two chars (`\` + `` ` ``). When injecting into a JS template literal, use plain `` ` `` for nested template literals OR use string concatenation (`.map(p=>'<tr>...</tr>')`) to avoid nested backtick issues entirely. Use string concatenation to be safe.
+
+---
+
+## SESSION 15 FIXES (2026-04-23) — commit 425af2f
+
+**FIX 1 — Referral commission math:** Already correct. Postback uses `Math.floor(payoutCents * 0.10)` where `payoutCents` is the MaxBounty gross payout. Commission engine uses `Math.floor(conv.gross_amount_cents * 0.10)`. Both are 10% of gross. No code change needed.
+
+**FIX 2 — Speedy Dumps reset:** contractor_agreed_at, w9_submitted, encrypted_tax_id, payment_method_type, payment_details_paypal, payment_method_set_at — all null/false. Confirmed via Supabase query.
+
+**FIX 3 — Hero copy:** All 3 instances of old truck-scanning copy replaced. T object EN/ES and hero HTML span. New EN: "You're in. Sign up below and get exclusive deals sent directly to your phone — even when you're not near a truck." New ES: "Ya estás adentro. Regístrate y recibe ofertas exclusivas en tu teléfono — aunque no estés cerca del camión."
+
+**FIX 4 — Placeholders:** All inputs changed to short "Email (optional)" / "Phone (optional)". setLang() updated. Inline error div added above Get My Deal button.
+
+**FIX 5 — Get My Deal flow:** heroGetMyDeal() rewritten. If both empty: show error div "Please enter your email or phone to continue", focus email field, do not proceed. If one field filled: fire-and-forget capture fetch, setLeadCapture(), redirect DIRECTLY to featured offer (no bridge). heroCapture() simplified to delegate to heroGetMyDeal(). is_featured added to affiliates JS variable so client can find featured offer. Offer CTA cards (openBridge) unchanged.
+
+**FIX 6 — QR white box:** Outer flex wrapper with `background:white;padding:16px;border-radius:8px` removed. Container is now `<div style="margin:20px auto;max-width:220px;text-align:center">`.
 
 ---
 
