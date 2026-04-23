@@ -1,6 +1,6 @@
 # Master Checklist — QR Perks + Sascribe
 
-> Last updated: 2026-04-23 | Session 13 — 12 Fixes Complete
+> Last updated: 2026-04-23 | Session 14 — Postback earnings fix
 
 ---
 
@@ -91,6 +91,24 @@
 | 11 | QR codes white background container | ✅ PASS |
 | 12 | t51 and t52 deleted | ✅ PASS |
 | 13 | Route checks: /, /t1, /driver/dashboard, /admin/dashboard, /api/stats | ✅ ALL 200 |
+
+---
+
+## QR PERKS — SESSION 14 (2026-04-23)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Postback: update direct_earnings on converting driver | ✅ DONE | numeric column in dollars; was 0 always |
+| 2 | Postback: update referral_earnings on referring driver | ✅ DONE | numeric column in dollars; was 0 always |
+| 3 | Referral lookup: driver.referred_by_driver_id first, then referrals table | ✅ DONE | More reliable attribution |
+| 4 | CF Worker deployed | ✅ DONE | commit a0883fe |
+| 5 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
+
+**Before fix:** Postback wrote to → `conversions` table (already correct). Drivers earnings update wrote to `total_earnings_cents` only. `direct_earnings` and `referral_earnings` were never updated (always $0.00).
+
+**After fix:** Postback writes to → `conversions` table AND updates all three: `total_earnings_cents` (integer cents), `direct_earnings` (numeric dollars), and referrer's `referral_earnings` (numeric dollars).
+
+**The "1 Lead" in admin:** Comes from `email_captures` table (`source=hero`). It is a landing page email form submission by `blu3rror@gmail.com` on 2026-04-14. It is NOT an affiliate conversion. Admin "Leads" and driver "Conversions" are intentionally different — Leads = email_captures, Conversions = MaxBounty postbacks to the `conversions` table. No migration performed. Both are correct.
 
 ---
 

@@ -262,6 +262,31 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 | 11 | CF Worker deployed | ✅ DONE |
 | 12 | GitHub pushed | ✅ DONE |
 
+---
+
+## SESSION 14 FIXES (2026-04-23) — commit a0883fe
+
+**Investigation findings:**
+- Postback (`handleApiConversion`) was already writing to `conversions` table with all required fields
+- The "1 Lead" in admin comes from `email_captures` table — a landing page email form submission (`source=hero`, `blu3rror@gmail.com`, 2026-04-14). This is NOT a conversion. Admin "Leads" and driver "Conversions" are intentionally different metrics.
+- `conversions` table has 0 rows — no MaxBounty postbacks have fired yet
+- `drivers.direct_earnings` column existed but postback was only updating `total_earnings_cents`
+- `drivers.referral_earnings` column existed but referral crediting only updated referrer's `total_earnings_cents`
+
+| # | Fix | Status |
+|---|-----|--------|
+| 1 | Postback: also update `direct_earnings` on converting driver (numeric, dollars) | ✅ DONE |
+| 2 | Postback: also update `referral_earnings` on referring driver (numeric, dollars) | ✅ DONE |
+| 3 | Referral lookup: check `driver.referred_by_driver_id` first, then `referrals` table | ✅ DONE |
+| 4 | CF Worker deployed | ✅ DONE |
+| 5 | GitHub pushed | ✅ DONE |
+
+**Before:** Postback wrote to `conversions` table ✅ but only updated `drivers.total_earnings_cents`. `direct_earnings` and `referral_earnings` were always 0.
+
+**After:** Postback writes to `conversions` table AND updates `drivers.total_earnings_cents`, `drivers.direct_earnings` (converted from cents to dollars), and referrer's `drivers.referral_earnings`.
+
+**Working Insight #49 (2026-04-23):** `drivers` table has two separate earnings representations: `total_earnings_cents` (integer, cents) for precise accounting and `direct_earnings`/`referral_earnings` (numeric, dollars) for display. Both must be updated atomically on postback. The `direct_earnings` + `referral_earnings` columns exist for driver dashboard display; `total_earnings_cents` feeds the commissions engine.
+
 ### Pending (QR Perks)
 
 | Item | Priority | Notes |
