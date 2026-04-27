@@ -1,6 +1,49 @@
 # Master Checklist — QR Perks + Sascribe
 
-> Last updated: 2026-04-19 | Session 5 — 7 Fixes Complete
+> Last updated: 2026-04-27 | Session 16 — address removal, welcome email, referral auto-approve, W9 redesign, media kit
+
+---
+
+## QR PERKS — SESSION 16 (2026-04-27) — commit d92c4cec4d70
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Supabase: delete email_captures (3 rows) | ✅ DONE | jessiepinedo88@gmail.com ×2, blu3rror@gmail.com ×1 |
+| 2 | Supabase: reset pre-payment fields — Geo Transportation | ✅ DONE | contractor_agreed_at, w9_submitted, encrypted_tax_id, payment_method_type, payment_details_paypal, payment_method_set_at all null/false |
+| 3 | Supabase: reset pre-payment fields — Speedy Dumps | ✅ DONE | Same 6 fields |
+| 4 | Supabase: ADD COLUMN w9_document_url TEXT on drivers | ✅ DONE | IF NOT EXISTS via Management API |
+| 5 | Supabase Storage: brand-assets bucket (public) | ✅ DONE | Created + QR-Perks-Logo.png (197KB) + QR-Perks-Banner.jpg (34KB) uploaded |
+| 6 | Supabase Storage: w9-documents bucket (private) | ✅ DONE | Created |
+| 7 | FIX 1: Remove physical address (PHYSICAL_ADDRESS = '[Business Address]') | ✅ DONE | Was '1945 S. Laurel Pl., Ontario, CA 91762' |
+| 8 | FIX 2: Welcome email on signup (emailDriverApplied, fire-and-forget) | ✅ DONE | Referral link + next steps + unsubscribe link |
+| 9 | FIX 3a: Store referred_by_driver_id on driver row at signup | ✅ DONE | Was only in referrals table |
+| 10 | FIX 3b: Auto-approve referred drivers after email verification | ✅ DONE | status='active' if referred_by_driver_id set; direct signups stay 'pending' |
+| 11 | FIX 4: Real-time password validation on signup form | ✅ DONE | Min 8 chars, ≥1 number, ≥1 letter; confirm match; blocks submission if unmet |
+| 12 | FIX 5a: Admin stat strip → "Organizations" + "Accounts" | ✅ DONE | 2 Organizations (REAL_COMPANY_IDS), 3 Accounts (all drivers) |
+| 13 | FIX 5b: Test driver in collapsed "Internal Test Accounts" section | ✅ DONE | Filtered from main table; collapsed details below |
+| 14 | FIX 6: Admin accordion descriptive labels | ✅ DONE | W9→Tax Documents(W9), Commissions→Commission Ledger, Offers→Affiliate Offer Management, Leads→Lead Captures & Email List |
+| 15 | FIX 7a: W9 page redesign (Download PDF + file upload) | ✅ DONE | IRS.gov link + file upload UI; no SSN stored |
+| 16 | FIX 7b: /api/w9-upload endpoint + handleApiW9Upload | ✅ DONE | Stores to w9-documents bucket, sets w9_submitted + w9_document_url |
+| 17 | FIX 7c: Admin W9 column shows "✓ View" link if w9_document_url | ✅ DONE | Opens doc in new tab |
+| 18 | FIX 8: SVG QR code wrapper — remove background:white | ✅ DONE | Covers svg + gensvg types (t9+ auto-generated) |
+| 19 | FIX 9: QR design rules below test notice | ✅ DONE | EN+ES: badge ≥8″×24″, tagline optional |
+| 20 | FIX 10: Media kit section on QR codes page | ✅ DONE | Logo (PNG) + Banner (JPG) download links from brand-assets bucket |
+| 21 | CF Worker deployed | ✅ DONE | 2,413,006 chars |
+| 22 | GitHub pushed | ✅ DONE | sascribe/qrperks-site commit d92c4cec4d70 |
+
+### VERIFICATION RESULTS (2026-04-27)
+
+| # | Check | Result |
+|---|-------|--------|
+| 1 | email_captures table empty | ✅ PASS — content-range: */0 |
+| 2 | Geo Transportation pre-payment reset | ✅ PASS — all 6 fields null/false |
+| 3 | Speedy Dumps pre-payment reset | ✅ PASS — all 6 fields null/false |
+| 4 | Homepage 200 | ✅ PASS |
+| 5 | /driver/signup 200 | ✅ PASS |
+| 6 | /admin 200 (redirect to login) | ✅ PASS |
+| 7 | Physical address removed (grep = 0 matches on public pages) | ✅ PASS — /privacy shows "[Business Address]" |
+| 8 | Password hints visible on signup form (pw-hints, checkPw, ph-len) | ✅ PASS — confirmed in HTML source |
+| 9 | brand-assets bucket: logo + banner uploaded | ✅ PASS — both returned Key+Id on upload |
 
 ---
 
@@ -91,6 +134,73 @@
 | 11 | QR codes white background container | ✅ PASS |
 | 12 | t51 and t52 deleted | ✅ PASS |
 | 13 | Route checks: /, /t1, /driver/dashboard, /admin/dashboard, /api/stats | ✅ ALL 200 |
+
+---
+
+## QR PERKS — SESSION 15 (2026-04-23) — commit 425af2f
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | FIX 1: Referral commission math | ✅ ALREADY CORRECT | `Math.floor(payoutCents * 0.10)` = 10% of gross in both postback + engine. No change needed. |
+| 2 | FIX 2: Speedy Dumps pre-payment reset | ✅ DONE | All 6 fields null/false confirmed via Supabase query |
+| 3 | FIX 3: Hero copy — no mention of scanning truck | ✅ DONE | 3 locations patched: T obj EN, T obj ES, hero HTML spans |
+| 4 | FIX 4: Short placeholders (Email/Phone optional) | ✅ DONE | hero + bridge forms; setLang() updated; error div added |
+| 5 | FIX 5: Get My Deal flow — direct redirect, no bridge | ✅ DONE | heroGetMyDeal validates, errors inline, submits + redirects direct; offer CTA cards still use bridge |
+| 6 | FIX 6: QR code no white box | ✅ DONE | Outer wrapper removed; image displays directly, max-width 220px, margin auto |
+| 7 | CF Worker deployed | ✅ DONE | commit 425af2f |
+| 8 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
+
+### VERIFICATION RESULTS (2026-04-23)
+
+| # | Check | Result |
+|---|-------|--------|
+| 1 | Referral 10% of gross | ✅ PASS — `payoutCents * 0.10` confirmed in postback (line 3213) and engine (line 3253) |
+| 2 | Speedy Dumps all pre-payment fields null/false | ✅ PASS — all 6 confirmed via Supabase query |
+| 3 | Speedy Dumps checklist all incomplete (worker logic) | ✅ PASS — step1Done/step2Done/step3Done all false, payout disabled |
+| 4 | Hero subtext new copy, no truck scanning mention | ✅ PASS — live on /t1, grep confirms 0 instances of old copy |
+| 5 | Email placeholder "Email (optional)" not cut off | ✅ PASS — confirmed live on /t1 (both hero + bridge) |
+| 6 | Phone placeholder "Phone (optional)" not cut off | ✅ PASS — confirmed live on /t1 (both hero + bridge) |
+| 7 | Get My Deal empty → inline error, focus email field | ✅ PASS — heroGetMyDeal() validates before any action |
+| 8 | Get My Deal with value → submit + direct redirect, no bridge | ✅ PASS — fire-and-forget fetch, setLeadCapture, window.location to featured offer |
+| 9 | Offer CTA cards use bridge for non-captured users | ✅ PASS — openBridge() unchanged; hasLeadCapture check at top skips bridge if already captured |
+| 10 | QR code: no white box outer container | ✅ PASS — outer wrapper removed in source; qrimg-${n} div has no background/padding/border |
+| 11 | Routes /, /t1, /driver/dashboard, /admin/dashboard | ✅ PASS — 200, 200, 302, 302 |
+
+---
+
+## QR PERKS — SESSION 14 (2026-04-23)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Postback: update direct_earnings on converting driver | ✅ DONE | numeric column in dollars; was 0 always |
+| 2 | Postback: update referral_earnings on referring driver | ✅ DONE | numeric column in dollars; was 0 always |
+| 3 | Referral lookup: driver.referred_by_driver_id first, then referrals table | ✅ DONE | More reliable attribution |
+| 4 | CF Worker deployed | ✅ DONE | commit a0883fe |
+| 5 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
+
+**Before fix:** Postback wrote to → `conversions` table (already correct). Drivers earnings update wrote to `total_earnings_cents` only. `direct_earnings` and `referral_earnings` were never updated (always $0.00).
+
+**After fix:** Postback writes to → `conversions` table AND updates all three: `total_earnings_cents` (integer cents), `direct_earnings` (numeric dollars), and referrer's `referral_earnings` (numeric dollars).
+
+**The "1 Lead" in admin:** Comes from `email_captures` table (`source=hero`). It is a landing page email form submission by `blu3rror@gmail.com` on 2026-04-14. It is NOT an affiliate conversion. Admin "Leads" and driver "Conversions" are intentionally different — Leads = email_captures, Conversions = MaxBounty postbacks to the `conversions` table. No migration performed. Both are correct.
+
+---
+
+## QR PERKS — SESSION 13 (2026-04-23)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Speedy Dumps login fix — hex PBKDF2 hash for SpeedyDriver2026! | ✅ DONE | Patched directly to Supabase drivers table |
+| 2 | savePayment raw text on dashboard — moved inside `<script>` block | ✅ DONE | Was between two `</script>` tags |
+| 3 | Per-truck stats T2/T3 showing 0 — add truck_id to scans select | ✅ DONE | Filter was always failing without truck_id in response |
+| 4 | QR code centering — display:flex on outer container | ✅ DONE | was text-align:center only |
+| 5 | addTruck slot logic — use lowest unassigned inactive truck first | ✅ DONE | Falls back to new ID if none available |
+| 6 | Admin truck list — active-only by default, Show All toggle | ✅ DONE | Circle indicators (green=active, grey=inactive) |
+| 7 | Admin Add New Driver form — Company, Email, Password, Truck | ✅ DONE | /admin/add-driver POST handler added |
+| 8 | Admin accordion CSS — dark theme, chevron, hover | ✅ DONE | ❯ chevron rotates 90deg on open |
+| 9 | Delete test drivers — 5 accounts removed | ✅ DONE | testdriver, driver1-3, newdriver@qr-perks |
+| 10 | CF Worker deployed | ✅ DONE | commit abfcaf9 |
+| 11 | GitHub pushed | ✅ DONE | sascribe/qrperks-site main |
 
 ---
 
