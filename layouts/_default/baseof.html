@@ -28,10 +28,10 @@
   <meta name="twitter:title" content="{{ .Title }}">
   <meta name="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else if .IsHome }}Honest reviews, comparisons, and tutorials for AI tools, SaaS software, and productivity apps.{{ else }}{{ .Summary }}{{ end }}">
   {{ if .Params.cover }}{{ if .Params.cover.image }}
-  <meta name="twitter:image" content="{{ .Site.BaseURL | trimSuffix "/" }}{{ .Params.cover.image }}">
+  <meta name="twitter:image" content="{{ .Site.BaseURL | strings.TrimSuffix "/" }}{{ .Params.cover.image }}">
   {{ end }}{{ end }}
   {{ if .Params.cover }}{{ if .Params.cover.image }}
-  <meta property="og:image" content="{{ .Site.BaseURL | trimSuffix "/" }}{{ .Params.cover.image }}">
+  <meta property="og:image" content="{{ .Site.BaseURL | strings.TrimSuffix "/" }}{{ .Params.cover.image }}">
   {{ end }}{{ end }}
 
   <!-- Fonts -->
