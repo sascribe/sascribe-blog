@@ -27,27 +27,24 @@ Apply these three settings:
 
 ---
 
-## 2. PropellerAds — Add real creative images and activate campaigns
+## 2. PropellerAds — Activate campaigns (images already uploaded)
 
-**Why manual:** PropellerAds requires image review before activation. Images must be uploaded via dashboard.
+**Creative images uploaded via API 2026-05-03:**
+- Icon (192x192): `~/Desktop/AffiliateMarketing/creatives/elevenlabs_icon_192x192.png` ✅ uploaded to all 4 creatives
+- Banner (492x328): `~/Desktop/AffiliateMarketing/creatives/elevenlabs_banner_492x328.jpg` ✅ uploaded to all 4 creatives
+- Source photo: ZDNyhmgkZlQ (Will Francis / Unsplash) — professional studio headphones on microphone
+- Frequency cap: 1/24h applied to all creatives via API ✅
 
-**Campaigns to activate (all currently Draft / status 1):**
+**All 4 campaigns still in Draft (status 1). Activate when ready to spend:**
 
-| Campaign ID | Name | Daily Budget | Total Budget |
-|-------------|------|-------------|-------------|
-| 10865252 | ElevenLabs — Make Money AI Voice — Push | $10/day | $28 total |
-| 10865253 | SaaS Ebook — AI Creator Toolkit — Push | $14/day | $40 total |
-| 10865254 | Side Hustle Playbook — Push | $10/day | $30 total |
-| 10865255 | NordVPN — Security Fear — Push | $10/day | $30 total |
+| Campaign ID | Name | Daily Budget | Total Budget | Action |
+|-------------|------|-------------|-------------|--------|
+| 10865252 | ElevenLabs — Make Money AI Voice — Push | $10/day | $28 total | Activate when Beehiiv welcome email is live |
+| 10865253 | SaaS Ebook — AI Creator Toolkit — Push | $14/day | $40 total | Activate after ebook landing page is built |
+| 10865254 | Side Hustle Playbook — Push | $10/day | $30 total | Activate after ebook landing page is built |
+| 10865255 | NordVPN — Security Fear — Push | $10/day | $30 total | Activate when ready |
 
-**Steps for each campaign:**
-1. Go to propellerads.com → Campaigns → find campaign
-2. Click Edit → Creatives
-3. Upload a real 360×240px banner image (JPG/PNG, <150KB) for each of the 4 creatives
-4. Save → Submit for review
-5. Once approved, change status to Active
-
-**Creative image specs:** 360×240px minimum, JPG or PNG, <150KB
+**To activate:** propellerads.com → Campaigns → find campaign → change status to Active. Images are already there, no upload needed.
 
 ---
 
