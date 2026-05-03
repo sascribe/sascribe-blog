@@ -1,5 +1,5 @@
 ---
-title: "The AI Voice Tool 1 Million Creators Are Using Right Now"
+title: "Make Money With Your Voice — No Studio, No Experience Required"
 date: 2026-05-02
 draft: false
 layout: landing
@@ -14,6 +14,8 @@ cover:
 .lp { max-width: 680px; margin: 0 auto; padding: 0 20px 60px; font-family: inherit; }
 .lp-disclosure { background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2); border-radius: 8px; padding: 10px 16px; font-size: .8rem; color: var(--secondary); text-align: center; margin: 16px 0 24px; }
 .lp-hero { text-align: center; padding: 40px 0 24px; }
+.lp-logo { display: block; max-width: 200px; margin: 0 auto 14px; }
+.lp-trust-badge { display: inline-block; background: #18181b; color: #a1a1aa; border: 1px solid #27272a; border-radius: 20px; font-size: .72rem; font-weight: 600; letter-spacing: .05em; padding: 4px 14px; margin: 0 0 20px; text-transform: uppercase; }
 .lp-hero h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; line-height: 1.15; margin: 0 0 14px; }
 .lp-hero .sub { font-size: 1.05rem; color: var(--secondary); line-height: 1.5; margin: 0 auto 28px; max-width: 560px; }
 .deal-box { background: linear-gradient(135deg, rgba(99,102,241,.12) 0%, rgba(16,185,129,.08) 100%); border: 2px solid rgba(99,102,241,.35); border-radius: 14px; padding: 22px 24px; margin: 0 0 28px; text-align: center; }
@@ -39,9 +41,19 @@ cover:
 .use-cases li::before { content: "→"; color: #6366f1; font-weight: 700; flex-shrink: 0; }
 .cta-btn-secondary { display: block; background: transparent; color: #6366f1 !important; text-align: center; padding: 16px 32px; border-radius: 10px; font-size: 1.05rem; font-weight: 700; text-decoration: none !important; border: 2px solid #6366f1; transition: background .2s; margin: 0 0 48px; }
 .cta-btn-secondary:hover { background: rgba(99,102,241,.08); }
-.email-section { background: var(--entry); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; text-align: center; }
-.email-section h2 { font-size: 1.2rem; font-weight: 700; margin: 0 0 10px; }
-.email-section p { font-size: .9rem; color: var(--secondary); margin: 0 0 24px; }
+/* Email capture — dark box */
+.email-section { background: #0f0f13; border: 1px solid #27272a; border-radius: 14px; padding: 36px 32px; text-align: center; }
+.email-section h2 { font-size: 1.3rem; font-weight: 800; color: #f9fafb; margin: 0 0 8px; }
+.email-section .email-sub { font-size: .92rem; color: #9ca3af; margin: 0 0 24px; }
+.email-form { display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin: 0 auto; }
+.email-form input[type="email"] { background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 14px 16px; font-size: .97rem; color: #f9fafb; outline: none; transition: border-color .2s; }
+.email-form input[type="email"]::placeholder { color: #6b7280; }
+.email-form input[type="email"]:focus { border-color: #6366f1; }
+.email-form button { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 14px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .2s; }
+.email-form button:hover { background: #4f46e5; }
+.email-form button:disabled { background: #4f46e5; opacity: .7; cursor: not-allowed; }
+.email-compliance { font-size: .72rem; color: #6b7280; margin: 12px 0 0; line-height: 1.5; }
+.email-success { display: none; padding: 20px; background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.3); border-radius: 10px; color: #10b981; font-weight: 600; font-size: .95rem; margin-top: 16px; }
 @media (max-width: 480px) {
   .lp { padding: 0 16px 48px; }
   .lp-hero { padding: 28px 0 20px; }
@@ -49,6 +61,7 @@ cover:
   .cta-btn { padding: 16px 20px; font-size: 1.05rem; }
   .pricing-table { font-size: .83rem; }
   .pricing-table th, .pricing-table td { padding: 9px 8px; }
+  .email-section { padding: 28px 20px; }
 }
 </style>
 
@@ -58,9 +71,12 @@ cover:
 
 <div class="lp-hero">
 
-<h1>The AI Voice Tool 1 Million Creators Are Using Right Now</h1>
+<img src="/images/elevenlabs/logo-elevenlabs.png" alt="ElevenLabs" class="lp-logo">
+<span class="lp-trust-badge">Official Affiliate Partner</span>
 
-<p class="sub">ElevenLabs turns any text into professional audio in seconds — podcasts, YouTube voiceovers, audiobooks, and more.</p>
+<h1>Make Money With Your Voice — No Studio, No Experience Required</h1>
+
+<p class="sub">ElevenLabs turns any text into professional-grade audio. Creators are using it for YouTube, podcasts, and audiobooks — and getting paid for it.</p>
 
 <div class="deal-box">
   <p class="deal-headline">🎙️ Start free — no credit card required.<br>First paid month just $11 (Creator plan, 50% off for new users — applied automatically at checkout)</p>
@@ -126,11 +142,48 @@ cover:
 
 <div class="email-section" id="email-capture">
   <h2>Want the free guide?</h2>
-  <p>5 ways creators are earning with AI voice in 2026 — delivered to your inbox instantly.</p>
-  <div id="beehiiv-embed">
-    <!-- PASTE BEEHIIV EMBED CODE HERE -->
-    <!-- Go to app.beehiiv.com → Grow → Forms → Create Form → Copy embed code → replace this comment block -->
-  </div>
+  <p class="email-sub">5 ways creators are earning with AI voice in 2026 — delivered to your inbox instantly.</p>
+  <form class="email-form" id="subscribe-form">
+    <input type="email" name="email" placeholder="Enter your email address" required autocomplete="email">
+    <button type="submit" id="subscribe-btn">Send Me the Guide →</button>
+  </form>
+  <p class="email-compliance">By subscribing you agree to receive emails from Sascribe. Unsubscribe anytime.</p>
+  <div class="email-success" id="subscribe-success">Guide sent! Check your inbox — then grab your ElevenLabs free account below.</div>
 </div>
 
 </div>
+
+<script>
+document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('subscribe-btn');
+  var success = document.getElementById('subscribe-success');
+  var email = this.querySelector('input[type="email"]').value.trim();
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  try {
+    var res = await fetch('/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: email})
+    });
+    var data = await res.json();
+    if (data.ok) {
+      this.style.display = 'none';
+      document.querySelector('.email-compliance').style.display = 'none';
+      success.style.display = 'block';
+      setTimeout(function() {
+        window.location.href = 'https://try.elevenlabs.io/25umn8melpnn';
+      }, 2500);
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Send Me the Guide →';
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Send Me the Guide →';
+    alert('Something went wrong. Please try again.');
+  }
+});
+</script>
