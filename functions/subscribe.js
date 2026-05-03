@@ -133,7 +133,7 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Sascribe <hello@qr-perks.com>',
+        from: 'Sascribe <hello@sascribe.com>',
         reply_to: 'sascribeblog@gmail.com',
         to: [email],
         subject: 'Your free guide: 5 ways creators are earning with AI voice in 2026',
