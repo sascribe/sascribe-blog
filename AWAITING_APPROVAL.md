@@ -48,53 +48,33 @@ Apply these three settings:
 
 ---
 
-## 3. Beehiiv welcome email — UPDATE BODY ONLY (subject + preview already set via Playwright)
+## 3. Beehiiv welcome email — BLOCKED BY PAYWALL (decision required)
 
-**Playwright automation status (2026-05-03):**
+**Status (2026-05-03 session 2):**
 - ✅ Subject: "Your free guide — 5 ways creators are earning with AI voice in 2026" — SET AND SAVED
 - ✅ Preview text: "No studio, no experience, no gear. Here's what's working." — SET AND SAVED
-- ❌ Body: Old content ("Hey, welcome aboard") still present — ProseMirror editor resists programmatic clearing
-- ❌ Trigger: Needs re-activation after editing
-- ❌ Publish changes: Disabled until trigger is active
+- ✅ Body: ElevenLabs 5-income-streams content — SET AND SAVED (372 words)
+- ✅ Trigger (IF / Added by API): Activated
+- ✅ Send email step: Activated
+- ❌ **Publish changes: BLOCKED — Beehiiv requires Scale plan ($49/month)**
 
-**This is a 3-minute manual task. Exact steps:**
+**Beehiiv paywall confirmed:** Clicking "Publish changes" opens an upsell modal:
+> "Upgrade to Scale to publish and activate your automations. $49/month for up to 1,000 subscribers."
 
-1. Go to: https://app.beehiiv.com/automations/6d04a7f1-8d0f-4707-9378-adafd8fe102d/workflow
-2. Click the **"IF / Added by API"** card → click **"Activate"** in the right panel
-3. Click the **"Send email"** card → click **"Edit email"**
-4. Click **"Write"** tab → select all body text (Cmd+A) → delete → paste the body below
-5. Click **Save** → click **"Publish changes"**
+**Current state:** The automation is technically live (old "Hey, welcome aboard" body is what subscribers receive). New content is saved as a draft but cannot be published without Scale plan.
 
-**Subject (already set, do not change):** Your free guide — 5 ways creators are earning with AI voice in 2026  
-**Preview text (already set, do not change):** No studio, no experience, no gear. Here's what's working.
+**Decision required — two options:**
 
-**Body:**
-> Here are 5 income streams creators are building right now with AI voice — specifically with ElevenLabs.
->
-> **01 — YouTube channel voiceovers**  
-> Faceless YouTube is the fastest-growing creator model. No mic, no studio, no face required. ElevenLabs voices are indistinguishable from human narration. Finance, history, and tech explainer channels are doing this at scale. Write the script (or use AI), generate the voice, add stock footage, upload. Channels are hitting 100k+ views within 3 months.
->
-> **02 — Podcast narration**  
-> Solo podcasts where you narrate pre-written episodes are big on Spotify and Apple Podcasts right now. Write a weekly deep-dive, generate audio in under 10 minutes, distribute. No recording sessions, no noise editing. Some creators run 3–4 shows simultaneously.
->
-> **03 — Audiobook creation**  
-> Turn any book, ebook, or course into an audiobook and sell it on Gumroad, Lemon Squeezy, or ACX. Creator plan gives you 121,000 characters/month — roughly 2–3 hours of audio. Audiobooks command 2–3x the price of the written version.
->
-> **04 — Corporate training videos**  
-> Companies pay $500–$5,000 per training video — onboarding, compliance, product demos. The voiceover that used to cost $300 to record now costs ~$0.30 with ElevenLabs.
->
-> **05 — Language learning content**  
-> 30+ languages with native-sounding voices. Language learners pay well for pronunciation guides and listening drills. Build a Gumroad product or YouTube channel in a language you don't even speak — just translate scripts and generate audio.
->
-> ---
-> **[Try ElevenLabs Free →]** https://try.elevenlabs.io/25umn8melpnn?utm_source=beehiiv&utm_medium=email&utm_campaign=welcome
->
-> Creator plan is $11 your first month (normally $22). Start free, no credit card needed.
->
-> ---
-> *You're receiving this because you subscribed at sascribe.com. [Unsubscribe]*
+| Option | Cost | Impact |
+|--------|------|--------|
+| Upgrade to Beehiiv Scale | $49/month | Publish ElevenLabs welcome email immediately. Required for automation publishing. |
+| Keep Grow plan (current) | $0 | Old welcome email stays live. New subscribers get generic "Hey, welcome aboard" instead of ElevenLabs affiliate pitch. |
 
-**No activation needed** — the welcome email fires automatically once content is saved and `send_welcome_email: true` is passed (already the case in subscribe.js).
+**Recommendation:** If PA campaign 10865252 (ElevenLabs push) is live and driving subscribers, the welcome email is the primary conversion point. $49/month breakeven = ~5 ElevenLabs signups/month at $11 first-month commission. Worth it if subscriber volume justifies.
+
+**If you upgrade:** The content is already saved. Just go to the workflow URL and click "Publish changes" — it will work immediately after upgrade.
+
+Workflow URL: https://app.beehiiv.com/automations/6d04a7f1-8d0f-4707-9378-adafd8fe102d/workflow
 
 ---
 
