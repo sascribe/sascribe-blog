@@ -69,6 +69,7 @@
 </head>
 <body>
 
+  {{ if not .Params.noNav }}
   <header class="site-header">
     <div class="container">
       <nav class="nav">
@@ -87,6 +88,7 @@
       </nav>
     </div>
   </header>
+  {{ end }}
 
   <main>
     {{- block "main" . }}{{- end }}

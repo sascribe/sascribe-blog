@@ -439,6 +439,13 @@ a:hover { opacity: 0.8; }
 }
 
 /* AdCreative — promo image with white bg, show full logo */
+.post-card--featured .post-card__image img[src*="/adcreative/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #ffffff;
+  max-height: 200px;
+}
+.post-card__thumb img[src*="/adcreative/"],
 .post-card--archive .post-card__thumb img[src*="/adcreative/"],
 .post-card--grid .post-card__thumb img[src*="/adcreative/"] {
   object-fit: contain;
@@ -446,6 +453,14 @@ a:hover { opacity: 0.8; }
   background: #ffffff;
   width: 100%;
   height: 100%;
+}
+.article-hero__img[src*="/adcreative/"] {
+  object-fit: contain;
+  background: #ffffff;
+  padding: 40px;
+  max-height: 320px;
+  border: none;
+  border-radius: var(--radius);
 }
 
 /* Logo style class applied via frontmatter cover.style: logo */
