@@ -48,54 +48,44 @@ Apply these three settings:
 
 ---
 
-## 3. Beehiiv welcome email — BLOCKED BY PAYWALL (decision required)
+## 3. Beehiiv welcome email — SCALE PLAN REQUIRED (no workaround)
 
-**Status (2026-05-03 session 2):**
+**Status (fully investigated 2026-05-03):**
 - ✅ Subject: "Your free guide — 5 ways creators are earning with AI voice in 2026" — SET AND SAVED
 - ✅ Preview text: "No studio, no experience, no gear. Here's what's working." — SET AND SAVED
-- ✅ Body: ElevenLabs 5-income-streams content — SET AND SAVED (372 words)
+- ✅ Body: ElevenLabs 5-income-streams content (372 words) — SET AND SAVED
 - ✅ Trigger (IF / Added by API): Activated
 - ✅ Send email step: Activated
 - ❌ **Publish changes: BLOCKED — Beehiiv requires Scale plan ($49/month)**
 
-**Beehiiv paywall confirmed:** Clicking "Publish changes" opens an upsell modal:
-> "Upgrade to Scale to publish and activate your automations. $49/month for up to 1,000 subscribers."
+**All workarounds exhausted:**
+1. Settings → Emails: only configures sender name/reply-to, no welcome email content editor
+2. Creating new automation: also requires Scale to publish (same paywall)
+3. Publication-level `send_welcome_email: true` in subscribe.js: fires Beehiiv's system default, no content editor on current plan
+4. No "Welcome Email" section exists in nav on Launch plan
 
-**Current state:** The automation is technically live (old "Hey, welcome aboard" body is what subscribers receive). New content is saved as a draft but cannot be published without Scale plan.
+**Current live state:** Subscribers get old "Hey, welcome aboard" auto-response. New ElevenLabs content is saved as draft.
 
-**Decision required — two options:**
-
-| Option | Cost | Impact |
-|--------|------|--------|
-| Upgrade to Beehiiv Scale | $49/month | Publish ElevenLabs welcome email immediately. Required for automation publishing. |
-| Keep Grow plan (current) | $0 | Old welcome email stays live. New subscribers get generic "Hey, welcome aboard" instead of ElevenLabs affiliate pitch. |
-
-**Recommendation:** If PA campaign 10865252 (ElevenLabs push) is live and driving subscribers, the welcome email is the primary conversion point. $49/month breakeven = ~5 ElevenLabs signups/month at $11 first-month commission. Worth it if subscriber volume justifies.
-
-**If you upgrade:** The content is already saved. Just go to the workflow URL and click "Publish changes" — it will work immediately after upgrade.
-
-Workflow URL: https://app.beehiiv.com/automations/6d04a7f1-8d0f-4707-9378-adafd8fe102d/workflow
+**Action when PA campaigns start spending:** Upgrade to Scale at app.beehiiv.com → click "Publish changes" on the workflow. 1-click, content already saved.
+- Breakeven: ~5 ElevenLabs signups/month ($11 each × 5 = $55 > $49/month Scale cost)
+- Workflow URL: https://app.beehiiv.com/automations/6d04a7f1-8d0f-4707-9378-adafd8fe102d/workflow
 
 ---
 
-## 4. PropellerAds creatives — Retry image upload (PA API server bug)
+## 4. PropellerAds creatives — Upload via dashboard (API has persistent 500 bug)
 
-**Why pending:** PATCH /v5/adv/creatives/{id} returns 500 for valid 192x192 PNG icons. Server-side PA bug confirmed (validation works, processing crashes). 4 distinct creatives are generated and ready.
+**Why pending:** PATCH /v5/adv/creatives/{id} returns 500 for any image payload (PNG, JPEG, any size). Confirmed server-side bug on ssp-api.propellerads.com. Tried: base64 PNG, base64 JPEG, 8KB icon, 77KB icon, both API base URLs.
 
-**To retry when PA fixes their image server:**
+**Upload manually via dashboard** (fastest path):
+1. Go to propellerads.com → Campaigns → Find 10865252 → Creatives
+2. For each creative (IDs: 26041829, 26041830, 26041831, 26041832):
+   - Click Edit → upload icon from `~/Desktop/AffiliateMarketing/creatives/el_creative_{N}_icon_192x192.png`
+   - Upload banner from `~/Desktop/AffiliateMarketing/creatives/el_creative_{N}_banner_492x328.jpg`
+
+**When API bug is fixed, retry:**
 ```bash
 source ~/.zshrc && cd ~/Desktop/AffiliateMarketing && python3 browser/upload_pa_creatives.py
 ```
-
-**Files ready:**
-| PA ID | Icon | Banner | Title |
-|-------|------|--------|-------|
-| 26041829 | el_creative_1_icon_192x192.png | el_creative_1_banner_492x328.jpg | Make $500/Month: AI Voice |
-| 26041830 | el_creative_2_icon_192x192.png | el_creative_2_banner_492x328.jpg | AI Side Hustle While You Sleep |
-| 26041831 | el_creative_3_icon_192x192.png | el_creative_3_banner_492x328.jpg | Start a Podcast in 10 Minutes |
-| 26041832 | el_creative_4_icon_192x192.png | el_creative_4_banner_492x328.jpg | 1M+ Creators Use This AI Tool |
-
-All in: `~/Desktop/AffiliateMarketing/creatives/`
 
 ---
 
