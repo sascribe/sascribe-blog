@@ -49,6 +49,8 @@ cover:
 .email-form input[type="email"] { background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 14px 16px; font-size: .97rem; color: #f9fafb; outline: none; transition: border-color .2s; }
 .email-form input[type="email"]::placeholder { color: #6b7280; }
 .email-form input[type="email"]:focus { border-color: #6366f1; }
+/* honeypot — off-screen, invisible to humans, visible to bots */
+.email-form .hp-field { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .email-form button { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 14px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .2s; }
 .email-form button:hover { background: #4f46e5; }
 .email-form button:disabled { background: #4f46e5; opacity: .7; cursor: not-allowed; }
@@ -83,7 +85,7 @@ cover:
   <p class="deal-sub">Limited-time offer · Creator plan normally $22/mo</p>
 </div>
 
-<a class="cta-btn" href="https://try.elevenlabs.io/25umn8melpnn" target="_blank" rel="noopener sponsored">Try ElevenLabs Free →</a>
+<a class="cta-btn" href="https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice" rel="noopener sponsored">Try ElevenLabs Free →</a>
 <p class="cta-sub">No credit card required · Cancel anytime</p>
 
 </div>
@@ -138,13 +140,15 @@ cover:
   <li>Audiobook creation — turn written content into sellable audio products</li>
 </ul>
 
-<a class="cta-btn-secondary" href="https://try.elevenlabs.io/25umn8melpnn" target="_blank" rel="noopener sponsored">Get Started for $11 →</a>
+<a class="cta-btn-secondary" href="https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice" rel="noopener sponsored">Get Started for $11 →</a>
 
 <div class="email-section" id="email-capture">
   <h2>Want the free guide?</h2>
   <p class="email-sub">5 ways creators are earning with AI voice in 2026 — delivered to your inbox instantly.</p>
   <form class="email-form" id="subscribe-form">
     <input type="email" name="email" placeholder="Enter your email address" required autocomplete="email">
+    <!-- honeypot: real users never see or fill this -->
+    <span class="hp-field"><input type="text" name="website" tabindex="-1" autocomplete="off"></span>
     <button type="submit" id="subscribe-btn">Send Me the Guide →</button>
   </form>
   <p class="email-compliance">By subscribing you agree to receive emails from Sascribe. Unsubscribe anytime.</p>
@@ -156,11 +160,20 @@ cover:
 <script>
 document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
   e.preventDefault();
+  // Honeypot check — bots fill hidden fields, humans don't
+  var hp = this.querySelector('input[name="website"]');
+  if (hp && hp.value) {
+    // Bot detected — silently succeed without API call
+    this.style.display = 'none';
+    document.querySelector('.email-compliance').style.display = 'none';
+    document.getElementById('subscribe-success').style.display = 'block';
+    return;
+  }
   var btn = document.getElementById('subscribe-btn');
   var success = document.getElementById('subscribe-success');
   var email = this.querySelector('input[type="email"]').value.trim();
   btn.disabled = true;
-  btn.textContent = 'Sending…';
+  btn.textContent = 'Sending\u2026';
   try {
     var res = await fetch('/subscribe', {
       method: 'POST',
@@ -173,16 +186,16 @@ document.getElementById('subscribe-form').addEventListener('submit', async funct
       document.querySelector('.email-compliance').style.display = 'none';
       success.style.display = 'block';
       setTimeout(function() {
-        window.location.href = 'https://try.elevenlabs.io/25umn8melpnn';
+        window.location.href = 'https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice';
       }, 2500);
     } else {
       btn.disabled = false;
-      btn.textContent = 'Send Me the Guide →';
+      btn.textContent = 'Send Me the Guide \u2192';
       alert('Something went wrong. Please try again.');
     }
   } catch(err) {
     btn.disabled = false;
-    btn.textContent = 'Send Me the Guide →';
+    btn.textContent = 'Send Me the Guide \u2192';
     alert('Something went wrong. Please try again.');
   }
 });
