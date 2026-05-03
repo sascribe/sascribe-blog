@@ -1,6 +1,6 @@
 # AWAITING APPROVAL — Manual Steps Required
 # Last updated: 2026-05-03
-# Items here have been exhausted via API — only genuinely impossible-to-automate steps remain.
+# Items here have been exhausted via API/Playwright — only genuinely impossible-to-automate steps remain.
 
 ---
 
@@ -48,16 +48,25 @@ Apply these three settings:
 
 ---
 
-## 3. Beehiiv welcome email content — Settings (NOT Automations)
+## 3. Beehiiv welcome email — UPDATE BODY ONLY (subject + preview already set via Playwright)
 
-**Why manual:** All Beehiiv automation/content API endpoints (POST automations, PATCH automation, GET steps, POST posts) are 404 or 403 on the current plan. Exhaustively confirmed.
+**Playwright automation status (2026-05-03):**
+- ✅ Subject: "Your free guide — 5 ways creators are earning with AI voice in 2026" — SET AND SAVED
+- ✅ Preview text: "No studio, no experience, no gear. Here's what's working." — SET AND SAVED
+- ❌ Body: Old content ("Hey, welcome aboard") still present — ProseMirror editor resists programmatic clearing
+- ❌ Trigger: Needs re-activation after editing
+- ❌ Publish changes: Disabled until trigger is active
 
-**However:** `send_welcome_email: true` is already in `functions/subscribe.js`. This fires Beehiiv's built-in **Welcome Email** — which is a Publication Setting (not an automation), available on all plans. You just need to paste the content in.
+**This is a 3-minute manual task. Exact steps:**
 
-**Exact dashboard path:** https://app.beehiiv.com → Select "Sascribe" → **Settings** → **Publication Settings** → scroll to **Welcome Email** → paste subject + body → Save
+1. Go to: https://app.beehiiv.com/automations/6d04a7f1-8d0f-4707-9378-adafd8fe102d/workflow
+2. Click the **"IF / Added by API"** card → click **"Activate"** in the right panel
+3. Click the **"Send email"** card → click **"Edit email"**
+4. Click **"Write"** tab → select all body text (Cmd+A) → delete → paste the body below
+5. Click **Save** → click **"Publish changes"**
 
-**Subject:** Your free guide — 5 ways creators are earning with AI voice in 2026  
-**Preview text:** No studio, no experience, no gear. Here's what's working.
+**Subject (already set, do not change):** Your free guide — 5 ways creators are earning with AI voice in 2026  
+**Preview text (already set, do not change):** No studio, no experience, no gear. Here's what's working.
 
 **Body:**
 > Here are 5 income streams creators are building right now with AI voice — specifically with ElevenLabs.
