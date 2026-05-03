@@ -48,16 +48,13 @@ Apply these three settings:
 
 ---
 
-## 3. Beehiiv welcome automation — email content (API enterprise-only)
+## 3. Beehiiv welcome email content — Settings (NOT Automations)
 
-**Why manual:** Beehiiv automation creation API returns 404. Post creation API (for email content) returns 403 enterprise-only. The `/subscribe` Pages Function already subscribes users to Beehiiv with `send_welcome_email: true` and `utm_source: elevenlabs-landing`.
+**Why manual:** All Beehiiv automation/content API endpoints (POST automations, PATCH automation, GET steps, POST posts) are 404 or 403 on the current plan. Exhaustively confirmed.
 
-**Steps:**
-1. Go to https://app.beehiiv.com → Select "Sascribe" publication
-2. Navigate to **Automations** → **New Automation**
-3. Set trigger: **New Subscriber**
-4. Add email step with delay: **0 minutes** (immediate)
-5. Use this content:
+**However:** `send_welcome_email: true` is already in `functions/subscribe.js`. This fires Beehiiv's built-in **Welcome Email** — which is a Publication Setting (not an automation), available on all plans. You just need to paste the content in.
+
+**Exact dashboard path:** https://app.beehiiv.com → Select "Sascribe" → **Settings** → **Publication Settings** → scroll to **Welcome Email** → paste subject + body → Save
 
 **Subject:** Your free guide — 5 ways creators are earning with AI voice in 2026  
 **Preview text:** No studio, no experience, no gear. Here's what's working.
@@ -88,7 +85,28 @@ Apply these three settings:
 > ---
 > *You're receiving this because you subscribed at sascribe.com. [Unsubscribe]*
 
-6. **Activate** the automation (set to Live)
+**No activation needed** — the welcome email fires automatically once content is saved and `send_welcome_email: true` is passed (already the case in subscribe.js).
+
+---
+
+## 4. PropellerAds creatives — Retry image upload (PA API server bug)
+
+**Why pending:** PATCH /v5/adv/creatives/{id} returns 500 for valid 192x192 PNG icons. Server-side PA bug confirmed (validation works, processing crashes). 4 distinct creatives are generated and ready.
+
+**To retry when PA fixes their image server:**
+```bash
+source ~/.zshrc && cd ~/Desktop/AffiliateMarketing && python3 browser/upload_pa_creatives.py
+```
+
+**Files ready:**
+| PA ID | Icon | Banner | Title |
+|-------|------|--------|-------|
+| 26041829 | el_creative_1_icon_192x192.png | el_creative_1_banner_492x328.jpg | Make $500/Month: AI Voice |
+| 26041830 | el_creative_2_icon_192x192.png | el_creative_2_banner_492x328.jpg | AI Side Hustle While You Sleep |
+| 26041831 | el_creative_3_icon_192x192.png | el_creative_3_banner_492x328.jpg | Start a Podcast in 10 Minutes |
+| 26041832 | el_creative_4_icon_192x192.png | el_creative_4_banner_492x328.jpg | 1M+ Creators Use This AI Tool |
+
+All in: `~/Desktop/AffiliateMarketing/creatives/`
 
 ---
 
