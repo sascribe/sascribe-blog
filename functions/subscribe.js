@@ -1,11 +1,22 @@
 // Cloudflare Pages Function — POST /subscribe
-// Subscribes email to Beehiiv (Sascribe newsletter platform)
-// THEN fires a Resend welcome email immediately, bypassing Beehiiv automation
-// (Beehiiv automation requires Scale plan $49/month to publish — using Resend as workaround)
-// NOTE: This is the only Sascribe function that uses RESEND_API_KEY. Normally Resend is
-// QR-Perks transactional only — this is a deliberate exception per 2026-05-03 session.
+// Flow:
+//   1. Validate email + honeypot (honeypot handled client-side; server ignores it)
+//   2. Subscribe to Beehiiv with send_welcome_email:false
+//   3. Fire BeMob conversion postback if cid is present (attribution)
+//   4. Send welcome email via Resend from hello@sascribe.com
+//
+// Platform rules:
+//   - Beehiiv receives ALL Sascribe subscriptions (source of truth for list)
+//   - Resend sends welcome email as approved exception while Beehiiv Scale plan ($49/mo) is not active
+//   - Sender MUST be hello@sascribe.com (sascribe.com verified in Resend)
+//   - QR-Perks transactional emails use Resend separately — never cross-use
+//
+// AWAITING: Resend Pro plan ($20/mo) required to add sascribe.com as second domain
+// TEMPORARY: Sending from hello@qr-perks.com until sascribe.com is verified in Resend
+// TODO: Change from address to 'Sascribe <hello@sascribe.com>' after Resend plan upgrade
 
 const PUB_ID = 'pub_df60cb42-4828-474d-8553-8092d9f0746b';
+const BEMOB_POSTBACK_BASE = 'https://8gwxs.bemobtrcks.com/postback';
 
 const WELCOME_EMAIL_SUBJECT = 'Your free guide — 5 ways creators are earning with AI voice in 2026';
 
@@ -71,12 +82,13 @@ export async function onRequestPost(context) {
   try {
     const body = await request.json();
     const email = (body.email || '').trim().toLowerCase();
+    const cid = (body.cid || '').trim();  // BeMob click ID — passed from landing page URL ?cid=
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400, headers: corsHeaders });
     }
 
-    // Step 1: Subscribe to Beehiiv (adds to list, no welcome email from Beehiiv automation)
+    // Step 1: Subscribe to Beehiiv
     const beehiivRes = await fetch(`https://api.beehiiv.com/v2/publications/${PUB_ID}/subscriptions`, {
       method: 'POST',
       headers: {
@@ -86,7 +98,7 @@ export async function onRequestPost(context) {
       body: JSON.stringify({
         email,
         reactivate_existing: true,
-        send_welcome_email: false,  // Beehiiv automation blocked by Scale plan — Resend handles welcome
+        send_welcome_email: false,
         utm_source: 'elevenlabs-landing',
         utm_medium: 'push-traffic',
         utm_campaign: 'elevenlabs-voice-guide',
@@ -100,9 +112,16 @@ export async function onRequestPost(context) {
       return new Response(JSON.stringify({ error: 'Subscription failed' }), { status: 500, headers: corsHeaders });
     }
 
-    // Step 2: Send welcome email via Resend (bypasses Beehiiv automation paywall)
-    // qr-perks.com is the verified Resend domain. sascribe.com is not yet verified in Resend.
-    // Using hello@qr-perks.com as sender until sascribe.com domain is verified.
+    // Step 2: Fire BeMob postback if we have a click ID (attribution — tells BeMob email lead converted)
+    if (cid && /^[a-zA-Z0-9_\-]{6,64}$/.test(cid)) {
+      const bemobUrl = `${BEMOB_POSTBACK_BASE}?cid=${encodeURIComponent(cid)}&payout=0&status=approved`;
+      fetch(bemobUrl).catch((err) => console.error('BeMob postback failed:', err));
+      console.log('BeMob postback fired for cid:', cid);
+    }
+
+    // Step 3: Send welcome email via Resend
+    // TEMPORARY: sending from hello@qr-perks.com — sascribe.com domain requires Resend Pro plan ($20/mo)
+    // TODO after plan upgrade: change from to 'Sascribe <hello@sascribe.com>'
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -125,13 +144,11 @@ export async function onRequestPost(context) {
     const resendData = await resendRes.json().catch(() => ({}));
 
     if (!resendRes.ok) {
-      // Log but don't fail the subscription — Beehiiv subscribe succeeded
       console.error('Resend welcome email failed:', resendRes.status, JSON.stringify(resendData));
     } else {
       console.log('Welcome email sent via Resend:', resendData.id);
     }
 
-    // Frontend will redirect to https://try.elevenlabs.io/25umn8melpnn on ok: true
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
 
   } catch (err) {

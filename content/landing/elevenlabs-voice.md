@@ -158,12 +158,23 @@ cover:
 </div>
 
 <script>
+// Read BeMob click ID from URL — passed by BeMob when redirecting to this page
+// e.g. https://sascribe.com/landing/elevenlabs-voice/?cid=abc123
+var _cid = (new URLSearchParams(window.location.search)).get('cid') || '';
+
+// Append cid to all affiliate links on the page for attribution
+var _elBase = 'https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice';
+var _elHref = _elBase + (_cid ? '&cid=' + encodeURIComponent(_cid) : '');
+document.querySelectorAll('a[href*="try.elevenlabs.io"]').forEach(function(a) {
+  a.href = _elHref;
+});
+
 document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   // Honeypot check — bots fill hidden fields, humans don't
   var hp = this.querySelector('input[name="website"]');
   if (hp && hp.value) {
-    // Bot detected — silently succeed without API call
+    // Bot detected — silently fake-succeed without API call
     this.style.display = 'none';
     document.querySelector('.email-compliance').style.display = 'none';
     document.getElementById('subscribe-success').style.display = 'block';
@@ -178,7 +189,7 @@ document.getElementById('subscribe-form').addEventListener('submit', async funct
     var res = await fetch('/subscribe', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: email})
+      body: JSON.stringify({email: email, cid: _cid})  // pass cid for BeMob attribution
     });
     var data = await res.json();
     if (data.ok) {
@@ -186,7 +197,7 @@ document.getElementById('subscribe-form').addEventListener('submit', async funct
       document.querySelector('.email-compliance').style.display = 'none';
       success.style.display = 'block';
       setTimeout(function() {
-        window.location.href = 'https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice';
+        window.location.href = _elHref;  // affiliate URL with cid appended
       }, 2500);
     } else {
       btn.disabled = false;
