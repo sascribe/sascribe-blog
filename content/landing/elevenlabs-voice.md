@@ -85,9 +85,6 @@ cover:
   <p class="deal-sub">Limited-time offer · Creator plan normally $22/mo</p>
 </div>
 
-<a class="cta-btn" href="https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice" rel="noopener sponsored">Try ElevenLabs Free →</a>
-<p class="cta-sub">No credit card required · Cancel anytime</p>
-
 </div>
 
 <hr class="section-divider">
@@ -140,8 +137,6 @@ cover:
   <li>Audiobook creation — turn written content into sellable audio products</li>
 </ul>
 
-<a class="cta-btn-secondary" href="https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice" rel="noopener sponsored">Get Started for $11 →</a>
-
 <div class="email-section" id="email-capture">
   <h2>Want the free guide?</h2>
   <p class="email-sub">5 ways creators are earning with AI voice in 2026 — delivered to your inbox instantly.</p>
@@ -149,10 +144,10 @@ cover:
     <input type="email" name="email" placeholder="Enter your email address" required autocomplete="email">
     <!-- honeypot: real users never see or fill this -->
     <span class="hp-field"><input type="text" name="website" tabindex="-1" autocomplete="off"></span>
-    <button type="submit" id="subscribe-btn">Send Me the Guide →</button>
+    <button type="submit" id="subscribe-btn">Send Me the Free Guide + Try ElevenLabs →</button>
   </form>
   <p class="email-compliance">By subscribing you agree to receive emails from Sascribe. Unsubscribe anytime.</p>
-  <div class="email-success" id="subscribe-success">Guide sent! Check your inbox — then grab your ElevenLabs free account below.</div>
+  <div class="email-success" id="subscribe-success">Guide sent! Check your inbox — taking you to ElevenLabs now…</div>
 </div>
 
 </div>
@@ -162,12 +157,9 @@ cover:
 // e.g. https://sascribe.com/landing/elevenlabs-voice/?cid=abc123
 var _cid = (new URLSearchParams(window.location.search)).get('cid') || '';
 
-// Append cid to all affiliate links on the page for attribution
+// ElevenLabs affiliate URL — visitor only reaches this after submitting their email
 var _elBase = 'https://try.elevenlabs.io/25umn8melpnn?utm_source=propellerads&utm_medium=push&utm_campaign=elevenlabs-voice';
 var _elHref = _elBase + (_cid ? '&cid=' + encodeURIComponent(_cid) : '');
-document.querySelectorAll('a[href*="try.elevenlabs.io"]').forEach(function(a) {
-  a.href = _elHref;
-});
 
 document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -201,12 +193,12 @@ document.getElementById('subscribe-form').addEventListener('submit', async funct
       }, 2500);
     } else {
       btn.disabled = false;
-      btn.textContent = 'Send Me the Guide \u2192';
+      btn.textContent = 'Send Me the Free Guide + Try ElevenLabs \u2192';
       alert('Something went wrong. Please try again.');
     }
   } catch(err) {
     btn.disabled = false;
-    btn.textContent = 'Send Me the Guide \u2192';
+    btn.textContent = 'Send Me the Free Guide + Try ElevenLabs \u2192';
     alert('Something went wrong. Please try again.');
   }
 });
