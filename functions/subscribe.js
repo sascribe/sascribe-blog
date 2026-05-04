@@ -23,54 +23,102 @@ const WELCOME_EMAIL_SUBJECT = 'Your free guide — 5 ways creators are earning w
 
 const WELCOME_EMAIL_HTML = `
 <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 32px 24px; color: #1a1a1a; background: #fff;">
+
+  <!-- SECTION 1: GUIDE CONTENT -->
   <p style="font-size: 16px; line-height: 1.7; margin: 0 0 24px;">Here are 5 income streams creators are building right now with AI voice — specifically with ElevenLabs.</p>
 
   <p style="font-size: 17px; font-weight: bold; margin: 32px 0 8px;">01 — YouTube channel voiceovers</p>
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Faceless YouTube is the fastest-growing creator model. No mic, no studio, no face required. ElevenLabs voices are indistinguishable from human narration. Finance, history, and tech explainer channels are doing this at scale. Write the script (or use AI), generate the voice, add stock footage, upload. Channels are hitting 100k+ views within 3 months.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">Faceless YouTube is the fastest-growing creator model right now. No mic, no studio, no face on camera. ElevenLabs voices are indistinguishable from professional human narration.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">The workflow: write the script (or generate it with AI), paste it into ElevenLabs, download the audio, layer it over stock footage in CapCut or DaVinci Resolve, upload. Finance explainers, historical documentaries, and tech breakdowns are the top-performing niches. Channels in these categories are regularly hitting 100k+ views within their first 3 months.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Monetization: YouTube AdSense once you hit 1,000 subscribers and 4,000 watch hours. Sponsorships after 10k. Some creators are running 3–4 channels simultaneously — one voice, multiple revenue streams.</p>
 
   <p style="font-size: 17px; font-weight: bold; margin: 32px 0 8px;">02 — Podcast narration</p>
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Solo podcasts where you narrate pre-written episodes are big on Spotify and Apple Podcasts right now. Write a weekly deep-dive, generate audio in under 10 minutes, distribute. No recording sessions, no noise editing. Some creators run 3–4 shows simultaneously.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">Solo podcasts where you narrate pre-written episodes are booming on Spotify and Apple Podcasts. No recording sessions, no noise editing, no microphone upgrade cycle.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">The workflow: write a 1,500–2,500 word deep-dive on a topic your audience cares about, generate the audio in under 10 minutes, upload directly to Spotify for Podcasters or Anchor. Consistent weekly episodes compound — your back catalog becomes a long-term traffic asset. Some creators run 3–4 shows simultaneously with distinct ElevenLabs voice profiles for each brand.</p>
 
   <p style="font-size: 17px; font-weight: bold; margin: 32px 0 8px;">03 — Audiobook creation</p>
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Turn any book, ebook, or course into an audiobook and sell it on Gumroad, Lemon Squeezy, or ACX. Creator plan gives you 121,000 characters/month — roughly 2–3 hours of audio. Audiobooks command 2–3x the price of the written version.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">Any book, ebook, or course can become an audiobook in hours — not weeks. Sell on Gumroad, Lemon Squeezy, or submit to ACX (Amazon's audiobook marketplace, which distributes to Audible).</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">The Creator plan gives you 121,000 characters per month — roughly 2–3 hours of finished audio. A 20,000-word ebook turns into a 2.5-hour audiobook.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Pricing advantage: audiobooks command 2–3x the price of the written version. A $27 ebook becomes a $67–$97 audiobook. ACX royalties run 25–40% of list price. The production cost: a few dollars in ElevenLabs credits.</p>
 
   <p style="font-size: 17px; font-weight: bold; margin: 32px 0 8px;">04 — Corporate training videos</p>
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">Companies pay $500–$5,000 per training video — onboarding, compliance, product demos. The voiceover that used to cost $300 to record now costs ~$0.30 with ElevenLabs.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">Companies pay $500–$5,000 per training video for employee onboarding, compliance training, and product demos. The voiceover that used to cost $200–$400 to record now costs roughly $0.30 with ElevenLabs.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">If you can use PowerPoint or Canva, you can build these. Find clients on Upwork, LinkedIn, or directly pitch HR departments at mid-size companies. Package it as a recurring service — companies update training annually. One client paying $1,500/quarter is $6,000/year.</p>
 
   <p style="font-size: 17px; font-weight: bold; margin: 32px 0 8px;">05 — Language learning content</p>
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">30+ languages with native-sounding voices. Language learners pay well for pronunciation guides and listening drills. Build a Gumroad product or YouTube channel in a language you don't even speak — just translate scripts and generate audio.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 8px;">ElevenLabs supports 30+ languages with native-sounding voices. Language learners pay well for pronunciation guides, vocabulary drills, and listening comprehension content.</p>
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 24px;">The opportunity: you don't need to speak the language. Write scripts in English, use AI translation (DeepL or GPT-4), generate native-accent audio with ElevenLabs. Build a Gumroad product bundle or a YouTube channel in Spanish, French, or Mandarin. Language learning is a $60B industry and growing — the audience is massive and willing to spend.</p>
 
+  <!-- SECTION 2: CTA -->
+  <div style="background: #f9fafb; border: 2px solid #1a1a1a; border-radius: 8px; padding: 28px 24px; margin: 40px 0; text-align: center;">
+    <p style="font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #6b7280; margin: 0 0 10px;">The tool behind everything above</p>
+    <p style="font-size: 18px; font-weight: 800; margin: 0 0 12px; line-height: 1.3;">ElevenLabs turns any text into professional AI voice in seconds.</p>
+    <p style="font-size: 15px; color: #374151; margin: 0 0 24px; line-height: 1.5;">First month just <strong>$11</strong> (Creator plan, normally $22). Start free — no credit card required.</p>
+    <a href="https://try.elevenlabs.io/25umn8melpnn?utm_source=sascribe&utm_medium=email&utm_campaign=welcome"
+       style="display: inline-block; background: #1a1a1a; color: #fff; padding: 16px 32px; text-decoration: none; border-radius: 6px; font-family: -apple-system, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: .01em;">
+      Try ElevenLabs Free →
+    </a>
+    <p style="font-size: 12px; color: #9ca3af; margin: 12px 0 0;">Creator plan · $11 first month · Cancel anytime</p>
+  </div>
+
+  <!-- SECTION 3: CAN-SPAM FOOTER -->
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 32px 0;" />
-
-  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 16px;">
-    <a href="https://try.elevenlabs.io/25umn8melpnn?utm_source=sascribe&utm_medium=email&utm_campaign=welcome" style="background: #1a1a1a; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-family: -apple-system, sans-serif; font-size: 15px;">Try ElevenLabs Free →</a>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    <strong style="color: #6b7280;">Sascribe</strong> | <a href="mailto:hello@sascribe.com" style="color: #9ca3af; text-decoration: none;">hello@sascribe.com</a>
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    1945 S Laurel Pl, Ontario CA 91762
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    You received this email because you subscribed at <a href="https://sascribe.com" style="color: #9ca3af;">sascribe.com</a>.
+    To unsubscribe, reply to this email with UNSUBSCRIBE in the subject line.
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0; line-height: 1.6;">
+    This email contains affiliate links. We may earn a commission if you click and purchase, at no additional cost to you.
   </p>
 
-  <p style="font-size: 13px; color: #888; margin: 24px 0 0; line-height: 1.5;">Creator plan is $11 your first month (normally $22). Start free, no credit card needed.<br>You're receiving this because you signed up at sascribe.com.</p>
 </div>
 `;
 
-const WELCOME_EMAIL_TEXT = `Here are 5 income streams creators are building right now with AI voice — specifically with ElevenLabs.
+const WELCOME_EMAIL_TEXT = `5 ways creators are earning with AI voice (ElevenLabs)
+================================================================
 
 01 — YouTube channel voiceovers
-Faceless YouTube is the fastest-growing creator model. No mic, no studio, no face required. ElevenLabs voices are indistinguishable from human narration. Finance, history, and tech explainer channels are doing this at scale.
+Faceless YouTube is the fastest-growing creator model right now. No mic, no studio, no face on camera. ElevenLabs voices are indistinguishable from professional human narration.
+
+Workflow: write script → paste into ElevenLabs → download audio → layer over stock footage → upload. Finance, history, and tech channels are hitting 100k+ views in their first 3 months. Monetize via AdSense, then sponsorships. Some creators run 3–4 channels simultaneously.
 
 02 — Podcast narration
-Solo podcasts where you narrate pre-written episodes are big on Spotify and Apple Podcasts right now. Write a weekly deep-dive, generate audio in under 10 minutes, distribute.
+Solo podcasts narrating pre-written episodes are booming. No recording sessions, no noise editing. Write a 1,500–2,500 word deep-dive, generate audio in 10 minutes, upload to Spotify. Back catalog compounds over time. Some creators run 3–4 distinct shows with different ElevenLabs voice profiles.
 
 03 — Audiobook creation
-Turn any book, ebook, or course into an audiobook and sell it on Gumroad, Lemon Squeezy, or ACX. Creator plan gives you 121,000 characters/month — roughly 2–3 hours of audio.
+Turn any book, ebook, or course into an audiobook in hours. Sell on Gumroad, Lemon Squeezy, or ACX (Amazon/Audible). Creator plan: 121,000 characters/month = roughly 2–3 hours of audio. Audiobooks command 2–3x the price of written versions. A $27 ebook becomes a $67–$97 audiobook. Production cost: a few dollars in ElevenLabs credits.
 
 04 — Corporate training videos
-Companies pay $500–$5,000 per training video. The voiceover that used to cost $300 to record now costs ~$0.30 with ElevenLabs.
+Companies pay $500–$5,000 per training video. The voiceover that used to cost $200–$400 now costs ~$0.30 with ElevenLabs. Package it as a recurring service — companies update training annually. One client at $1,500/quarter = $6,000/year.
 
 05 — Language learning content
-30+ languages with native-sounding voices. Language learners pay well for pronunciation guides and listening drills.
+ElevenLabs supports 30+ languages with native-sounding voices. You don't need to speak the language. Write in English, translate with DeepL or GPT-4, generate native audio. Build a Gumroad product bundle or YouTube channel. Language learning is a $60B industry with an audience willing to spend.
 
----
+================================================================
+THE TOOL BEHIND EVERYTHING ABOVE
+================================================================
+
+ElevenLabs turns any text into professional AI voice in seconds.
+
+First month just $11 (Creator plan, normally $22). Start free — no credit card required.
+
 Try ElevenLabs Free: https://try.elevenlabs.io/25umn8melpnn?utm_source=sascribe&utm_medium=email&utm_campaign=welcome
 
-Creator plan is $11 your first month (normally $22). Start free, no credit card needed.`;
+================================================================
+
+Sascribe | hello@sascribe.com
+1945 S Laurel Pl, Ontario CA 91762
+
+You received this email because you subscribed at sascribe.com.
+To unsubscribe, reply to this email with UNSUBSCRIBE in the subject line.
+
+This email contains affiliate links. We may earn a commission if you click and purchase, at no additional cost to you.`;
 
 export async function onRequestPost(context) {
   const { request, env } = context;
