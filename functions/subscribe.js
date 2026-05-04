@@ -3,18 +3,20 @@
 //   1. Validate email
 //   2. Subscribe to Beehiiv with send_welcome_email:false (Beehiiv = source of truth for list)
 //   3. Fire BeMob conversion postback if cid is present (attribution)
-//   4. Send welcome email via MailChannels (free, no API key, native Cloudflare infrastructure)
+//   4. Send welcome email via SMTP2GO (free 1k/mo, SMTP2GO_API_KEY in CF Pages env)
 //
 // Platform rules:
 //   - Beehiiv receives ALL Sascribe subscriptions (source of truth for list)
-//   - MailChannels sends welcome email from hello@sascribe.com — no paid plan required
-//   - DKIM: private key in CF Pages secret DKIM_PRIVATE_KEY; selector = mailchannels
+//   - SMTP2GO sends welcome email from hello@sascribe.com (domain verified, DKIM signed)
 //   - QR-Perks transactional emails use Resend separately — never cross-use
 //
-// DNS records required on sascribe.com (already added 2026-05-04):
-//   SPF:      v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net ~all
-//   DKIM:     mailchannels._domainkey.sascribe.com  TXT  v=DKIM1; p=<public_key>
-//   Lockdown: _mailchannels.sascribe.com            TXT  v=mc1; cfid=sascribe.com
+// DNS records on sascribe.com for SMTP2GO (added 2026-05-05):
+//   SPF:        v=spf1 ... include:smtp2go.net ~all
+//   DKIM:       s1079579._domainkey.sascribe.com  CNAME  dkim.smtp2go.net
+//   Return path: em1079579.sascribe.com           CNAME  return.smtp2go.net
+//
+// NOTE: MailChannels free tier deprecated 2026-05 — returns 401 from all origins.
+//   Old MailChannels DNS records (mailchannels._domainkey, _mailchannels) on sascribe.com are inert.
 
 const PUB_ID = 'pub_df60cb42-4828-474d-8553-8092d9f0746b';
 const BEMOB_POSTBACK_BASE = 'https://8gwxs.bemobtrcks.com/postback';
@@ -168,39 +170,26 @@ export async function onRequestPost(context) {
       console.log('BeMob postback fired for cid:', cid);
     }
 
-    // Step 3: Send welcome email via MailChannels
-    // Free on Cloudflare Workers/Pages — no API key required.
-    // DNS records on sascribe.com: SPF includes relay.mailchannels.net, DKIM at mailchannels._domainkey
-    const personalization = {
-      to: [{ email }],
-    };
-
-    // Add DKIM signing if private key is available
-    if (env.DKIM_PRIVATE_KEY) {
-      personalization.dkim_domain = 'sascribe.com';
-      personalization.dkim_selector = 'mailchannels';
-      personalization.dkim_private_key = env.DKIM_PRIVATE_KEY;
-    }
-
-    const mailchannelsRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
+    // Step 3: Send welcome email via SMTP2GO
+    // SMTP2GO_API_KEY in CF Pages env. Domain sascribe.com verified + DKIM signed via SMTP2GO.
+    const smtp2goRes = await fetch('https://api.smtp2go.com/v3/email/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        personalizations: [personalization],
-        from: { email: 'hello@sascribe.com', name: 'Sascribe' },
+        api_key: env.SMTP2GO_API_KEY,
+        to: [email],
+        sender: 'Sascribe <hello@sascribe.com>',
         subject: WELCOME_EMAIL_SUBJECT,
-        content: [
-          { type: 'text/plain', value: WELCOME_EMAIL_TEXT },
-          { type: 'text/html', value: WELCOME_EMAIL_HTML },
-        ],
+        text_body: WELCOME_EMAIL_TEXT,
+        html_body: WELCOME_EMAIL_HTML,
       }),
     });
 
-    if (mailchannelsRes.status === 202) {
-      console.log('Welcome email sent via MailChannels to:', email);
+    const smtp2goData = await smtp2goRes.json().catch(() => ({}));
+    if (smtp2goData?.data?.succeeded === 1) {
+      console.log('Welcome email sent via SMTP2GO to:', email);
     } else {
-      const mcBody = await mailchannelsRes.text().catch(() => '');
-      console.error('MailChannels error:', mailchannelsRes.status, mcBody);
+      console.error('SMTP2GO error:', JSON.stringify(smtp2goData));
     }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
