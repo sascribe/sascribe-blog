@@ -1,19 +1,20 @@
 // Cloudflare Pages Function — POST /subscribe
 // Flow:
-//   1. Validate email + honeypot (honeypot handled client-side; server ignores it)
-//   2. Subscribe to Beehiiv with send_welcome_email:false
+//   1. Validate email
+//   2. Subscribe to Beehiiv with send_welcome_email:false (Beehiiv = source of truth for list)
 //   3. Fire BeMob conversion postback if cid is present (attribution)
-//   4. Send welcome email via Resend from hello@sascribe.com
+//   4. Send welcome email via MailChannels (free, no API key, native Cloudflare infrastructure)
 //
 // Platform rules:
 //   - Beehiiv receives ALL Sascribe subscriptions (source of truth for list)
-//   - Resend sends welcome email as approved exception while Beehiiv Scale plan ($49/mo) is not active
-//   - Sender MUST be hello@sascribe.com (sascribe.com verified in Resend)
+//   - MailChannels sends welcome email from hello@sascribe.com — no paid plan required
+//   - DKIM: private key in CF Pages secret DKIM_PRIVATE_KEY; selector = mailchannels
 //   - QR-Perks transactional emails use Resend separately — never cross-use
 //
-// AWAITING: Resend Pro plan ($20/mo) required to add sascribe.com as second domain
-// TEMPORARY: Sending from hello@qr-perks.com until sascribe.com is verified in Resend
-// TODO: Change from address to 'Sascribe <hello@sascribe.com>' after Resend plan upgrade
+// DNS records required on sascribe.com (already added 2026-05-04):
+//   SPF:      v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net ~all
+//   DKIM:     mailchannels._domainkey.sascribe.com  TXT  v=DKIM1; p=<public_key>
+//   Lockdown: _mailchannels.sascribe.com            TXT  v=mc1; cfid=sascribe.com
 
 const PUB_ID = 'pub_df60cb42-4828-474d-8553-8092d9f0746b';
 const BEMOB_POSTBACK_BASE = 'https://8gwxs.bemobtrcks.com/postback';
@@ -119,34 +120,39 @@ export async function onRequestPost(context) {
       console.log('BeMob postback fired for cid:', cid);
     }
 
-    // Step 3: Send welcome email via Resend
-    // TEMPORARY: sending from hello@qr-perks.com — sascribe.com domain requires Resend Pro plan ($20/mo)
-    // TODO after plan upgrade: change from to 'Sascribe <hello@sascribe.com>'
-    const resendRes = await fetch('https://api.resend.com/emails', {
+    // Step 3: Send welcome email via MailChannels
+    // Free on Cloudflare Workers/Pages — no API key required.
+    // DNS records on sascribe.com: SPF includes relay.mailchannels.net, DKIM at mailchannels._domainkey
+    const personalization = {
+      to: [{ email }],
+    };
+
+    // Add DKIM signing if private key is available
+    if (env.DKIM_PRIVATE_KEY) {
+      personalization.dkim_domain = 'sascribe.com';
+      personalization.dkim_selector = 'mailchannels';
+      personalization.dkim_private_key = env.DKIM_PRIVATE_KEY;
+    }
+
+    const mailchannelsRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Sascribe <hello@qr-perks.com>',
-        to: [email],
+        personalizations: [personalization],
+        from: { email: 'hello@sascribe.com', name: 'Sascribe' },
         subject: WELCOME_EMAIL_SUBJECT,
-        html: WELCOME_EMAIL_HTML,
-        text: WELCOME_EMAIL_TEXT,
-        tags: [
-          { name: 'campaign', value: 'elevenlabs-welcome' },
-          { name: 'source', value: 'push-traffic' },
+        content: [
+          { type: 'text/plain', value: WELCOME_EMAIL_TEXT },
+          { type: 'text/html', value: WELCOME_EMAIL_HTML },
         ],
       }),
     });
 
-    const resendData = await resendRes.json().catch(() => ({}));
-
-    if (!resendRes.ok) {
-      console.error('Resend welcome email failed:', resendRes.status, JSON.stringify(resendData));
+    if (mailchannelsRes.status === 202) {
+      console.log('Welcome email sent via MailChannels to:', email);
     } else {
-      console.log('Welcome email sent via Resend:', resendData.id);
+      const mcBody = await mailchannelsRes.text().catch(() => '');
+      console.error('MailChannels error:', mailchannelsRes.status, mcBody);
     }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
