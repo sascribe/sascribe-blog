@@ -69,6 +69,26 @@ https://qr-perks.com/api/conversion?subid=#S2#&offer=#CAMPAIGN_ID#&payout=#RATE#
 **Stack:** Hugo · GitHub Actions · Cloudflare CDN
 **Repo:** sascribe/sascribe-blog
 
+### Heal and Soothe Pipeline (2026-05-04)
+
+| Component | Status | Details |
+|-----------|--------|---------|
+| Prelander | ✅ LIVE | sascribe.com/lp/hs/ — commit a3a63ae |
+| PA sitewide pixel | ✅ LIVE | ID 176658, baseof.html head |
+| PA prelander pixel | ✅ LIVE | ID 176659, layouts/lp/single.html |
+| Cookie consent banner | ✅ LIVE | CCPA/EU compliant, all pages |
+| BeMob offer | ✅ Created | ID: fb194d36-062c-4aa2-abc6-189b20b2ebec |
+| BeMob campaign | ✅ Created | ID: 11e1d31a-efb2-4766-9459-f9acb2779e1d |
+| MaxBounty postback | ✅ Wired | Offer 17722 → S2S → BeMob postback |
+| PA campaign | ⚠️ PENDING | SSP API broken — create via dashboard |
+
+**BeMob tracking URL:**
+```
+https://8gwxs.bemobtrcks.com/go/11e1d31a-efb2-4766-9459-f9acb2779e1d?visitor_id=${SUBID}&zoneid={zoneid}&campaignid={campaignid}&bannerid={bannerid}
+```
+
+**Next session:** Blue creates PA campaign via dashboard (spec in ANSTREX_RESEARCH.md), uploads 4 creatives, activates.
+
 ### Infrastructure
 
 | Service | Status | Notes |
