@@ -66,6 +66,10 @@
   </script>
   {{ end }}
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "027c2dc081f04fd3a6b5fee36918122a"}' ></script><!-- End Cloudflare Web Analytics -->
+
+  <!-- PropellerAds Retargeting — Sascribe All Visitors (ID 176658) -->
+  <script src="https://my.rtmark.net/p.js?f=sync&lr=1&partner=ab6c6bb78ed290cf6711b617fc28e21358f3ea5c293ce0822e27b91bd28dd7a6" defer></script>
+  <noscript><img src="https://my.rtmark.net/img.gif?f=sync&lr=1&partner=ab6c6bb78ed290cf6711b617fc28e21358f3ea5c293ce0822e27b91bd28dd7a6" width="1" height="1" /></noscript>
 </head>
 <body>
 
@@ -140,6 +144,20 @@
       </div>
     </div>
   </footer>
+
+ <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;color:#ccc;padding:12px 20px;font-size:13px;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <span>This site uses cookies for analytics and personalized advertising. By continuing you agree to our <a href="/privacy/" style="color:#6EE7F7;text-decoration:underline;">cookie policy</a>.</span>
+    <button onclick="document.getElementById('cookie-banner').style.display='none';document.cookie='consent=1;max-age=31536000;path=/;SameSite=Lax'" style="background:#6EE7F7;color:#111;border:none;padding:7px 18px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">OK</button>
+  </div>
+  <script>
+  (function(){
+    if(document.cookie.indexOf('consent=1')===-1){
+      var b=document.getElementById('cookie-banner');
+      if(b) b.style.display='flex';
+    }
+  })();
+  </script>
 
  <script>
   async function subscribeNewsletter(e) {
