@@ -184,7 +184,13 @@ description: ""
 
 <div class="lp-success" id="success-box">
   <h2>Check your inbox!</h2>
-  <p>The AI Creator Playbook is on its way. Taking you to your free tools now&hellip;</p>
+  <p>The AI Creator Playbook is on its way. You can also download it directly below.</p>
+  <a href="/ai_creator_playbook.pdf" id="pdf-link"
+     style="display:inline-block;margin-top:16px;background:#1a1a1a;color:#fff;padding:14px 28px;
+            border-radius:6px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+            text-decoration:none;letter-spacing:0.2px;">
+    Download PDF Now &rarr;
+  </a>
 </div>
 
 <hr class="lp-divider">
@@ -225,8 +231,17 @@ function submitForm(e) {
   btn.disabled = true;
 
   var cid = getParam('cid');
-  var payload = { email: email };
+  var payload = { email: email, source: 'ebook' };
   if (cid) payload.cid = cid;
+
+  function showSuccess() {
+    document.getElementById('form-box').style.display = 'none';
+    document.getElementById('success-box').style.display = 'block';
+    // Auto-trigger PDF download after 1 second
+    setTimeout(function() {
+      document.getElementById('pdf-link').click();
+    }, 1000);
+  }
 
   fetch('/subscribe', {
     method: 'POST',
@@ -234,20 +249,7 @@ function submitForm(e) {
     body: JSON.stringify(payload)
   })
   .then(function(res) { return res.json(); })
-  .then(function() {
-    document.getElementById('form-box').style.display = 'none';
-    document.getElementById('success-box').style.display = 'block';
-    setTimeout(function() {
-      window.location.href = 'https://sascribe.com/';
-    }, 2500);
-  })
-  .catch(function() {
-    // Still show success and redirect on error — don't block user
-    document.getElementById('form-box').style.display = 'none';
-    document.getElementById('success-box').style.display = 'block';
-    setTimeout(function() {
-      window.location.href = 'https://sascribe.com/';
-    }, 2500);
-  });
+  .then(function() { showSuccess(); })
+  .catch(function() { showSuccess(); });
 }
 </script>

@@ -21,6 +21,87 @@
 const PUB_ID = 'pub_df60cb42-4828-474d-8553-8092d9f0746b';
 const BEMOB_POSTBACK_BASE = 'https://8gwxs.bemobtrcks.com/postback';
 
+// Ebook — The AI Creator Playbook
+const EBOOK_URL = 'https://sascribe.com/ai_creator_playbook.pdf';
+const EBOOK_EMAIL_SUBJECT = 'Your AI Creator Playbook is ready — download link inside';
+const EBOOK_EMAIL_HTML = `
+<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 32px 24px; color: #1a1a1a; background: #fff;">
+
+  <p style="font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f59e0b; margin: 0 0 6px;">Sascribe · Free Resource</p>
+  <h1 style="font-family: -apple-system, sans-serif; font-size: 26px; font-weight: 800; line-height: 1.2; margin: 0 0 16px; color: #111;">The AI Creator Playbook is ready for you.</h1>
+
+  <p style="font-size: 16px; line-height: 1.7; margin: 0 0 24px; color: #374151;">
+    Six chapters. Six AI tools. Five income streams you can start in 2026 without a team,
+    a studio, or a $10,000 budget.
+  </p>
+
+  <div style="background: #1a1a1a; border-radius: 8px; padding: 28px 24px; margin: 0 0 32px; text-align: center;">
+    <p style="font-size: 14px; color: #9ca3af; margin: 0 0 12px;">Click to download your free copy</p>
+    <a href="${EBOOK_URL}"
+       style="display: inline-block; background: #f59e0b; color: #1a1a1a; padding: 16px 36px;
+              text-decoration: none; border-radius: 6px; font-family: -apple-system, sans-serif;
+              font-size: 17px; font-weight: 800; letter-spacing: .01em;">
+      Download The AI Creator Playbook (PDF) →
+    </a>
+    <p style="font-size: 12px; color: #6b7280; margin: 12px 0 0;">PDF · 1.1MB · 6 chapters · No sign-in required</p>
+  </div>
+
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 12px; color: #374151;"><strong>What's inside:</strong></p>
+  <ul style="margin: 0 0 28px; padding-left: 20px; color: #374151; font-size: 15px; line-height: 1.8;">
+    <li>Ch. 1 — ElevenLabs: Turn words into cash with AI voice</li>
+    <li>Ch. 2 — Synthesia: Create professional AI videos without a camera</li>
+    <li>Ch. 3 — AdCreative.ai: Launch profitable ads without a design team</li>
+    <li>Ch. 4 — Beehiiv: Build an email list that actually pays you</li>
+    <li>Ch. 5 — CapCut: Edit professional video from your phone</li>
+    <li>Ch. 6 — NordVPN: Protect the business you're building</li>
+  </ul>
+
+  <p style="font-size: 15px; line-height: 1.7; margin: 0 0 32px; color: #374151;">
+    Each chapter includes the exact workflow, realistic revenue timelines, and 3 recommended
+    resources to go deeper. Start with Chapter 1 and build from there.
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;" />
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    <strong style="color: #6b7280;">Sascribe</strong> | <a href="mailto:hello@sascribe.com" style="color: #9ca3af; text-decoration: none;">hello@sascribe.com</a>
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    1945 S Laurel Pl, Ontario CA 91762
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0 0 6px; line-height: 1.6;">
+    You received this because you subscribed at sascribe.com.
+    To unsubscribe, reply with UNSUBSCRIBE in the subject line.
+  </p>
+  <p style="font-size: 12px; color: #9ca3af; margin: 0; line-height: 1.6;">
+    This email contains affiliate links. We may earn a commission if you purchase through our links, at no extra cost to you.
+  </p>
+</div>
+`;
+const EBOOK_EMAIL_TEXT = `The AI Creator Playbook — Download Link
+=========================================
+
+Download your free copy here:
+${EBOOK_URL}
+
+What's inside:
+- Ch. 1 — ElevenLabs: Turn words into cash with AI voice
+- Ch. 2 — Synthesia: Create professional AI videos without a camera
+- Ch. 3 — AdCreative.ai: Launch profitable ads without a design team
+- Ch. 4 — Beehiiv: Build an email list that actually pays you
+- Ch. 5 — CapCut: Edit professional video from your phone
+- Ch. 6 — NordVPN: Protect the business you're building
+
+Each chapter includes the exact workflow, realistic revenue timelines, and 3 recommended resources.
+
+=========================================
+Sascribe | hello@sascribe.com
+1945 S Laurel Pl, Ontario CA 91762
+
+You received this because you subscribed at sascribe.com.
+To unsubscribe, reply with UNSUBSCRIBE in the subject line.
+
+This email contains affiliate links. We may earn a commission if you purchase through our links, at no extra cost to you.`;
+
 const WELCOME_EMAIL_SUBJECT = 'Your free guide — 5 ways creators are earning with AI voice in 2026';
 
 const WELCOME_EMAIL_HTML = `
@@ -133,11 +214,14 @@ export async function onRequestPost(context) {
   try {
     const body = await request.json();
     const email = (body.email || '').trim().toLowerCase();
-    const cid = (body.cid || '').trim();  // BeMob click ID — passed from landing page URL ?cid=
+    const cid = (body.cid || '').trim();      // BeMob click ID — passed from landing page URL ?cid=
+    const source = (body.source || '').trim(); // 'ebook' = AI Creator Playbook LP, '' = ElevenLabs LP
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400, headers: corsHeaders });
     }
+
+    const isEbook = source === 'ebook';
 
     // Step 1: Subscribe to Beehiiv
     const beehiivRes = await fetch(`https://api.beehiiv.com/v2/publications/${PUB_ID}/subscriptions`, {
@@ -150,9 +234,9 @@ export async function onRequestPost(context) {
         email,
         reactivate_existing: true,
         send_welcome_email: false,
-        utm_source: 'elevenlabs-landing',
-        utm_medium: 'push-traffic',
-        utm_campaign: 'elevenlabs-voice-guide',
+        utm_source: isEbook ? 'ebook-lp' : 'elevenlabs-landing',
+        utm_medium: isEbook ? 'organic' : 'push-traffic',
+        utm_campaign: isEbook ? 'ai-creator-playbook' : 'elevenlabs-voice-guide',
       }),
     });
 
@@ -171,7 +255,12 @@ export async function onRequestPost(context) {
     }
 
     // Step 3: Send welcome email via SMTP2GO
-    // SMTP2GO_API_KEY in CF Pages env. Domain sascribe.com verified + DKIM signed via SMTP2GO.
+    // Ebook signups get the ebook delivery email with PDF download link.
+    // ElevenLabs LP signups get the AI voice guide email.
+    const emailSubject = isEbook ? EBOOK_EMAIL_SUBJECT : WELCOME_EMAIL_SUBJECT;
+    const emailHtml    = isEbook ? EBOOK_EMAIL_HTML    : WELCOME_EMAIL_HTML;
+    const emailText    = isEbook ? EBOOK_EMAIL_TEXT    : WELCOME_EMAIL_TEXT;
+
     const smtp2goRes = await fetch('https://api.smtp2go.com/v3/email/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -179,9 +268,9 @@ export async function onRequestPost(context) {
         api_key: env.SMTP2GO_API_KEY,
         to: [email],
         sender: 'Sascribe <hello@sascribe.com>',
-        subject: WELCOME_EMAIL_SUBJECT,
-        text_body: WELCOME_EMAIL_TEXT,
-        html_body: WELCOME_EMAIL_HTML,
+        subject: emailSubject,
+        text_body: emailText,
+        html_body: emailHtml,
       }),
     });
 
