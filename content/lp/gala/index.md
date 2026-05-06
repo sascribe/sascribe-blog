@@ -141,7 +141,7 @@ html, body {
 
 <div class="lp-brand">GLP-1 Report &nbsp;·&nbsp; Health &amp; Wellness</div>
 
-<h1 class="lp-h1">Why Thousands of Women Have Stopped Waiting for Ozempic — And What They're Using Instead</h1>
+<h1 class="lp-h1">Why Thousands of Women Have Stopped Paying $1,200 a Month for Ozempic — And What They're Using Instead</h1>
 
 <p class="lp-sub">A compounded alternative with the same active ingredient ships to all 50 states. No insurance required. No clinic visit. Starting at $179/month.</p>
 
@@ -161,7 +161,7 @@ html, body {
 
 <div class="lp-body">
 
-<p>If you've been trying to get Ozempic or Mounjaro, you already know the story. Your doctor thinks it's a good option. Your insurance disagrees. Or the pharmacy has it listed as "out of stock." Or the monthly cost — often $900 to $1,300 without coverage — is simply not possible.</p>
+<p>If you've been looking at Ozempic or Mounjaro, you already know the problem. Your doctor thinks it's a good option. Your insurance disagrees. And without coverage, the monthly cost — often $900 to $1,300 — is simply not realistic for most people.</p>
 
 <p>This is not a fringe experience. Millions of women have been caught in the same loop: GLP-1 medications are clinically proven to reduce body weight by 15–20%, but accessing them has become a bureaucratic and financial obstacle course.</p>
 
@@ -176,7 +176,7 @@ html, body {
 
 <p>The telehealth platform where women are accessing this has served over 50,000 patients, holds LegitScript verification, is HIPAA compliant, and offers free expedited shipping. The assessment takes 60 seconds online. A licensed provider reviews your profile and, if you qualify, writes the prescription. You cancel anytime.</p>
 
-<p>If you've been waiting for insurance to come through, or have hit a pharmacy backorder for the third time, this is what the alternative looks like. No clinic. No waitlist. No insurance battle.</p>
+<p>If you've been paying full price out of pocket, or walking away from a prescription your doctor recommended because the cost doesn't make sense — this is what the alternative looks like. No clinic visit. No insurance battle. $1,120 less per month.</p>
 
 </div>
 
