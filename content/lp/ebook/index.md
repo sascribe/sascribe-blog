@@ -210,7 +210,7 @@ description: ""
 
 <p class="lp-disclaimer">
   This page contains affiliate links. We may earn a commission if you purchase through our links, at no additional cost to you.<br>
-  &copy; {{ now.Year }} Sascribe &nbsp;·&nbsp; <a href="https://sascribe.com" style="color:#bbb;">sascribe.com</a>
+  &copy; 2026 Sascribe &nbsp;·&nbsp; <a href="https://sascribe.com" style="color:#bbb;">sascribe.com</a>
 </p>
 
 </div>

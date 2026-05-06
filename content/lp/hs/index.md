@@ -131,7 +131,7 @@ draft: true
 </div>
 <p class="lp-cta-note">Free trial available — limited supply</p>
 
-<p class="lp-disclaimer">This article contains affiliate links. Results may vary. This is not medical advice. Consult your physician before starting any new supplement. &copy; {{ now.Year }} Joint Relief Report.</p>
+<p class="lp-disclaimer">This article contains affiliate links. Results may vary. This is not medical advice. Consult your physician before starting any new supplement. &copy; 2026 Joint Relief Report.</p>
 
 </div>
 
