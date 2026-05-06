@@ -188,7 +188,7 @@ html, body {
 <p class="lp-disclaimer">
   This page contains affiliate links. We may earn a commission if you purchase through this page, at no additional cost to you.
   Compounded tirzepatide is not FDA-approved. It is produced at FDA-regulated compounding pharmacies and prescribed by licensed providers. Results may vary. This is not medical advice. Consult your physician before starting any new treatment.
-  &copy; {{ now.Year }} GLP-1 Report &nbsp;·&nbsp; sascribe.com
+  &copy; 2026 GLP-1 Report &nbsp;·&nbsp; sascribe.com
 </p>
 
 </div>
