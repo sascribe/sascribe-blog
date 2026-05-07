@@ -199,9 +199,13 @@ html, body {
     var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results ? decodeURIComponent(results[1]) : '';
   }
+  // cid = BeMob click ID (primary, from Tracking Template redirect)
+  // msclkid = MS Ads click ID (fallback for direct traffic without BeMob redirect)
   var cid = getParam('cid');
+  var msclkid = getParam('msclkid');
+  var trackingId = cid || msclkid || '';
   var baseUrl = 'https://afflat3c1.com/trk/lnk/C8CC1E8D-9D2D-46AD-842E-9CEDD11DD805/?o=32072&c=918277&a=792250&k=0&l=1&s1=msads';
-  var fullUrl = cid ? baseUrl + '&s2=' + encodeURIComponent(cid) : baseUrl;
+  var fullUrl = trackingId ? baseUrl + '&s2=' + encodeURIComponent(trackingId) : baseUrl;
   document.getElementById('cta-top').href = fullUrl;
   document.getElementById('cta-bottom').href = fullUrl;
 })();
