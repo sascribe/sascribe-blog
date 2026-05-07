@@ -169,6 +169,10 @@ html, body {
 
 <p>Compounded tirzepatide uses the same active molecule as Mounjaro and Zepbound — a GLP-1/GIP dual agonist — but is produced at FDA-regulated compounding pharmacies and prescribed directly by licensed telehealth providers. It is not a generic. It is not an off-brand substitute. It is the same mechanism, prescribed by a real licensed physician, made in a regulated facility, and shipped directly to your door.</p>
 
+<div style="text-align:center; margin: 28px 0;">
+  <img src="/images/gala-provider.jpg" alt="Licensed physician available for GLP-1 prescriptions in all 50 states" style="max-width: 420px; width: 100%; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+</div>
+
 <div class="lp-price-box">
   <strong>The price gap: $179/month vs. $1,299/month.</strong><br>
   That is the difference between compounded tirzepatide through a telehealth platform and brand-name Ozempic. Same biological mechanism. Licensed providers in all 50 states. No insurance required.
