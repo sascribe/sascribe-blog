@@ -200,7 +200,7 @@ description: ""
 <ul class="lp-bullets">
   <li>The 6 AI tools that replace a full creative team — all with free tiers</li>
   <li>5 income streams you can start in 2026 without showing your face or spending $1,000 on equipment</li>
-  <li>How to build a faceless YouTube channel that earns AdSense in 90 days</li>
+  <li>How to build a faceless YouTube channel — no camera, no face required</li>
   <li>The exact workflow for turning any text into professional AI voice (used by 3M+ creators)</li>
   <li>How to sell AI-generated audiobooks on Amazon — step by step</li>
   <li>The one tool creators swear by for voiceovers, podcasts, and video narration</li>
