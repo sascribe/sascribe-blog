@@ -5,7 +5,7 @@ description: "Looking for AdCreative AI alternatives? Compare the best AI ad cre
 tags: ["Ad Tools ", "saas", "ai tools"]
 categories: ["Ad Tools "]
 cover:
-  image: "/images/adcreative/c-story6.png"
+  image: "/images/adcreative/logo-adc.jpg"
   alt: "AdCreative AI review"
   style: "logo"
 affiliateURL: "https://sascribe.com/go/adcreative"
