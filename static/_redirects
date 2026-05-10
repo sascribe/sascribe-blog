@@ -1,22 +1,11 @@
 # Amazon affiliate redirects — sascribe.com/r/{slug} → Amazon with sascribe-20 tag
-# Managed here so all ebooks in circulation auto-fix when this file updates.
+# All 6 ASINs verified live as of 2026-05-10 (Option C — durable products only).
+# To swap a dead ASIN: edit one line, push — every PDF in circulation auto-fixes.
 # Format: /path  target  status_code
 
-/r/blue-yeti          https://www.amazon.com/dp/B00N1YPXW2?tag=sascribe-20  301
-/r/sony-mdr7506       https://www.amazon.com/dp/B000AJIF4E?tag=sascribe-20  301
-/r/steal-like-artist  https://www.amazon.com/dp/0761169253?tag=sascribe-20  301
-/r/neewer-ring-light  https://www.amazon.com/dp/B01N9WJQQY?tag=sascribe-20  301
-/r/boya-bym1          https://www.amazon.com/dp/B01N32Y4Z5?tag=sascribe-20  301
-/r/crushing-it        https://www.amazon.com/dp/B077YPQ7JZ?tag=sascribe-20  301
-/r/100m-offers        https://www.amazon.com/dp/B09BKZFHKJ?tag=sascribe-20  301
-/r/ogilvy             https://www.amazon.com/dp/B00EMXBBO4?tag=sascribe-20  301
-/r/1page-marketing    https://www.amazon.com/dp/B01B35M3SM?tag=sascribe-20  301
-/r/rain-mstand        https://www.amazon.com/dp/B000OOYECC?tag=sascribe-20  301
-/r/mx-master-3s       https://www.amazon.com/dp/B09HM94VDS?tag=sascribe-20  301
-/r/permission-marketing https://www.amazon.com/dp/B00FFLQHWQ?tag=sascribe-20  301
-/r/joby-gorillapod    https://www.amazon.com/dp/B01MQGWCF0?tag=sascribe-20  301
-/r/lume-cube          https://www.amazon.com/dp/B09XYF4ZCN?tag=sascribe-20  301
-/r/youtube-secrets    https://www.amazon.com/dp/B07GJ4SX29?tag=sascribe-20  301
-/r/yubikey-5          https://www.amazon.com/dp/B07HBD71HL?tag=sascribe-20  301
-/r/wd-passport-2tb    https://www.amazon.com/dp/B01LQQH86A?tag=sascribe-20  301
-/r/art-of-invisibility https://www.amazon.com/dp/B01B82TWNY?tag=sascribe-20  301
+/r/blue-yeti        https://www.amazon.com/dp/B00N1YPXW2?tag=sascribe-20  301
+/r/sony-mdr7506     https://www.amazon.com/dp/B000AJIF4E?tag=sascribe-20  301
+/r/mx-master-3s     https://www.amazon.com/dp/B09HM94VDS?tag=sascribe-20  301
+/r/wd-passport      https://www.amazon.com/dp/B01LQQH86A?tag=sascribe-20  301
+/r/joby-gorillapod  https://www.amazon.com/dp/B075MMFPMV?tag=sascribe-20  301
+/r/yubikey-5        https://www.amazon.com/dp/B07HBD71HL?tag=sascribe-20  301

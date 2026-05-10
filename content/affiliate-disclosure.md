@@ -22,9 +22,15 @@ Affiliate commissions help keep Sascribe free and allow us to continue producing
 
 We currently have affiliate relationships with the following companies:
 
+- **Amazon Associates** — We earn from qualifying purchases on Amazon.com through our affiliate links
+- **ElevenLabs** — AI voice generation platform
+- **Synthesia** — AI video creation platform
 - **AdCreative.ai** — AI-powered ad creative generation platform
+- **Beehiiv** — Email newsletter and monetization platform
+- **CapCut** — Video editing software
+- **NordVPN** — VPN and cybersecurity service
 
-This list will be updated as we add new affiliate partnerships.
+This list will be updated as we add or remove affiliate partnerships.
 
 ## Questions
 
