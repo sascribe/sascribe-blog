@@ -415,6 +415,27 @@ a:hover { opacity: 0.8; }
   border: none;
 }
 
+/* CapCut — white logo on dark bg */
+.post-card--featured .post-card__image img[src*="/capcut/"] {
+  object-fit: contain;
+  padding: 40px;
+  background: #0C0C0F;
+  max-height: 200px;
+}
+.post-card__thumb img[src*="/capcut/"],
+.post-card--archive .post-card__thumb img[src*="/capcut/"] {
+  object-fit: contain;
+  padding: 20px;
+  background: #0C0C0F;
+}
+.article-hero__img[src*="/capcut/"] {
+  object-fit: contain;
+  background: #0C0C0F;
+  padding: 40px;
+  max-height: 320px;
+  border: none;
+}
+
 /* --- NordVPN --- */
 /* Wide horizontal logo — reduce left/right padding so it fills container proportionally */
 /* NOTE: This logo PNG has black background baked in — matches site bg #0C0C0F perfectly */

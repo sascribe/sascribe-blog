@@ -6,7 +6,7 @@ description: "Step-by-step workflow to repurpose a single long-form video into 3
 tags: ["AI Tools", "CapCut", "Video Editing", "How-To"]
 categories: ["AI Tools"]
 cover:
-  image: "/images/capcut/capcut-vertical-black.png"
+  image: "/images/capcut/capcut-vertical-white.png"
   alt: "CapCut video repurposing guide"
   style: "logo"
 affiliateURL: "https://afflat3c2.com/trk/lnk/C8CC1E8D-9D2D-46AD-842E-9CEDD11DD805/?o=27683&c=918277&a=792250&k=BDD9D340BCBC9119C8BC17D4BA009DB8&l=30076"
